@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>资源页面</title>
+    <style>
+        body {
+            display: flex;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .sidebar {
+            width: 25%;
+            background-color: #f4f4f4;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        .content {
+            width: 75%;
+            padding: 20px;
+        }
+        .sidebar h2 {
+            font-size: 1.2em;
+            margin-top: 0;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>索引</h2>
+        <ul>
+            <li>
+                <h3>课程资源</h3>
+                <ul>
+                    <li><a href="#quantum-mechanics">量子力学</a></li>
+                    <li><a href="#quantum-information">量子信息</a></li>
+                    <li><a href="#mathematical-methods">数理方法</a></li>
+                </ul>
+            </li>
+            <li><a href="#other">其他</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <h2 id="quantum-mechanics">量子力学</h2>
+        <p>这里是量子力学的内容。</p>
+        
+        <h2 id="quantum-information">量子信息</h2>
+        <p>这里是量子信息的内容。</p>
+        
+        <h2 id="mathematical-methods">数理方法</h2>
+        <p>这里是数理方法的内容。</p>
+        
+        <h2 id="other">其他</h2>
+        <p>这里是其他内容。</p>
+    </div>
+</body>
+</html>
