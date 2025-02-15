@@ -1,0 +1,230 @@
+body {
+    width: 100%;
+    min-width: 768px;
+    /*抗锯齿，仅在部分浏览器有效*/
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+.item0 {
+    grid-area: 1/1/3/5;
+    /* background-color: rgba(10, 10, 10, 0.9); */
+    background-color: black;
+}
+
+@media (min-width: 1020px) {
+
+    .item1 {
+        grid-area: 1/1/3/2;
+    }
+
+    .item2 {
+        grid-area: 1/2/2/5;
+        place-self: center;
+    }
+}
+
+@media (max-width: 1020px) {
+
+    .item1 {
+        grid-area: 1/1/1/1;
+        visibility: hidden;
+    }
+
+    .item2 {
+        grid-area: 1/1/2/5;
+        place-self: center;
+
+    }
+}
+
+
+.item3 {
+    grid-area: 3/1/4/4;
+    background-image: url(../Picture/instrument/JEB_3.jpg);
+    background-size: cover;
+}
+
+.item4 {
+    grid-area: 3/4/4/5;
+    background-image: url(../Picture/instrument/wirebonding.JPG);
+    background-size: cover;
+    /* background-repeat: no-repeat; */
+
+}
+
+.item5 {
+    grid-area: 4/1/5/3;
+    background-image: url(../Picture/instrument/Oxford稀释制冷机.JPG);
+    background-size: cover;
+}
+
+.item6 {
+    grid-area: 4/3/5/5;
+    background-image: url(../Picture/op1.PNG);
+    background-size: cover;
+}
+
+.foot {
+    grid-area: 5/1/6/5;
+    background-color: rgba(30, 30, 30, 0.9);
+    /* background-color: black; */
+    /* align-self: center; */
+    text-align: center;
+    color: lightgray;
+}
+
+div.gridcontainer {
+    display: grid;
+    grid-template-columns:3fr 1fr 2fr 4fr;
+    grid-template-rows: 150px auto auto auto 100px;
+    /* grid-gap: 10px; */
+    /* background-color: powderblue; */
+}
+
+
+section.sec3 {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(39, 138, 126, 0.9);
+    /*设置弹性盒布局使得内容居于本section中心*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+p.sec3 {
+    font-size: 4vmin;
+    color: white;
+    text-align: center;
+    /*margin: auto 75px;*/
+}
+
+p.sec3 span:hover {
+    color: tomato;
+}
+
+span.line1{
+    font-size: 6vmin;
+}
+
+
+
+section#sec4 {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(235, 190, 225, 0.85);
+    /*color: ;*/
+}
+
+div.sec4 {
+    padding: 25% 5%;
+}
+
+div.sec4 p {
+    color: black;
+    line-height: 1.75;
+}
+
+div.sec4 p span {
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+
+section#sec5 {
+    width: 100%;
+    height: 100%;
+    /*background-color: rgba(181, 138, 126, 0.95);*/
+    background-color: rgba(181, 150, 107, 0.9);
+    padding-bottom: 30px;
+}
+
+ul.menubar {
+    padding: 10%;
+    padding-right: 5%;
+    line-height: 1.5;
+    font-size: large;
+}
+
+li.menu-value {
+    list-style-type: square;
+    line-height: 2;
+}
+
+p.menubar {
+    font-size: 32pt;
+    margin-bottom: 20px;
+    color: white;
+}
+
+p.menubar_li {
+    font-family: "Roboto", sans-serif;
+    color: white;
+}
+
+p.menubar_li:hover {
+    color: lightskyblue;
+}
+
+a.menubarmore {
+    font-size: 17pt;
+    color: lightblue;
+
+}
+
+a.menubarmore:hover {
+    color: aqua;
+}
+
+
+section#sec6 {
+    width: 100%;
+    height: 100%;
+    /* background-color: rgba(23, 95, 165, 0.85); */
+    background-color: rgba(40, 28, 76, 0.9);
+
+}
+
+div#sec6 {
+    padding: 50px;
+}
+
+img.sec6 {
+    width: 260px;
+    height: 180px;
+    padding-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+section.content article h1 {
+    /*text-indent: 10px;*/
+    padding-left: 20px;
+    /*padding-right: 10px;*/
+
+}
+
+section.content article p {
+    font-family: "Roboto", sans-serif;
+    font-size: large;
+    color: whitesmoke;
+    margin: 5px;
+}
+
+a.bottom {
+    color: whitesmoke;
+    text-decoration: none;
+    font-size: large;
+}
+
+a.bottom:hover {
+    color: aquamarine;
+}
+
+p.bottom{
+    font-family: "Roboto", sans-serif;
+    font-size: medium;
+    color: whitesmoke;
+}
