@@ -1,223 +1,70 @@
-<!doctype html>
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>欢迎加入</title>
-    <meta name="Author" content="王骁珂">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="量子计算,qubit,量子信息,量子算法,超导量子比特,吴盛俊,陈增兵">
-    <meta name="description" content="招生招聘">
+	<head>
+		<meta charset="utf-8">
+    	<title>南京大学量子信息组</title>
+    	<meta name="Author" content="王骁珂">
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+    	<meta name="keywords" content="量子计算,qubit,量子信息,量子算法,超导量子比特,吴盛俊,陈增兵">
+    	<meta name="description" content="加入我们">
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
 
-    <link rel="stylesheet" href="CSS/nav.css" type="text/css">
-    <link rel="stylesheet" href="CSS/bottom.css" type="text/css">
-    <link rel="stylesheet" href="CSS/slogan.css" type="text/css">
+		<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="title">Hyperspace</a>
+				<nav>
+					<ul>
+						<li><a href="index.html">首页</a></li>
+							<li><a href="intro.html" >简介</a></li>
+							<li><a href="news.html">动态</a></li>
+							<li><a href="paper.html">论文</a></li>
+							<li><a href="membership.html">成员</a></li>
+							<li><a href="resources.html">资料</a></li>
+							<li><a href="joinus.html" class="active">加入</a></li>
+					</ul>
+				</nav>
+			</header>
 
-    <!-- 轮播图css -->
-    <link rel="stylesheet" href="CSS/shutter.css">
+		<!-- Wrapper -->
+			<div id="wrapper">
 
+				<!-- Main -->
+					<section id="main" class="wrapper">
+						<div class="inner">
+							<h1 class="major">A Generic Page</h1>
+							<span class="image fit"><img src="images/pic04.jpg" alt="" /></span>
+							<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique.</p>
+							<p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+						</div>
+					</section>
 
-    <!--     slogan js -->
-    <script src="JS/slogan.js"></script>
+			</div>
 
-    <style>
-        body {
-            min-width: 768px;
-            background: mintcream;
-            /*抗锯齿，仅在部分浏览器有效*/
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+		<!-- Footer -->
+		<footer id="footer" class="wrapper style1-alt">
+			<div class="inner">
+				<ul class="menu">
+					<li><a href="http://www.nju.edu.cn">南京大学</a></li><li><a href="http://physics.nju.edu.cn">南京大学物理学院</a></li><li>&copy;2025 南京大学 Quantum Information 课题组 All rights reserved.</li><li>Design: Hronrad</a></li>
+				</ul>
+			</div>
+		</footer>
 
-        .item0 {
-            grid-area: 1/1/3/5;
-            background-color: black;
-        }
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
 
-
-        @media (min-width: 1020px) {
-
-            .item1 {
-                grid-area: 1/1/3/2;
-            }
-
-            .item2 {
-                grid-area: 1/2/2/5;
-                place-self: center;
-            }
-        }
-
-        @media (max-width: 1020px) {
-
-            .item1 {
-                grid-area: 1/1/1/1;
-                visibility: hidden;
-            }
-
-            .item2 {
-                grid-area: 1/1/2/5;
-                place-self: center;
-
-            }
-        }
-
-        div.gridcontainer {
-            display: grid;
-            grid-template-columns:3fr 1fr 2fr 4fr;
-            grid-template-rows: 200px auto auto;
-        }
-
-        p.zhaoshou {
-            text-indent: 2em;
-            /*font-family: cursive;*/
-            font-size: 20px;
-            line-height: 40px;
-            font-family: serif;
-        }
-
-        div.zhaoshou {
-            border: double 10px LightSeaGreen;
-            height: auto;
-            padding: 5%;
-            padding-left: 5%;
-            padding-right: 5%;
-            padding-bottom: 10%;
-            margin: 5%;
-        }
-    </style>
-</head>
-<body>
-<div class="gridcontainer">
-
-    <div class="item0"></div>
-    <div class="item1">
-        <a id="solgan">NJU SQDLAB</a>
-    </div>
-
-    <div class="item2">
-        <div class="nav-shoe-wrap">
-            <div class="nav-wrap">
-                <div class="mouse-follow-nav">
-                    <div id="nav_1" class="nav-list-w">
-                        <ul class="nav-list clearFix">
-                            <li class="nav-item">
-                                <a href="index.html">首页</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="intro.html">简介</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="news.html">动态</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="paper.html">发表论文</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="membership.html">人员构成</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="resources.html">资料</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="joinus.html">欢迎加入</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="zhaoshou">
-    <div class="shutter" style="margin-bottom: 40px;">
-        <!--        大小在body末尾处修改-->
-        <div class="shutter-img">
-            <a href="#" data-shutter-title="团建"><img src="Picture/bgpic.jpeg" alt="#"></a>
-            <a href="#" data-shutter-title="2022"><img src="Picture/2022欢送会.jpg" alt="#"></a>
-            <a href="#" data-shutter-title="2021"><img src="Picture/合影2021.jpg" alt="#"></a>
-            <a href="#" data-shutter-title="2019"><img src="Picture/合影2.jpg" alt="#"></a>
-            <a href="#" data-shutter-title="2018"><img src="Picture/合影2019.jpg" alt="#"></a>
-            <a href="#" data-shutter-title="2017"><img src="Picture/合影2017.jpg" alt="#"></a>
-            <a href="#" data-shutter-title="2015"><img src="Picture/合影.jpg" alt="#"></a>
-        </div>
-        <ul class="shutter-btn">
-            <li class="prev"></li>
-            <li class="next"></li>
-        </ul>
-        <div class="shutter-desc">
-            <p>合影</p>
-        </div>
-    </div>
-
-    <p class="zhaoshou">
-        南京大学超导量子器件研究组依托固体微结构物理国家重点实验室，是国内较早开展超导量子计算研究的研究组之一。 团队带头人为于扬教授，固定职员有数十人。研究组拥有完善的微纳米加工实验室和低温测量实验室，可实现样品的制备到测量的全链条化。研究方向主要围绕“超导量子器件”展开，着重于超导量子计算、超导量子模拟、实用化超导量子器件的设计制备（参量放大器、SQUID、MKID），以及在超导芯片上，量子力学基本问题的研究。
-        当前正处在“二次量子革命”的前夜，量子计算发展的黄金时期，欢迎对此研究方向感兴趣、勤奋刻苦的你加入到我们研究团队！
-    </p>
-
-    <p class="zhaoshou">我们组拥有世界一流的实验设备，良好的科研环境，欢迎对科研有浓厚兴趣，勤奋刻苦的你加入我们的团队。本组每年招收若干名研究生，请联系谭新生老师。 
-        我们希望有共同兴趣和志同道合的年轻人加盟我们。</p>
-
-
-</div>
-<div class="zhaoshou">
-    <p class="zhaoshou" style="font-size: 30px;">
-        应聘资格及待遇
-    <p class="zhaoshou">（1）具有博士学位；</p>
-    <p class="zhaoshou">（2）具备超导电子学、量子计算、超导物理和低温物理背景；</p>
-    <p class="zhaoshou">（3）熟悉超导量子器件设计，具有超导量子芯片制备表征、微纳加工技术，低温物理实验经验。</p>
-    <p class="zhaoshou">
-        特任助理研究员年薪标准12-36万元，并享受各类成果奖励；特别优秀者待遇可进一步面谈。聘期内参照学校正式职工，享受同岗位教师子女入学、入托、公费医疗保险以及其他社会保险等福利待遇；可申请校内周转房，并可申请南京市租房补贴。
-        鼓励、支持和协助申请国家自然科学基金、国家研发计划和江苏省自然科学基金等科研项目。团队将为申请者提供优异的科研条件，创造良好的职业发展机会；聘期内表现优秀的申请者，团队将推荐和提供教职的机会。
-        上述岗位均为南京大学研究系列岗位，薪酬待遇参考南京大学统一标准，相关政策详见南京大学人力资源处网站《南京大学研究系列岗位聘用管理办法》：<a
-            href="https://hr.nju.edu.cn/a2/b4/c6655a434868/page.htm" target="_blank">https://hr.nju.edu.cn/a2/b4/c6655a434868/page.htm</a>。
-    </p>
-    <br>
-    <p class="zhaoshou" style="font-size: 30px;">
-        应聘方式</p>
-    <p class="zhaoshou">有意应聘者请将个人简历、代表性论文等科研成果相关材料发至yuyang@nju.edu.cn。确定正式申请后再依规定提交其他材料。
-        通信地址：南京市鼓楼区汉口路22号，南京大学物理学院，邮政编码：210093。
-        联系人及电话：于老师，025-83685553。
-    </p>
-</div>
-
-
-<footer id="bottom">
-    <div style="margin-top: 20px;">
-        <a class="bottom" href="http://www.nju.edu.cn" target="_blank"> 南京大学 </a>|
-        <a class="bottom" href="http://physics.nju.edu.cn" target="_blank"> 南京大学物理学院 </a>|
-        <a class="bottom" href="https://cicam.nju.edu.cn/zh/" target="_blank"> 固体微结构国家重点实验室 </a>
-        <p style="width: 600px; height: 2px;line-height: 2px; margin:5px auto; background-color: whitesmoke; "></p>
-        <p class="bottom">©2025 南京大学Quantum Information课题组 All rights reserved. </p>
-    </div>
-</footer>
-
-
-<!-- 轮播图片js -->
-<script src="JS/jq_shutter.js"></script>
-
-<!-- 导航栏js -->
-<script src="JS/jquery.js"></script>
-<script src="JS/nav.SlidingBlock.js" type="text/javascript" charset="utf-8"></script>
-<script src="JS/nav_07.js"></script>
-
-<!-- 轮播图片js -->
-<script src="JS/velocity.js"></script>
-<script src="JS/shutter.js"></script>
-<script>
-    $(function () {
-        $('.shutter').shutter({
-            shutterW: 600, // 容器宽度(px)
-            shutterH: 380, // 容器高度
-            isAutoPlay: true, // 是否自动播放
-            playInterval: 3000, // 自动播放时间(ms)
-            curDisplay: 1, // 当前显示页
-            fullPage: false // 是否全屏展示
-        });
-    });
-</script>
-
-
-</body>
+	</body>
 </html>
-
