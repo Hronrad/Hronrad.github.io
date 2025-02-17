@@ -1,0 +1,49 @@
+p.title {
+    font-size: x-large;
+    font-weight: bold;
+    line-height: 1.4;
+}
+
+p.authors {
+    font-size: medium;
+    margin-top: 0.5em;
+    margin-right: 2em;
+    margin-bottom: 0.5em;
+    line-height: 1.5;
+}
+
+section.outline {
+    width: 80%;
+    margin: 5% 10%;
+}
+
+p.dateline {
+    font-style: italic;
+    font-size: small;
+}
+
+p.abstract {
+    line-height: 1.4;
+    margin-bottom: 1.5em;
+    font-size: 90%;
+    text-indent: 2em;
+    text-align: justify;
+}
+
+.cite {
+    font-size: 90%;
+}
+
+.arx {
+    font-weight: bold;
+    font-size: 90%;
+    text-indent: 2em;
+}
+
+.arx a {
+    text-decoration: none;
+}
+
+.arx a:hover {
+    text-decoration: underline;
+}
