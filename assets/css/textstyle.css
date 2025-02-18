@@ -1,15 +1,27 @@
+.heading-set-1 h1, .heading-set-1 h2, .heading-set-1 h3, .heading-set-1 h4, .heading-set-1 h5, .heading-set-1 h6 {
+    color: #422d5a !important;
+    font-family: Arial, sans-serif;
+}
+.heading-set-1 p {
+    color: #422d5a !important;
+    font-family: Arial, sans-serif;
+}
+
+
 p.title {
     font-size: x-large;
     font-weight: bold;
-    line-height: 1.4;
+    line-height: 1.5;
+    color: #000000;
 }
 
 p.authors {
     font-size: medium;
-    margin-top: 0.5em;
+    margin-top: 0.2em;
     margin-right: 2em;
     margin-bottom: 0.5em;
     line-height: 1.5;
+    color: #000000;
 }
 
 section.outline {
@@ -20,6 +32,7 @@ section.outline {
 p.dateline {
     font-style: italic;
     font-size: small;
+    color: #000000;
 }
 
 p.abstract {
@@ -28,20 +41,25 @@ p.abstract {
     font-size: 90%;
     text-indent: 2em;
     text-align: justify;
+    color: #000000;
 }
 
 .cite {
     font-size: 90%;
+
+
 }
 
 .arx {
     font-weight: bold;
     font-size: 90%;
     text-indent: 2em;
+    color:#8441ff;
 }
 
 .arx a {
     text-decoration: none;
+    color:#8441ff;
 }
 
 .arx a:hover {
