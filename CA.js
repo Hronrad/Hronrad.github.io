@@ -41,6 +41,7 @@
         constructor(canvas, options = {}) {
             this.canvas = canvas;
             this.ctx = canvas.getContext("2d");
+
             this.colorBackground = options.colorBackground || "#ffffff";
             this.colorGrid = options.colorGrid || "#e0e0e0";
             this.word = options.word || "HRONRAD";
@@ -291,21 +292,28 @@
         }
 
         drawGrid() {
-            this.ctx.fillStyle = this.colorBackground;
-            this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-            this.ctx.strokeStyle = this.colorGrid;
-            this.ctx.lineWidth = 1;
-            this.ctx.beginPath();
-            for (let col = 0; col <= this.cols; col++) {
-                this.ctx.moveTo(col * this.resolution, 0);
-                this.ctx.lineTo(col * this.resolution, this.canvas.height);
+            const isGlassMode = document.body.classList.contains("glass-mode");
+            const isProfileGlassMode = isGlassMode && document.body.classList.contains("profile-page");
+            this.ctx.globalCompositeOperation = "source-over";
+            this.ctx.fillStyle = isGlassMode ? "rgba(0, 0, 0, 0.9)" : this.colorBackground;
+            if (isGlassMode) {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+            } else {
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                this.ctx.strokeStyle = this.colorGrid;
+                this.ctx.lineWidth = 1;
+                this.ctx.beginPath();
+                for (let col = 0; col <= this.cols; col++) {
+                    this.ctx.moveTo(col * this.resolution, 0);
+                    this.ctx.lineTo(col * this.resolution, this.canvas.height);
+                }
+                for (let row = 0; row <= this.rows; row++) {
+                    this.ctx.moveTo(0, row * this.resolution);
+                    this.ctx.lineTo(this.canvas.width, row * this.resolution);
+                }
+                this.ctx.stroke();
             }
-            for (let row = 0; row <= this.rows; row++) {
-                this.ctx.moveTo(0, row * this.resolution);
-                this.ctx.lineTo(this.canvas.width, row * this.resolution);
-            }
-            this.ctx.stroke();
 
             const totalExpandFrames = this.getExpandFrames();
 
@@ -313,7 +321,29 @@
                 for (let row = 0; row < this.rows; row++) {
                     const state = this.grid[col][row];
                     const renderState = this.getRenderState(state, totalExpandFrames);
+
+                    const pxX = col * this.resolution;
+                    const pxY = row * this.resolution;
+                    const centerX = pxX + this.resolution / 2;
+                    const centerY = pxY + this.resolution / 2;
+                    const circleRadius = this.resolution * 0.34;
+
                     if (renderState <= 0) {
+                        if (isGlassMode) {
+                            if (isProfileGlassMode) {
+                                this.ctx.fillStyle = "rgba(70, 70, 70, 0.82)";
+                                this.ctx.beginPath();
+                                this.ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
+                                this.ctx.fill();
+                                continue;
+                            }
+
+                            this.ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
+                            this.ctx.lineWidth = 1;
+                            this.ctx.beginPath();
+                            this.ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
+                            this.ctx.stroke();
+                        }
                         continue;
                     }
 
@@ -324,13 +354,20 @@
                         lightness = 100;
                     }
 
-                    this.ctx.fillStyle = `hsl(${this.currentHue}, 100%, ${lightness}%)`;
-                    this.ctx.fillRect(
-                        col * this.resolution,
-                        row * this.resolution,
-                        this.resolution - 1,
-                        this.resolution - 1
-                    );
+                    if (isProfileGlassMode) {
+                        const grayscale = Math.round(150 + (lightness / 100) * 105);
+                        this.ctx.fillStyle = `rgb(${grayscale}, ${grayscale}, ${grayscale})`;
+                    } else {
+                        this.ctx.fillStyle = `hsl(${this.currentHue}, 100%, ${lightness}%)`;
+                    }
+
+                    if (isGlassMode) {
+                        this.ctx.beginPath();
+                        this.ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
+                        this.ctx.fill();
+                    } else {
+                        this.ctx.fillRect(pxX, pxY, this.resolution - 1, this.resolution - 1);
+                    }
                 }
             }
         }

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="page_title"></title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="glass-theme.css">
+    <link rel="stylesheet" href="glass-theme.css?v=20260413q">
 </head>
 <body>
     <audio id="bgm-audio" preload="auto"></audio>
@@ -20,12 +20,19 @@
             <span id="site-subtitle-text" class="site-subtitle" data-i18n="site_subtitle"></span>
         </span>
         <span class="bgm-btn" id="bgm-toggle" role="button" tabindex="0" aria-label="Toggle background music">
+            <span id="bgm-text" class="bgm-text">AUDIO: OFF</span>
             <img id="bgm-icon" src="assets/soundon.jpeg" alt="BGM toggle icon">
         </span>
     </div>
 
     <div class="bottom-bar">
         <button class="lang-toggle" id="lang-btn">English</button>
+        <div class="sys-status-bar" id="default-sys-status">
+            <span>SYS.STATUS [ ONLINE ]</span>
+            <a href="#media">MEDIA</a>
+            <a href="#github">GITHUB</a>
+            <a href="mailto:hronrad@smail.nju.edu.cn">EMAIL</a>
+        </div>
     </div>
 
     <button id="explore-back-btn" class="nav-back-btn" type="button" data-i18n="btn_back"></button>
@@ -73,15 +80,20 @@
 
     <div id="glass-marquee" class="glass-marquee" aria-hidden="true">
         <div class="glass-marquee-track">
-            <span>CODE IS LAW /// DESTROY THE MONOPOLY /// DATA FREEDOM ///</span>
-            <span>CODE IS LAW /// DESTROY THE MONOPOLY /// DATA FREEDOM ///</span>
-            <span>CODE IS LAW /// DESTROY THE MONOPOLY /// DATA FREEDOM ///</span>
-            <span>CODE IS LAW /// DESTROY THE MONOPOLY /// DATA FREEDOM ///</span>
+            <span data-i18n-html="intro_text"></span>
+            <span data-i18n-html="intro_text"></span>
         </div>
     </div>
 
     <section id="glass-content-section" class="glass-content-section">
         <div class="glass-content-grid" aria-hidden="true"></div>
+    </section>
+
+    <main id="page-home" class="pixel-panel page-panel active">
+        <p class="intro home-intro" data-i18n-html="intro_text"></p>
+    </main>
+
+    <main id="page-intro" class="pixel-panel page-panel">
         <div class="glass-collage-scene" aria-hidden="true">
             <div class="glass-collage-card glass-collage-card-1">
                 <div class="glass-duct-tape glass-duct-tape-top">REJECTED_ASSET</div>
@@ -102,13 +114,6 @@
                 <span>Energy</span>
             </div>
         </div>
-    </section>
-
-    <main id="page-home" class="pixel-panel page-panel active">
-        <p class="intro home-intro" data-i18n-html="intro_text"></p>
-    </main>
-
-    <main id="page-intro" class="pixel-panel page-panel">
         <div class="intro-sections">
             <section class="intro-section">
                 <p class="bio-text">

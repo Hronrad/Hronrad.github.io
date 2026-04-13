@@ -5,10 +5,6 @@
         exploreHue: 170
     };
     const MAX_BGM_VOLUME = 0.1;
-    const BGM_ICONS = {
-        on: "assets/soundon.jpeg",
-        off: "assets/soundoff.jpeg"
-    };
     const AUDIO_TRACKS = [
         "assets/BGM/Scott Lloyd Shelly - Overworld Day.mp3",
         "assets/BGM/claire.mp3",
@@ -44,9 +40,17 @@
         document.documentElement.style.setProperty("--theme-lightness", lightness);
     }
 
-    function setBGMIcon(isPlaying) {
+    function setBGMIndicator(isPlaying) {
         const icon = document.getElementById("bgm-icon");
-        icon.src = isPlaying ? BGM_ICONS.on : BGM_ICONS.off;
+        const text = document.getElementById("bgm-text");
+
+        if (icon) {
+            icon.alt = isPlaying ? "BGM on" : "BGM off";
+        }
+
+        if (text) {
+            text.innerText = isPlaying ? "AUDIO: ON" : "AUDIO: OFF";
+        }
     }
 
     function loadCurrentTrack() {
@@ -64,10 +68,10 @@
 
         return audio.play().then(() => {
             state.isPlayingBGM = true;
-            setBGMIcon(true);
+            setBGMIndicator(true);
         }).catch(() => {
             state.isPlayingBGM = false;
-            setBGMIcon(false);
+            setBGMIndicator(false);
         });
     }
 
@@ -89,6 +93,7 @@
         document.querySelectorAll(".page-panel").forEach((panel) => panel.classList.remove("active"));
         document.querySelectorAll(".nav-list a").forEach((link) => link.classList.remove("active"));
         document.body.classList.toggle("home-page", hash === "home");
+        document.body.classList.toggle("profile-page", hash === "intro");
 
         const targetPage = document.getElementById(`page-${hash}`);
         if (targetPage) {
@@ -213,7 +218,7 @@
         if (state.isPlayingBGM) {
             audio.pause();
             state.isPlayingBGM = false;
-            setBGMIcon(false);
+            setBGMIndicator(false);
         } else {
             playCurrentTrack();
         }
@@ -322,7 +327,7 @@
 
         audio.volume = MAX_BGM_VOLUME;
         loadCurrentTrack();
-        setBGMIcon(false);
+        setBGMIndicator(false);
 
         bgmToggle.addEventListener("click", toggleBGM);
         bgmToggle.addEventListener("keydown", (event) => {
@@ -496,6 +501,19 @@
                 target.style.setProperty("--glass-glow-x", `${x}px`);
                 target.style.setProperty("--glass-glow-y", `${y}px`);
             });
+        });
+
+        const collage1 = document.querySelector('.glass-collage-card-1');
+        const collage2 = document.querySelector('.glass-collage-card-2');
+        const energyCard = document.querySelector('.glass-energy-card');
+        const introPage = document.getElementById('page-intro');
+        
+        window.addEventListener('scroll', () => {
+            if (!state.isGlassTheme || !introPage.classList.contains('active')) return;
+            const scrollY = window.scrollY;
+            if(collage1) collage1.style.transform = `translateY(${scrollY * -0.15}px) rotate(4deg)`;
+            if(collage2) collage2.style.transform = `translateY(${scrollY * -0.05}px) rotate(-3deg)`;
+            if(energyCard) energyCard.style.transform = `translate(-50%, -50%) rotate(${scrollY * 0.15}deg)`;
         });
     }
 
