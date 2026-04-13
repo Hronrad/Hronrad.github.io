@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HRONRAD - 像素与代码</title>
+    <title data-i18n="page_title"></title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="glass-theme.css">
 </head>
 <body>
-    <audio id="bgm-audio" src="assets/Scott Lloyd Shelly - Overworld Day.mp3" loop autoplay></audio>
+    <audio id="bgm-audio" preload="auto"></audio>
+    <div class="glass-noise-overlay" aria-hidden="true"></div>
+    <div class="glass-blob glass-blob-1" aria-hidden="true"></div>
+    <div class="glass-blob glass-blob-2" aria-hidden="true"></div>
+    <div class="glass-blob glass-blob-3" aria-hidden="true"></div>
 
     <div class="top-bar">
         <span class="site-title">
-            <span>Hronrad 赫朗拉德</span>
-            <span class="site-subtitle">的主页</span>
+            <span id="site-title-text" data-i18n="site_title"></span>
+            <span id="site-subtitle-text" class="site-subtitle" data-i18n="site_subtitle"></span>
         </span>
         <span class="bgm-btn" id="bgm-toggle" role="button" tabindex="0" aria-label="Toggle background music">
             <img id="bgm-icon" src="assets/soundon.jpeg" alt="BGM toggle icon">
@@ -23,14 +28,23 @@
         <button class="lang-toggle" id="lang-btn">English</button>
     </div>
 
+    <button id="explore-back-btn" class="nav-back-btn" type="button" data-i18n="btn_back"></button>
+    <div id="playground-hue-controls" class="playground-hue-controls pixel-panel">
+        <label for="hueSlider" data-i18n="ctrl_hue"></label>
+        <input type="range" id="hueSlider" min="0" max="359" value="170">
+        <span id="valHue">170</span>
+    </div>
+
     <canvas id="bg-canvas"></canvas>
 
     <nav id="left-sidebar">
         <ul class="nav-list">
-            <li><a href="#home" class="active" data-i18n="nav_home">首页</a></li>
-            <li><a href="#media" data-i18n="nav_media">自媒体</a></li>
-            <li><a href="#github" data-i18n="nav_github">Github</a></li>
-            <li><a href="#research" data-i18n="nav_research">科研</a></li>
+            <li><a href="#home" class="active" data-i18n="nav_home" data-glass-i18n="glass_nav_home"></a></li>
+            <li><a href="#intro" data-i18n="nav_intro" data-glass-i18n="glass_nav_intro"></a></li>
+            <li><a href="#media" data-i18n="nav_media" data-glass-i18n="glass_nav_media"></a></li>
+            <li><a href="#github" data-i18n="nav_github" data-glass-i18n="glass_nav_github"></a></li>
+            <li><a href="#research" data-i18n="nav_research" data-glass-i18n="glass_nav_research"></a></li>
+            <li><a href="#explore" data-i18n="nav_explore" data-glass-i18n="glass_nav_explore"></a></li>
         </ul>
     </nav>
 
@@ -38,73 +52,169 @@
         <div class="v-slider-group">
             <span id="valStates">10</span>
             <input type="range" id="statesSlider" min="2" max="20" value="10" orient="vertical">
-            <label data-i18n="ctrl_trail">拖尾层数</label>
+            <label data-i18n="ctrl_trail"></label>
         </div>
         <div class="v-slider-group">
             <span id="valFps">15</span>
             <input type="range" id="fpsSlider" min="5" max="60" value="15" orient="vertical">
-            <label data-i18n="ctrl_fps">运行帧率</label>
+            <label data-i18n="ctrl_fps"></label>
+        </div>
+        <div id="resetCard" class="v-slider-group reset-card">
+            <button id="resetAutomataBtn" class="reset-btn" type="button" data-i18n="btn_reset"></button>
         </div>
     </div>
 
+    <section id="glass-hero" class="glass-hero" aria-hidden="true">
+        <div id="glass-hero-text" class="glass-hero-text">
+            <h1>HRONRAD</h1>
+            <h1 class="glass-hero-outline">HRONRAD</h1>
+        </div>
+    </section>
+
+    <div id="glass-marquee" class="glass-marquee" aria-hidden="true">
+        <div class="glass-marquee-track">
+            <span>CODE IS LAW /// DESTROY THE MONOPOLY /// DATA FREEDOM ///</span>
+            <span>CODE IS LAW /// DESTROY THE MONOPOLY /// DATA FREEDOM ///</span>
+            <span>CODE IS LAW /// DESTROY THE MONOPOLY /// DATA FREEDOM ///</span>
+            <span>CODE IS LAW /// DESTROY THE MONOPOLY /// DATA FREEDOM ///</span>
+        </div>
+    </div>
+
+    <section id="glass-content-section" class="glass-content-section">
+        <div class="glass-content-grid" aria-hidden="true"></div>
+        <div class="glass-collage-scene" aria-hidden="true">
+            <div class="glass-collage-card glass-collage-card-1">
+                <div class="glass-duct-tape glass-duct-tape-top">REJECTED_ASSET</div>
+                <div class="glass-duct-tape glass-duct-tape-bottom">OVERRIDE</div>
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=600" alt="Abstract collage">
+                <div class="glass-collage-code">||| || | ||| |</div>
+            </div>
+            <div class="glass-collage-card glass-collage-card-2">
+                <div class="glass-warning-frame">
+                    <div class="glass-warning-inner">
+                        <h3>SYS<br>FAIL</h3>
+                        <p>FATAL_ERROR:<br>MEMORY_LEAK_DETECTED</p>
+                        <p>HASH: 0xDEAD...BEEF</p>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-energy-card">
+                <span>Energy</span>
+            </div>
+        </div>
+    </section>
+
     <main id="page-home" class="pixel-panel page-panel active">
-        <h1>HRONRAD</h1>
-        <p class="intro" data-i18n="intro_text">欢迎来到我的空间。背景展现的是基于元胞自动机的轮回演化程序。秩序、混沌、时光倒流与随机涌现，在这里无休止地交织运作。</p>
+        <p class="intro home-intro" data-i18n-html="intro_text"></p>
+    </main>
+
+    <main id="page-intro" class="pixel-panel page-panel">
+        <div class="intro-sections">
+            <section class="intro-section">
+                <p class="bio-text">
+                    <span class="intro-topic" data-i18n="intro_heading_consciousness"></span>
+                    <span data-i18n="intro_body_consciousness"></span>
+                </p>
+            </section>
+            <section class="intro-section">
+                <p class="bio-text">
+                    <span class="intro-topic" data-i18n="intro_heading_nature"></span>
+                    <span data-i18n="intro_body_nature"></span>
+                </p>
+            </section>
+            <section class="intro-section">
+                <p class="bio-text">
+                    <span class="intro-topic" data-i18n="intro_heading_art"></span>
+                    <span data-i18n="intro_body_art"></span>
+                </p>
+            </section>
+        </div>
     </main>
 
     <main id="page-media" class="pixel-panel page-panel">
-        <h1 data-i18n="nav_media">自媒体</h1>
+        <h1 data-i18n="nav_media"></h1>
         <div class="card-grid">
             <div class="pixel-card">
-                <h3>哔哩哔哩 (Bilibili)</h3>
-                <p data-i18n="desc_bili">分享前端技术、生成艺术与复杂系统的可视化实验过程。</p>
-                <a href="https://bilibili.com" target="_blank" class="btn-black">WATCH ></a>
+                <h3 data-i18n="media_bili_title"></h3>
+                <p data-i18n="desc_bili"></p>
+                <a href="https://space.bilibili.com/76766417" target="_blank" class="btn-black" data-i18n="btn_watch"></a>
             </div>
             <div class="pixel-card">
-                <h3>小红书 (Xiaohongshu)</h3>
-                <p data-i18n="desc_xhs">记录日常代码灵感、像素画稿、UI设计理念及生活随笔。</p>
-                <a href="https://xiaohongshu.com" target="_blank" class="btn-black">VIEW ></a>
+                <h3 data-i18n="media_xhs_title"></h3>
+                <p data-i18n="desc_xhs"></p>
+                <a href="https://www.xiaohongshu.com/user/profile/626e79da000000002102ab9a" target="_blank" class="btn-black" data-i18n="btn_view"></a>
+            </div>
+            <div class="pixel-card">
+                <h3 data-i18n="media_netease_title"></h3>
+                <p data-i18n="desc_netease"></p>
+                <a href="https://music.163.com/#/user/home?id=357017094" target="_blank" class="btn-black" data-i18n="btn_listen"></a>
             </div>
         </div>
     </main>
 
     <main id="page-github" class="pixel-panel page-panel">
-        <h1 data-i18n="nav_github">Github</h1>
+        <h1 data-i18n="nav_github"></h1>
         <div class="card-grid">
             <div class="pixel-card">
-                <h3>Automata-Engine</h3>
-                <p data-i18n="repo_1">高性能的 JS 元胞自动机渲染引擎，支持拓展规则与时间回溯。</p>
-                <a href="https://github.com" target="_blank" class="btn-black">REPO ></a>
+                <h3 data-i18n="repo_title_1"></h3>
+                <p data-i18n="repo_1"></p>
+                <a href="https://github.com/Hronrad/Automata-Engine" target="_blank" class="btn-black" data-i18n="btn_repo"></a>
             </div>
             <div class="pixel-card">
-                <h3>Pixel-UI-Kit</h3>
-                <p data-i18n="repo_2">轻量级复古像素风 Web UI 组件库，纯 CSS 实现。</p>
-                <a href="https://github.com" target="_blank" class="btn-black">REPO ></a>
+                <h3 data-i18n="repo_title_2"></h3>
+                <p data-i18n="repo_2"></p>
+                <a href="https://github.com/Hronrad/LMS-enhancement" target="_blank" class="btn-black" data-i18n="btn_repo"></a>
             </div>
             <div class="pixel-card">
-                <h3>Fluid-Sim</h3>
-                <p data-i18n="repo_3">基于 WebGL 编写的实时流体动力学及散度场模拟器。</p>
-                <a href="https://github.com" target="_blank" class="btn-black">REPO ></a>
+                <h3 data-i18n="repo_title_3"></h3>
+                <p data-i18n="repo_3"></p>
+                <a href="https://github.com/Hronrad/marper" target="_blank" class="btn-black" data-i18n="btn_repo"></a>
             </div>
             <div class="pixel-card">
-                <h3>Chaos-Theory</h3>
-                <p data-i18n="repo_4">混沌系统吸引子与分形几何图案生成器集合工具箱。</p>
-                <a href="https://github.com" target="_blank" class="btn-black">REPO ></a>
+                <h3 data-i18n="repo_title_4"></h3>
+                <p data-i18n="repo_4"></p>
+                <a href="https://github.com/Hronrad/taichi-relativistic_path_tracing" target="_blank" class="btn-black" data-i18n="btn_repo"></a>
             </div>
         </div>
     </main>
 
     <main id="page-research" class="pixel-panel page-panel">
-        <h1 data-i18n="nav_research">科研</h1>
-        <p class="intro" data-i18n="desc_research">当前探索方向主要集中于：复杂自组织系统行为学、人工生命规律提纯，以及生成式模型的视觉融合表达。</p>
+        <h1 data-i18n="nav_research"></h1>
+        <p class="intro" data-i18n="desc_research"></p>
         <div class="card-grid">
             <div class="pixel-card">
-                <h3 data-i18n="contact_title">通信终端 (Contact)</h3>
-                <p data-i18n="contact_desc">通过电子邮件与我联系，探讨学术交流、项目协作或技术问题。</p>
-                <a href="mailto:hello@hronrad.com" class="btn-black">EMAIL ></a>
+                <h3 data-i18n="contact_title"></h3>
+                <p data-i18n="contact_desc"></p>
+                <a href="mailto:hronrad@smail.nju.edu.cn" class="btn-black" data-i18n="btn_email"></a>
             </div>
         </div>
     </main>
+
+    <main id="page-explore" class="pixel-panel page-panel">
+        <h1 data-i18n="nav_explore"></h1>
+        <div class="card-grid">
+            <div class="pixel-card">
+                <h3 data-i18n="explore_title_1"></h3>
+                <p data-i18n="explore_desc_1"></p>
+                <a href="#explore" id="explore-automata-start" class="btn-black" data-i18n="btn_start"></a>
+            </div>
+            <div class="pixel-card">
+                <h3 data-i18n="explore_title_2"></h3>
+                <p data-i18n="explore_desc_2"></p>
+                <button id="theme-mode-toggle" class="btn-black btn-black-static" type="button" data-i18n="btn_theme_mode_on"></button>
+            </div>
+        </div>
+    </main>
+
+    <footer id="glass-footer" class="glass-footer">
+        <div>SYS.STATUS [ ONLINE ]</div>
+        <div class="glass-footer-links">
+            <a href="#media">MEDIA</a>
+            <a href="#github">GITHUB</a>
+            <a href="mailto:hronrad@smail.nju.edu.cn">EMAIL</a>
+        </div>
+        <div id="glass-footer-year"></div>
+    </footer>
 
     <script src="translations.js"></script>
     <script src="CA.js"></script>

@@ -14,6 +14,28 @@
         [16, 4], [20, 4], [21, 4], [0, 5], [1, 5], [10, 5], [14, 5], [16, 5], [17, 5],
         [22, 5], [24, 5], [10, 6], [16, 6], [24, 6], [11, 7], [15, 7], [12, 8], [13, 8]
     ];
+    const PULSAR_PATTERN = [
+        [2, 0], [3, 0], [4, 0], [8, 0], [9, 0], [10, 0],
+        [0, 2], [5, 2], [7, 2], [12, 2],
+        [0, 3], [5, 3], [7, 3], [12, 3],
+        [0, 4], [5, 4], [7, 4], [12, 4],
+        [2, 5], [3, 5], [4, 5], [8, 5], [9, 5], [10, 5],
+        [2, 7], [3, 7], [4, 7], [8, 7], [9, 7], [10, 7],
+        [0, 8], [5, 8], [7, 8], [12, 8],
+        [0, 9], [5, 9], [7, 9], [12, 9],
+        [0, 10], [5, 10], [7, 10], [12, 10],
+        [2, 12], [3, 12], [4, 12], [8, 12], [9, 12], [10, 12]
+    ];
+    const PENTADECATHLON_PATTERN = [
+        [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [8, 0],
+        [0, -1], [0, 1], [9, -1], [9, 1]
+    ];
+    const GLIDER_PATTERNS = [
+        [[1, 0], [2, 1], [0, 2], [1, 2], [2, 2]],
+        [[0, 0], [0, 1], [0, 2], [1, 0], [2, 1]],
+        [[0, 0], [1, 0], [2, 0], [0, 1], [1, 2]],
+        [[2, 0], [0, 1], [2, 1], [1, 2], [2, 2]]
+    ];
 
     class CAEngine {
         constructor(canvas, options = {}) {
@@ -22,6 +44,11 @@
             this.colorBackground = options.colorBackground || "#ffffff";
             this.colorGrid = options.colorGrid || "#e0e0e0";
             this.word = options.word || "HRONRAD";
+            this.currentHue = options.themeHue || 210;
+            this.targetHue = this.currentHue;
+            this.transitionFromHue = this.currentHue;
+            this.transitionStartTime = 0;
+            this.transitionDuration = 650;
 
             this.resolution = 8;
             this.cols = 0;
@@ -33,10 +60,25 @@
 
             this.historyGrid = [];
             this.currentPhase = "HOLD_TEXT";
+            this.previousPhase = this.currentPhase;
             this.phaseTimer = 0;
             this.strokeRadius = 1;
             this.grid = [];
             this.lastFrameTime = 0;
+        }
+
+        normalizeHue(hue) {
+            return ((hue % 360) + 360) % 360;
+        }
+
+        shortestHueDistance(from, to) {
+            return ((to - from + 540) % 360) - 180;
+        }
+
+        easeInOut(progress) {
+            return progress < 0.5
+                ? 4 * progress * progress * progress
+                : 1 - Math.pow(-2 * progress + 2, 3) / 2;
         }
 
         start() {
@@ -52,6 +94,53 @@
         setFps(value) {
             this.fps = value;
             this.evolveLimit = this.fps * 20;
+        }
+
+        setThemeHue(nextHue, timestamp = performance.now()) {
+            const normalizedHue = this.normalizeHue(nextHue);
+            this.updateThemeHue(timestamp);
+            this.transitionFromHue = this.currentHue;
+            this.targetHue = normalizedHue;
+            this.transitionStartTime = timestamp;
+        }
+
+        reset(options = {}) {
+            if (typeof options.statesCount === "number") {
+                this.statesCount = options.statesCount;
+            }
+            if (typeof options.fps === "number") {
+                this.fps = options.fps;
+                this.evolveLimit = this.fps * 20;
+            }
+            if (typeof options.themeHue === "number") {
+                const hue = this.normalizeHue(options.themeHue);
+                this.currentHue = hue;
+                this.targetHue = hue;
+                this.transitionFromHue = hue;
+                this.transitionStartTime = performance.now();
+            }
+
+            this.lastFrameTime = 0;
+            this.initTextGrid();
+            this.drawGrid();
+        }
+
+        updateThemeHue(timestamp) {
+            if (this.currentHue === this.targetHue) {
+                return false;
+            }
+
+            const elapsed = Math.max(0, timestamp - this.transitionStartTime);
+            const progress = Math.min(1, elapsed / this.transitionDuration);
+            const easedProgress = this.easeInOut(progress);
+            const hueDistance = this.shortestHueDistance(this.transitionFromHue, this.targetHue);
+            this.currentHue = this.normalizeHue(this.transitionFromHue + hueDistance * easedProgress);
+
+            if (progress >= 1) {
+                this.currentHue = this.targetHue;
+            }
+
+            return true;
         }
 
         resizeCanvas() {
@@ -104,6 +193,57 @@
                 const y = (((startY + dy * flipY) % this.rows) + this.rows) % this.rows;
                 this.grid[x][y] = 1;
             }
+        }
+
+        addPattern(pattern, width, height) {
+            const safeCols = Math.max(1, this.cols - width - 2);
+            const safeRows = Math.max(1, this.rows - height - 2);
+            const startX = Math.floor(Math.random() * safeCols);
+            const startY = Math.floor(Math.random() * safeRows);
+
+            for (const [dx, dy] of pattern) {
+                const x = (((startX + dx) % this.cols) + this.cols) % this.cols;
+                const y = (((startY + dy) % this.rows) + this.rows) % this.rows;
+                this.grid[x][y] = 1;
+            }
+        }
+
+        addSpecialOscillators() {
+            const patterns = [
+                { pattern: PULSAR_PATTERN, width: 13, height: 13 },
+                { pattern: PENTADECATHLON_PATTERN, width: 10, height: 3 }
+            ];
+            const totalCount = Math.random() < 0.5 ? 1 : 2;
+
+            for (let index = 0; index < totalCount; index++) {
+                const choice = patterns[Math.floor(Math.random() * patterns.length)];
+                this.addPattern(choice.pattern, choice.width, choice.height);
+            }
+        }
+
+        spawnGliderAt(col, row, orientation) {
+            const pattern = GLIDER_PATTERNS[orientation % GLIDER_PATTERNS.length];
+
+            for (const [dx, dy] of pattern) {
+                const x = (((col + dx) % this.cols) + this.cols) % this.cols;
+                const y = (((row + dy) % this.rows) + this.rows) % this.rows;
+                this.grid[x][y] = 1;
+            }
+        }
+
+        spawnRandomGliderAtClientPoint(clientX, clientY) {
+            const rect = this.canvas.getBoundingClientRect();
+            const col = Math.floor((clientX - rect.left) / this.resolution);
+            const row = Math.floor((clientY - rect.top) / this.resolution);
+
+            if (col < 0 || col >= this.cols || row < 0 || row >= this.rows) {
+                return false;
+            }
+
+            const orientation = Math.floor(Math.random() * GLIDER_PATTERNS.length);
+            this.spawnGliderAt(col, row, orientation);
+            this.drawGrid();
+            return true;
         }
 
         initTextGrid() {
@@ -184,7 +324,7 @@
                         lightness = 100;
                     }
 
-                    this.ctx.fillStyle = `hsl(210, 100%, ${lightness}%)`;
+                    this.ctx.fillStyle = `hsl(${this.currentHue}, 100%, ${lightness}%)`;
                     this.ctx.fillRect(
                         col * this.resolution,
                         row * this.resolution,
@@ -288,11 +428,14 @@
 
             this.addGosperGun();
             this.addGosperGun();
+            this.addSpecialOscillators();
             this.currentPhase = "EVOLVE";
             this.phaseTimer = 0;
         }
 
         advancePhase() {
+            const phaseBeforeUpdate = this.currentPhase;
+
             if (this.currentPhase === "HOLD_TEXT") {
                 this.historyGrid.push(this.cloneGrid(this.grid));
                 this.phaseTimer++;
@@ -301,38 +444,45 @@
                     this.phaseTimer = 0;
                     this.strokeRadius = 1;
                 }
-                return;
-            }
-
-            if (this.currentPhase === "STROKE_EXPAND") {
+            } else if (this.currentPhase === "STROKE_EXPAND") {
                 this.historyGrid.push(this.cloneGrid(this.grid));
                 this.expandStroke();
-                return;
-            }
-
-            if (this.currentPhase === "EVOLVE") {
+            } else if (this.currentPhase === "EVOLVE") {
                 this.historyGrid.push(this.cloneGrid(this.grid));
                 this.computeNextGeneration();
                 if (this.historyGrid.length >= this.evolveLimit) {
                     this.currentPhase = "REVERSE";
                     this.phaseTimer = 0;
                 }
-                return;
-            }
-
-            if (this.historyGrid.length > 0) {
+            } else if (this.historyGrid.length > 0) {
                 this.grid = this.historyGrid.pop();
             } else {
                 this.currentPhase = "HOLD_TEXT";
                 this.phaseTimer = 0;
             }
+
+            if (phaseBeforeUpdate !== this.currentPhase) {
+                window.dispatchEvent(new CustomEvent("ca-phase-change", {
+                    detail: {
+                        previousPhase: phaseBeforeUpdate,
+                        currentPhase: this.currentPhase
+                    }
+                }));
+            }
         }
 
         loop(timestamp) {
+            const themeIsTransitioning = this.updateThemeHue(timestamp);
+            let didAdvance = false;
+
             if (timestamp - this.lastFrameTime >= 1000 / this.fps) {
                 this.advancePhase();
-                this.drawGrid();
                 this.lastFrameTime = timestamp;
+                didAdvance = true;
+            }
+
+            if (didAdvance || themeIsTransitioning) {
+                this.drawGrid();
             }
 
             window.requestAnimationFrame((nextTimestamp) => this.loop(nextTimestamp));
