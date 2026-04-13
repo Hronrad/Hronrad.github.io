@@ -26,7 +26,7 @@
         hasPlayedHomeIntro: false,
         isAutomataPlayground: false,
         isPlayingBGM: false,
-        isGlassTheme: false,
+        isGlassTheme: true,
         lastGliderSpawnAt: 0,
         playgroundHue: DEFAULT_AUTOMATA_SETTINGS.exploreHue,
         currentLang: "zh"
@@ -94,6 +94,7 @@
         document.querySelectorAll(".nav-list a").forEach((link) => link.classList.remove("active"));
         document.body.classList.toggle("home-page", hash === "home");
         document.body.classList.toggle("profile-page", hash === "intro");
+        document.body.classList.toggle("mono-ca-page", hash === "intro");
 
         const targetPage = document.getElementById(`page-${hash}`);
         if (targetPage) {
@@ -238,6 +239,9 @@
                 element.innerText = translations[key];
             }
         });
+        document.querySelectorAll("#page-media > h1, #page-github > h1, #page-research > h1").forEach((element) => {
+            element.setAttribute("data-outline-text", element.innerText.trim());
+        });
         document.querySelectorAll("[data-i18n-html]").forEach((element) => {
             const key = element.getAttribute("data-i18n-html");
             if (translations[key]) {
@@ -366,14 +370,20 @@
 
     function syncThemeToggleCopy() {
         const themeToggle = document.getElementById("theme-mode-toggle");
+        const themeDescription = document.querySelector('#page-explore [data-i18n="explore_desc_2"]');
         if (!themeToggle) {
             return;
         }
 
         const nextKey = state.isGlassTheme ? "btn_theme_mode_off" : "btn_theme_mode_on";
+        const descKey = state.isGlassTheme ? "explore_desc_2_alt" : "explore_desc_2";
         const text = window.TRANSLATIONS[state.currentLang][nextKey];
         themeToggle.setAttribute("data-i18n", nextKey);
         themeToggle.innerText = text;
+
+        if (themeDescription) {
+            themeDescription.innerText = window.TRANSLATIONS[state.currentLang][descKey];
+        }
     }
 
     function resetAutomataToDefaults(engine) {
@@ -532,6 +542,7 @@
             footerYear.innerText = `(C) ${new Date().getFullYear()} HRONRAD`;
         }
 
+        document.body.classList.toggle("glass-mode", state.isGlassTheme);
         bindPageRouting(engine);
         bindAudioControls();
         bindLanguageControls();

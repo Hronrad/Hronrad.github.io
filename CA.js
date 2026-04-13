@@ -293,7 +293,7 @@
 
         drawGrid() {
             const isGlassMode = document.body.classList.contains("glass-mode");
-            const isProfileGlassMode = isGlassMode && document.body.classList.contains("profile-page");
+            const isMonochromeGlassMode = isGlassMode && document.body.classList.contains("mono-ca-page");
             this.ctx.globalCompositeOperation = "source-over";
             this.ctx.fillStyle = isGlassMode ? "rgba(0, 0, 0, 0.9)" : this.colorBackground;
             if (isGlassMode) {
@@ -330,19 +330,12 @@
 
                     if (renderState <= 0) {
                         if (isGlassMode) {
-                            if (isProfileGlassMode) {
+                            if (isMonochromeGlassMode) {
                                 this.ctx.fillStyle = "rgba(70, 70, 70, 0.82)";
                                 this.ctx.beginPath();
                                 this.ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
                                 this.ctx.fill();
-                                continue;
                             }
-
-                            this.ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
-                            this.ctx.lineWidth = 1;
-                            this.ctx.beginPath();
-                            this.ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
-                            this.ctx.stroke();
                         }
                         continue;
                     }
@@ -354,7 +347,7 @@
                         lightness = 100;
                     }
 
-                    if (isProfileGlassMode) {
+                    if (isMonochromeGlassMode) {
                         const grayscale = Math.round(150 + (lightness / 100) * 105);
                         this.ctx.fillStyle = `rgb(${grayscale}, ${grayscale}, ${grayscale})`;
                     } else {

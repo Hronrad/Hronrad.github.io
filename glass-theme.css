@@ -36,6 +36,9 @@ body.glass-mode .glass-noise-overlay {
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     mix-blend-mode: color-dodge; animation: noise-jitter 0.38s infinite steps(1);
 }
+body.glass-mode.home-page .glass-noise-overlay {
+    display: none !important;
+}
 
 body.glass-mode .glass-blob {
     display: block; position: fixed; border-radius: 999px; filter: blur(50px);
@@ -53,6 +56,9 @@ body.glass-mode {
     background: #020202; color: #fff; cursor: crosshair; font-family: "Inter", sans-serif;
     overflow-x: hidden; overflow-y: auto;
 }
+body.glass-mode.home-page {
+    overflow-y: hidden;
+}
 body.glass-mode::selection { background: #ccff00; color: #000; }
 /* Canvas Always Visible in Glass Mode under blur layers */
 body.glass-mode:not(.automata-playground) #bg-canvas {
@@ -61,6 +67,13 @@ body.glass-mode:not(.automata-playground) #bg-canvas {
     mix-blend-mode: screen;
     z-index: 1;
     pointer-events: none;
+}
+body.glass-mode.automata-playground #bg-canvas {
+    display: block !important;
+    opacity: 1;
+    mix-blend-mode: screen;
+    z-index: 25;
+    pointer-events: auto;
 }
 
 /* Invert Nav & UI Elements */
@@ -79,6 +92,7 @@ body.glass-mode .top-bar {
     height: auto;
     justify-content: flex-start;
     opacity: 1 !important;
+    z-index: 3000;
 }
 body.glass-mode .site-title {
     font-family: "JetBrains Mono", monospace;
@@ -91,12 +105,19 @@ body.glass-mode .site-title {
     backdrop-filter: none !important;
     text-rendering: geometricPrecision;
     -webkit-font-smoothing: antialiased;
+    position: fixed;
+    top: 4vh;
+    left: 4vw;
+    z-index: 3002;
+    mix-blend-mode: difference;
+    isolation: isolate;
+    pointer-events: none;
 }
 body.glass-mode #site-title-text {
-    color: #c8bbe8 !important;
-    -webkit-text-fill-color: #c8bbe8 !important;
-    -webkit-text-stroke: 0 !important;
-    text-shadow: none !important;
+    color: #e9defe !important;
+    -webkit-text-fill-color: #e9defe !important;
+    -webkit-text-stroke: 0.35px #ffffff !important;
+    text-shadow: 0 0 1px rgba(255,255,255,0.35) !important;
     opacity: 1 !important;
 }
 body.glass-mode .site-subtitle { display: none; }
@@ -104,7 +125,7 @@ body.glass-mode .bgm-btn {
     position: fixed;
     top: 4vh;
     right: 4vw;
-    z-index: 2001;
+    z-index: 3002;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -139,21 +160,27 @@ body.glass-mode #left-sidebar {
     width: auto;
     max-width: 50vw;
     opacity: 1 !important;
+    z-index: 3001;
 }
 body.glass-mode .nav-list { flex-direction: row; flex-wrap: wrap; justify-content: flex-end; gap: max(1rem, 1.5vw); }
 body.glass-mode .nav-list a {
-    min-width: auto; padding: 0; background: none; color: rgba(255,255,255,0.7); opacity: 1;
+    min-width: auto; padding: 0; background: none; color: rgba(255,255,255,0.82); opacity: 1;
     font-family: "JetBrains Mono", monospace; font-size: min(0.85rem, 1.2vw); font-weight: 800; text-transform: uppercase; transition: color 0.3s, transform 0.2s;
     mix-blend-mode: difference !important;
     -webkit-text-fill-color: #ffffff !important;
-    text-shadow: none !important;
+    text-shadow: 0 0 1px rgba(255,255,255,0.25) !important;
     position: relative;
-    z-index: 1;
+    z-index: 3001;
     filter: none !important;
     backdrop-filter: none !important;
     opacity: 1 !important;
     text-rendering: geometricPrecision;
     -webkit-font-smoothing: antialiased;
+}
+body.glass-mode .nav-list a[href="#explore"] {
+    font-size: min(1.2rem, 1.7vw);
+    font-weight: 900;
+    letter-spacing: 0.04em;
 }
 body.glass-mode .nav-list a:hover,
 body.glass-mode .nav-list a.active {
@@ -206,15 +233,15 @@ body.glass-mode h1 {
 body.glass-mode #page-media > h1,
 body.glass-mode #page-github > h1,
 body.glass-mode #page-research > h1 {
-    color: rgba(255, 255, 255, 0.72) !important;
-    -webkit-text-fill-color: rgba(255, 255, 255, 0.72) !important;
-    -webkit-text-stroke-width: 2px !important;
-    -webkit-text-stroke-color: #ffffff !important;
-    -webkit-text-stroke: 2px #ffffff !important;
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+    -webkit-text-stroke: 0 !important;
     paint-order: stroke fill !important;
-    mix-blend-mode: difference !important;
+    mix-blend-mode: normal !important;
     text-shadow: none !important;
     opacity: 1 !important;
+    position: relative;
+    display: inline-block;
 }
 
 /* Universal Brutalist Button */
@@ -245,7 +272,7 @@ body.glass-mode:not(.home-page) .glass-marquee { display: none !important; }
 
 /* In glass-mode, collage only shows when intro is active */
 body.glass-mode .glass-content-section { display: none !important; }
-body.glass-mode:has(#page-intro.active) .glass-content-section { display: block !important; }
+body.glass-mode.mono-ca-page .glass-content-section { display: block !important; }
 
 body.glass-mode.automata-playground .glass-hero,
 body.glass-mode.automata-playground .glass-marquee,
@@ -257,19 +284,19 @@ body.glass-mode .glass-hero-text { mix-blend-mode: difference; text-align: cente
 body.glass-mode .glass-hero-text h1 { font-size: min(22vw, 30vh); line-height: 0.75; -webkit-text-stroke: 0; color: #fff; mix-blend-mode: normal; display: none !important; }
 body.glass-mode .glass-hero-outline { -webkit-text-stroke: 4px rgba(255,255,255,0.4); color: transparent !important; }
 
-body.glass-mode .glass-marquee { position: fixed; bottom: clamp(40px, 8vh, 60px); left: 0; width: 100vw; background: #ccff00; color: #000; padding: 1vh 0; font-family: "Inter", sans-serif; font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 900; white-space: nowrap; text-transform: uppercase; z-index: 2; transform: none; box-shadow: 0 10px 20px rgba(0,0,0,0.5); border-y: 2px solid #000; pointer-events: none; overflow: hidden; }
+body.glass-mode .glass-marquee { position: fixed; bottom: 58px; left: 0; width: 100vw; background: #ccff00; color: #000; padding: 1vh 0; font-family: "Inter", sans-serif; font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 900; white-space: nowrap; text-transform: uppercase; z-index: 2; transform: none; box-shadow: 0 10px 20px rgba(0,0,0,0.5); border-top: 2px solid #000; border-bottom: 2px solid #000; pointer-events: none; overflow: hidden; }
 body.glass-mode .glass-marquee-track { display: inline-flex; gap: 3rem; min-width: max-content; animation: marquee-infinite 35s linear infinite; }
 body.glass-mode .glass-marquee-track br { display: none; }
 body.glass-mode .glass-marquee-track span { padding: 0 2vw; }
 
 body.glass-mode .glass-content-section { position: fixed; inset: 0; pointer-events: none; z-index: 3; background: transparent !important; padding: 0; min-height: 0; border: none; backdrop-filter: none; }
 body.glass-mode .glass-content-grid { position: absolute; inset: 0; opacity: 0.08; background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px); background-size: 80px 80px; }
-body.glass-mode.profile-page .glass-blob { display: none !important; }
-body.glass-mode.profile-page .glass-content-section {
+body.glass-mode.mono-ca-page .glass-blob { display: none !important; }
+body.glass-mode.mono-ca-page .glass-content-section {
     display: block !important;
     background: transparent !important;
 }
-body.glass-mode.profile-page .glass-content-grid {
+body.glass-mode.mono-ca-page .glass-content-grid {
     opacity: 0.18;
     background-image: linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
     background-size: 40px 40px;
@@ -536,8 +563,47 @@ body.glass-mode .glass-footer { display: flex; position: fixed; inset: auto 0 0 
     border-top: 1px solid rgba(255, 255, 255, 0.15); background: #000; color: rgba(255, 255, 255, 0.4);
     font-family: "JetBrains Mono", monospace; font-size: 0.85rem; padding: 1.5vh 4vw;
     display: flex; justify-content: space-between; align-items: center; text-transform: uppercase;
+    min-height: 58px;
 }
 body.glass-mode .glass-footer-links { display: flex; gap: 24px; }
 body.glass-mode .glass-footer a { color: rgba(255, 255, 255, 0.6); text-decoration: none; font-weight: 800; transition: color 0.2s; }
 body.glass-mode .glass-footer a:hover { color: #ccff00; }
 body.glass-mode.automata-playground .glass-footer { display: none !important; }
+
+body.glass-mode #page-media > h1,
+body.glass-mode #page-github > h1,
+body.glass-mode #page-research > h1 {
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+    -webkit-text-stroke: 0 !important;
+    paint-order: stroke fill !important;
+    mix-blend-mode: normal !important;
+    text-shadow: none !important;
+    opacity: 1 !important;
+    position: relative;
+    display: inline-block;
+    isolation: isolate;
+}
+body.glass-mode #page-media > h1::after,
+body.glass-mode #page-github > h1::after,
+body.glass-mode #page-research > h1::after {
+    content: attr(data-outline-text);
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    font: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    white-space: nowrap;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 3.5px #ffffff;
+    mix-blend-mode: difference !important;
+    text-shadow: none !important;
+    opacity: 1 !important;
+    pointer-events: none;
+}

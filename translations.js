@@ -31,7 +31,7 @@ window.TRANSLATIONS = {
         btn_back: "返回",
         btn_reset: "重置",
         btn_theme_mode_on: "切换 >",
-        btn_theme_mode_off: "还原 >",
+        btn_theme_mode_off: "切换 >",
         repo_title_1: "Automata-Engine",
         repo_title_2: "LMS-enhancement",
         repo_title_3: "marper",
@@ -54,7 +54,8 @@ window.TRANSLATIONS = {
         explore_title_1: "元胞自动机",
         explore_desc_1: "进入纯背景交互模式后，点击任意像素即可在该处注入一个随机方向的滑翔机，让你亲手扰动当前正在演化的生命游戏场。",
         explore_title_2: "主题切换",
-        explore_desc_2: "将整个站点切换为与 glassNfilm-demo.html 相同取向的毛玻璃拟态流动、黑白拼贴与粗粝实验网页风格。",
+        explore_desc_2: "将整个站点切换为毛玻璃拟态流动、黑白拼贴与粗粝实验网页风格。",
+        explore_desc_2_alt: "将整个站点切换到经典游戏像素风格。",
         contact_title: "通信终端 (Contact)",
         contact_desc: "可通过电子邮件与我联系，探讨学术交流、项目协作或技术问题。"
     },
@@ -90,7 +91,7 @@ window.TRANSLATIONS = {
         btn_back: "BACK",
         btn_reset: "RESET",
         btn_theme_mode_on: "SWITCH >",
-        btn_theme_mode_off: "RESTORE >",
+        btn_theme_mode_off: "SWITCH >",
         repo_title_1: "Automata-Engine",
         repo_title_2: "NJU LMS Helper",
         repo_title_3: "Text2Slides",
@@ -113,7 +114,8 @@ window.TRANSLATIONS = {
         explore_title_1: "Cellular Automata",
         explore_desc_1: "Enter a pure background-interaction mode and click any pixel to inject a glider with a random orientation directly into the running Game of Life field.",
         explore_title_2: "Theme Switch",
-        explore_desc_2: "Transform the entire site into the same glassmorphism-flowing, black-and-white collage aesthetic language showcased in glassNfilm-demo.html.",
+        explore_desc_2: "Transform the entire site into a glassmorphism-flowing, black-and-white collage, rough experimental web aesthetic.",
+        explore_desc_2_alt: "Switch the entire site back to a classic game-inspired pixel aesthetic.",
         contact_title: "Contact",
         contact_desc: "Contact me via email to discuss academic exchanges, project collaboration, or technical inquiries."
     }
