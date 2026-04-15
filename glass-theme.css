@@ -121,6 +121,15 @@ body.glass-mode #site-title-text {
     opacity: 1 !important;
 }
 body.glass-mode .site-subtitle { display: none; }
+body.glass-mode .mobile-notice {
+    background: rgba(10, 10, 10, 0.68);
+    border: 1px solid rgba(255,255,255,0.18);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    font-family: "JetBrains Mono", monospace;
+    mix-blend-mode: normal;
+}
 body.glass-mode .bgm-btn {
     position: fixed;
     top: 4vh;
@@ -325,10 +334,27 @@ body.glass-mode #page-home p.intro { display: none !important; }
    ========================================= */
 body.glass-mode #page-intro { display: none; opacity: 0; padding: 15vh 5vw; position: relative; min-height: 150vh; overflow: hidden; }
 body.glass-mode #page-intro.active { display: block; opacity: 1; }
+body.glass-mode #page-intro .intro-lead {
+    position: relative;
+    z-index: 10;
+    max-width: min(72rem, 88vw);
+    margin: 0 auto 5vh;
+    padding: clamp(1.5rem, 2vw, 2.2rem) clamp(1.5rem, 2.5vw, 2.6rem);
+    background: rgba(20, 20, 20, 0.52);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-top: 4px solid #fff;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.82);
+    font-size: clamp(1rem, 1.28vw, 1.18rem);
+    line-height: 1.85;
+    text-wrap: pretty;
+}
 body.glass-mode #page-intro .intro-sections { position: relative; width: 100%; height: auto; min-height: 80vh; display: grid; grid-template-columns: repeat(12, 1fr); gap: 2vw; z-index: 10; }
 
 body.glass-mode .glass-collage-scene {
-    position: absolute; top: 15vh; right: 5vw; width: max(300px, 30vw); height: max(400px, 50vh);
+    position: absolute; top: 26vh; right: 5vw; width: max(300px, 30vw); height: max(400px, 50vh);
     pointer-events: none; z-index: 5;
 }
 body.glass-mode .glass-energy-card {
