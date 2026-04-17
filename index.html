@@ -6,6 +6,7 @@
     <title data-i18n="page_title"></title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="glass-theme.css?v=20260413z">
+    <link rel="stylesheet" href="mobile-narrow.css?v=20260417a">
 </head>
 <body>
     <audio id="bgm-audio" preload="auto"></audio>
@@ -25,7 +26,12 @@
         </span>
     </div>
 
-    <div class="mobile-notice" data-i18n="mobile_notice"></div>
+    <div id="mobile-notice-modal" class="mobile-notice-modal" hidden>
+        <div class="mobile-notice-dialog">
+            <div class="mobile-notice" data-i18n="mobile_notice"></div>
+            <button id="mobile-notice-confirm" class="mobile-notice-confirm" type="button" data-i18n="mobile_notice_confirm"></button>
+        </div>
+    </div>
 
     <div class="bottom-bar">
         <button class="lang-toggle" id="lang-btn">English</button>
@@ -56,6 +62,8 @@
             <li><a href="#explore" data-i18n="nav_explore" data-glass-i18n="glass_nav_explore"></a></li>
         </ul>
     </nav>
+    <button id="nav-scroll-left" class="nav-scroll-arrow nav-scroll-left" type="button" aria-label="Scroll navigation left" hidden>&lt;</button>
+    <button id="nav-scroll-right" class="nav-scroll-arrow nav-scroll-right" type="button" aria-label="Scroll navigation right" hidden>&gt;</button>
 
     <div class="vertical-controls">
         <div class="v-slider-group">

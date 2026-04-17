@@ -1,0 +1,468 @@
+@media (max-width: 800px) {
+    html,
+    body {
+        max-width: 100%;
+        overflow-x: hidden !important;
+    }
+
+    body {
+        overscroll-behavior-x: none;
+    }
+
+    body * {
+        max-width: 100%;
+    }
+
+    #bg-canvas,
+    .glass-hero,
+    .glass-marquee,
+    .glass-footer,
+    .page-panel,
+    #left-sidebar,
+    .top-bar,
+    .bottom-bar {
+        max-width: 100vw;
+    }
+
+    .top-bar {
+        height: 44px;
+        padding: 0 12px;
+        font-size: 1.1rem;
+        align-items: center;
+    }
+
+    .site-title {
+        gap: 4px;
+    }
+
+    .bottom-bar {
+        height: 30px;
+        padding: 0 10px;
+        overflow: hidden;
+    }
+
+    .bottom-bar .lang-toggle,
+    .bottom-bar .sys-status-bar,
+    .bottom-bar .sys-status-bar a,
+    .bottom-bar .sys-status-bar span {
+        white-space: nowrap;
+        line-height: 1;
+    }
+
+    .bottom-bar .lang-toggle {
+        font-size: 0.72rem;
+    }
+
+    .bottom-bar .sys-status-bar {
+        gap: 8px;
+        min-width: 0;
+        font-size: 0.58rem;
+    }
+
+    .mobile-notice-dialog {
+        width: min(94vw, 420px);
+    }
+
+    .mobile-notice {
+        font-size: 0.82rem;
+    }
+
+    #left-sidebar {
+        top: 50px !important;
+        left: 8px !important;
+        right: 8px !important;
+        width: auto !important;
+        max-width: none !important;
+        transform: none !important;
+        z-index: 3002;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .nav-scroll-arrow {
+        display: flex;
+        position: fixed;
+        top: 54px;
+        width: 24px;
+        height: 26px;
+        align-items: center;
+        justify-content: center;
+        z-index: 3004;
+        border: none;
+        background: rgba(255, 255, 255, 0.22);
+        color: #fff;
+        font-size: 0.95rem;
+        line-height: 1;
+        pointer-events: auto;
+    }
+
+    .nav-scroll-arrow[hidden] {
+        display: none;
+    }
+
+    .nav-scroll-left {
+        left: 8px;
+        border-radius: 10px 0 0 10px;
+    }
+
+    .nav-scroll-right {
+        right: 8px;
+        border-radius: 0 10px 10px 0;
+    }
+
+    #left-sidebar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .nav-list {
+        width: max-content;
+        min-width: max-content;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: nowrap;
+        padding: 0 4px;
+    }
+
+    .nav-list a {
+        min-width: 104px;
+        height: 34px;
+        padding: 0 12px;
+        justify-content: center;
+        font-size: 1.02rem;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    body:not(.glass-mode) .page-panel {
+        width: calc(100vw - 32px) !important;
+        left: 16px !important;
+        right: 16px !important;
+        max-width: 20rem !important;
+        padding: 16px 14px !important;
+        box-sizing: border-box;
+        overflow-x: hidden !important;
+    }
+
+    body:not(.glass-mode) #page-home {
+        margin: 146px auto 0 !important;
+    }
+
+    body:not(.glass-mode) #page-home,
+    body:not(.glass-mode) #page-intro,
+    body:not(.glass-mode) #page-media,
+    body:not(.glass-mode) #page-github,
+    body:not(.glass-mode) #page-research,
+    body:not(.glass-mode) #page-explore {
+        overflow-x: hidden;
+    }
+
+    body:not(.glass-mode) .card-grid {
+        gap: 28px;
+        margin-top: 28px;
+        width: min(100%, 18.5rem);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    body:not(.glass-mode) .pixel-card {
+        min-height: 160px;
+        width: 100%;
+        max-width: 18.5rem;
+        padding: 12px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    body:not(.glass-mode) .pixel-card p {
+        margin-bottom: 54px;
+    }
+
+    .btn-black {
+        font-size: 1rem;
+    }
+
+    body:not(.glass-mode) .vertical-controls .v-slider-group label,
+    body:not(.glass-mode) .vertical-controls .v-slider-group span,
+    body:not(.glass-mode) .playground-hue-controls label,
+    body:not(.glass-mode) .playground-hue-controls span,
+    body:not(.glass-mode) .reset-btn {
+        color: #111 !important;
+    }
+}
+
+@media (max-width: 800px) and (orientation: portrait) {
+    body.glass-mode {
+        overflow-x: hidden !important;
+        overflow-y: auto;
+    }
+
+    body.glass-mode .top-bar {
+        top: 0;
+        padding: 0 12px;
+        height: 44px;
+        z-index: 3200;
+    }
+
+    body.glass-mode .site-title {
+        position: fixed;
+        top: 8px;
+        left: 12px;
+        font-size: 1rem;
+    }
+
+    body.glass-mode .bgm-btn {
+        top: 8px;
+        right: 12px;
+        font-size: 0.72rem;
+    }
+
+    body.glass-mode #left-sidebar {
+        top: 50px !important;
+        left: 8px !important;
+        right: 8px !important;
+        width: auto !important;
+        max-width: none !important;
+        height: 34px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        background: rgba(0, 0, 0, 0.78);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 12px;
+        padding: 6px 8px;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+
+    body.glass-mode .nav-scroll-arrow {
+        top: 58px;
+        background: rgba(255, 255, 255, 0.18);
+        color: #fff;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+
+    body.glass-mode #left-sidebar::-webkit-scrollbar {
+        display: none;
+    }
+
+    body.glass-mode .nav-list {
+        display: flex;
+        width: max-content;
+        min-width: max-content;
+        flex-wrap: nowrap;
+        gap: 8px;
+        justify-content: flex-start;
+        align-items: center;
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        padding: 0 6px 0 0;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
+    body.glass-mode .nav-list a {
+        width: auto;
+        min-width: max-content;
+        min-height: 32px;
+        font-size: 1rem;
+        justify-content: center;
+        text-align: center;
+        transform: none !important;
+        padding: 0 8px;
+        white-space: nowrap;
+    }
+
+    body.glass-mode .nav-list a[href="#explore"] {
+        font-size: 1.08rem;
+    }
+
+    body.glass-mode .page-panel {
+        left: 0 !important;
+        right: 0 !important;
+        width: auto !important;
+        min-height: auto;
+        padding-left: 18px !important;
+        padding-right: 18px !important;
+        overflow-x: hidden !important;
+    }
+
+    body.glass-mode #page-home {
+        margin: 0 !important;
+        padding-top: 116px !important;
+        padding-bottom: 112px !important;
+    }
+
+    body.glass-mode #page-home p.intro {
+        width: auto !important;
+        max-width: none !important;
+        left: 0 !important;
+        right: 0 !important;
+        top: 0 !important;
+        font-size: 0.98rem;
+        line-height: 1.8;
+    }
+
+    body.glass-mode #page-intro,
+    body.glass-mode #page-media,
+    body.glass-mode #page-github,
+    body.glass-mode #page-research,
+    body.glass-mode #page-explore {
+        padding-top: 126px !important;
+        padding-bottom: 96px !important;
+    }
+
+    body.glass-mode #page-intro .intro-lead {
+        margin-bottom: 22px;
+        font-size: 0.92rem;
+        line-height: 1.75;
+    }
+
+    body.glass-mode #page-intro .intro-sections {
+        gap: 24px !important;
+    }
+
+    body.glass-mode #page-intro .intro-section {
+        padding: 1.2rem !important;
+    }
+
+    body.glass-mode #page-media > h1,
+    body.glass-mode #page-github > h1,
+    body.glass-mode #page-research > h1,
+    body.glass-mode #page-explore h1 {
+        font-size: clamp(2.3rem, 12vw, 4rem) !important;
+        margin-bottom: 20px !important;
+        white-space: nowrap;
+    }
+
+    body.glass-mode #page-explore h1 {
+        color: transparent !important;
+        -webkit-text-fill-color: transparent !important;
+        -webkit-text-stroke: 0 !important;
+        mix-blend-mode: normal !important;
+        position: relative;
+        display: inline-block;
+        text-shadow: none !important;
+    }
+
+    body.glass-mode #page-explore h1::after {
+        content: attr(data-outline-text);
+        position: absolute;
+        inset: 0;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+        -webkit-text-stroke: 3.5px #ffffff;
+        mix-blend-mode: difference !important;
+        pointer-events: none;
+    }
+
+    body.glass-mode #page-media .card-grid,
+    body.glass-mode #page-github .card-grid,
+    body.glass-mode #page-research .card-grid,
+    body.glass-mode #page-explore .card-grid {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+        max-width: 24rem !important;
+        margin-top: 28px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-bottom: 12px;
+    }
+
+    body.glass-mode .vertical-controls .v-slider-group label,
+    body.glass-mode .vertical-controls .v-slider-group span,
+    body.glass-mode .playground-hue-controls label,
+    body.glass-mode .playground-hue-controls span,
+    body.glass-mode .reset-btn {
+        color: #fff !important;
+    }
+
+    body.glass-mode #page-media .pixel-card,
+    body.glass-mode #page-github .pixel-card,
+    body.glass-mode #page-research .pixel-card,
+    body.glass-mode #page-explore .pixel-card {
+        max-width: none !important;
+        width: 100%;
+        padding: 1.2rem !important;
+        box-shadow: 10px 10px 0 rgba(204, 255, 0, 0.18) !important;
+    }
+
+    body.glass-mode #page-media .pixel-card p,
+    body.glass-mode #page-github .pixel-card p,
+    body.glass-mode #page-research .pixel-card p,
+    body.glass-mode #page-explore .pixel-card p {
+        margin-bottom: 1.6rem !important;
+        font-size: 0.95rem !important;
+    }
+
+    body.glass-mode .btn-black,
+    body.glass-mode #page-research .pixel-card .btn-black,
+    body.glass-mode #page-explore .pixel-card .btn-black {
+        position: static !important;
+        align-self: flex-start !important;
+        margin-top: auto !important;
+        font-size: 0.9rem !important;
+        padding: 0.75rem 1.1rem !important;
+        box-shadow: 4px 4px 0 #ccff00 !important;
+    }
+
+    body.glass-mode .glass-marquee {
+        bottom: 44px !important;
+        font-size: 0.82rem !important;
+        padding: 6px 0 !important;
+        z-index: 120 !important;
+    }
+
+    body.glass-mode .glass-marquee-track {
+        gap: 1.5rem;
+    }
+
+    body.glass-mode .glass-marquee-track span {
+        padding: 0 1rem;
+    }
+
+    body.glass-mode .bottom-bar {
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        padding: 0 10px;
+        z-index: 3200;
+    }
+
+    body.glass-mode .lang-toggle {
+        font-size: 0.66rem;
+        line-height: 1;
+    }
+
+    body.glass-mode .glass-footer {
+        min-height: 44px;
+        padding: 8px 10px;
+        gap: 10px;
+        font-size: 0.58rem;
+        line-height: 1;
+        flex-wrap: nowrap;
+        overflow: hidden;
+    }
+
+    body.glass-mode .glass-footer,
+    body.glass-mode .glass-footer * {
+        white-space: nowrap;
+    }
+
+    body.glass-mode .glass-footer-links {
+        gap: 10px;
+        flex-wrap: nowrap;
+        min-width: 0;
+    }
+
+    body.glass-mode #glass-footer-year {
+        font-size: 0.52rem;
+    }
+}

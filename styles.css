@@ -54,6 +54,10 @@ body {
     line-height: 1.6;
 }
 
+body.mobile-notice-open {
+    overflow: hidden;
+}
+
 body.home-page {
     overflow-y: hidden;
 }
@@ -117,21 +121,56 @@ body.automata-playground #bg-canvas {
 }
 
 .mobile-notice {
-    display: none;
-    position: fixed;
-    top: 52px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(92vw, 520px);
-    padding: 10px 14px;
-    background: rgba(0, 0, 0, 0.88);
+    display: block;
+    position: static;
+    width: 100%;
+    padding: 0;
+    background: transparent;
     color: #fff;
-    border: 2px solid #111;
-    box-shadow: 0 4px 0 #333;
+    border: 0;
+    box-shadow: none;
     font-size: 0.9rem;
     line-height: 1.45;
     text-align: center;
-    z-index: 10000;
+}
+
+.mobile-notice-modal[hidden] {
+    display: none;
+}
+
+.mobile-notice-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 20000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.72);
+}
+
+.mobile-notice-dialog {
+    width: min(92vw, 420px);
+    padding: 18px 16px 14px;
+    background: rgba(0, 0, 0, 0.92);
+    color: #fff;
+    border: 2px solid #111;
+    box-shadow: 0 6px 0 #333;
+    display: grid;
+    gap: 14px;
+}
+
+.mobile-notice-confirm {
+    justify-self: center;
+    min-width: 112px;
+    min-height: 38px;
+    padding: 0 18px;
+    background: #fff;
+    color: #111;
+    border: 2px solid #111;
+    font-family: "PixelFont", monospace;
+    font-size: 0.95rem;
+    cursor: pointer;
 }
 
 .bottom-bar {
@@ -202,6 +241,14 @@ body.automata-playground #bg-canvas {
 
 body.automata-playground .nav-back-btn {
     display: block;
+}
+
+body.low-effects * {
+    -webkit-tap-highlight-color: transparent;
+}
+
+body.low-effects #bg-canvas {
+    image-rendering: auto;
 }
 
 .bgm-btn {
@@ -560,10 +607,6 @@ input[type="range"][orient="vertical"] {
 }
 
 @media (max-width: 800px) {
-    .mobile-notice {
-        display: block;
-    }
-
     #left-sidebar {
         top: 50px;
         flex-direction: row;

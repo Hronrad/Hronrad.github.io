@@ -40,16 +40,21 @@
     class CAEngine {
         constructor(canvas, options = {}) {
             this.canvas = canvas;
-            this.ctx = canvas.getContext("2d");
+            this.ctx = canvas.getContext("2d", {
+                alpha: false,
+                desynchronized: true
+            }) || canvas.getContext("2d");
 
             this.colorBackground = options.colorBackground || "#ffffff";
             this.colorGrid = options.colorGrid || "#e0e0e0";
             this.word = options.word || "HRONRAD";
+            this.performanceProfile = options.performanceProfile || {};
             this.currentHue = options.themeHue || 210;
             this.targetHue = this.currentHue;
             this.transitionFromHue = this.currentHue;
             this.transitionStartTime = 0;
             this.transitionDuration = 650;
+            this.isRuntimeSuspended = false;
 
             this.resolution = 8;
             this.cols = 0;
@@ -58,6 +63,8 @@
             this.statesCount = options.statesCount || 10;
             this.fps = options.fps || 15;
             this.evolveLimit = this.fps * 20;
+            this.defaultHoldFrames = options.defaultHoldFrames || 2;
+            this.currentHoldFrames = this.defaultHoldFrames;
 
             this.historyGrid = [];
             this.currentPhase = "HOLD_TEXT";
@@ -88,6 +95,13 @@
             window.requestAnimationFrame((timestamp) => this.loop(timestamp));
         }
 
+        setRuntimeSuspended(value) {
+            this.isRuntimeSuspended = Boolean(value);
+            if (!this.isRuntimeSuspended) {
+                this.lastFrameTime = 0;
+            }
+        }
+
         setStatesCount(value) {
             this.statesCount = value;
         }
@@ -95,6 +109,10 @@
         setFps(value) {
             this.fps = value;
             this.evolveLimit = this.fps * 20;
+        }
+
+        getFrameCountForSeconds(seconds) {
+            return Math.max(1, Math.round(seconds * this.fps));
         }
 
         setThemeHue(nextHue, timestamp = performance.now()) {
@@ -122,7 +140,21 @@
             }
 
             this.lastFrameTime = 0;
-            this.initTextGrid();
+            this.initTextGrid({
+                holdFrames: typeof options.holdSeconds === "number"
+                    ? this.getFrameCountForSeconds(options.holdSeconds)
+                    : this.defaultHoldFrames
+            });
+            this.drawGrid();
+        }
+
+        restartShowcase(options = {}) {
+            this.lastFrameTime = 0;
+            this.initTextGrid({
+                holdFrames: typeof options.holdSeconds === "number"
+                    ? this.getFrameCountForSeconds(options.holdSeconds)
+                    : this.defaultHoldFrames
+            });
             this.drawGrid();
         }
 
@@ -147,7 +179,11 @@
         resizeCanvas() {
             this.canvas.width = window.innerWidth;
             this.canvas.height = window.innerHeight;
-            this.resolution = window.innerWidth < 600 ? 5 : 8;
+            if (this.performanceProfile.useLowEffects) {
+                this.resolution = window.innerWidth < 600 ? 11 : 9;
+            } else {
+                this.resolution = window.innerWidth < 600 ? 7 : 8;
+            }
             this.cols = Math.floor(this.canvas.width / this.resolution);
             this.rows = Math.floor(this.canvas.height / this.resolution);
             this.initTextGrid();
@@ -247,7 +283,7 @@
             return true;
         }
 
-        initTextGrid() {
+        initTextGrid(options = {}) {
             this.grid = this.createEmptyGrid();
             this.historyGrid = [];
 
@@ -289,6 +325,9 @@
             this.currentPhase = "HOLD_TEXT";
             this.phaseTimer = 0;
             this.strokeRadius = 1;
+            this.currentHoldFrames = typeof options.holdFrames === "number"
+                ? Math.max(1, Math.round(options.holdFrames))
+                : this.defaultHoldFrames;
         }
 
         drawGrid() {
@@ -469,7 +508,7 @@
             if (this.currentPhase === "HOLD_TEXT") {
                 this.historyGrid.push(this.cloneGrid(this.grid));
                 this.phaseTimer++;
-                if (this.phaseTimer >= 2) {
+                if (this.phaseTimer >= this.currentHoldFrames) {
                     this.currentPhase = "STROKE_EXPAND";
                     this.phaseTimer = 0;
                     this.strokeRadius = 1;
@@ -489,6 +528,7 @@
             } else {
                 this.currentPhase = "HOLD_TEXT";
                 this.phaseTimer = 0;
+                this.currentHoldFrames = this.defaultHoldFrames;
             }
 
             if (phaseBeforeUpdate !== this.currentPhase) {
@@ -502,6 +542,12 @@
         }
 
         loop(timestamp) {
+            if (this.isRuntimeSuspended) {
+                this.lastFrameTime = timestamp;
+                window.requestAnimationFrame((nextTimestamp) => this.loop(nextTimestamp));
+                return;
+            }
+
             const themeIsTransitioning = this.updateThemeHue(timestamp);
             let didAdvance = false;
 
