@@ -38,6 +38,7 @@
     .bottom-bar {
         height: 30px;
         padding: 0 10px;
+        gap: 8px;
         overflow: hidden;
     }
 
@@ -54,9 +55,17 @@
     }
 
     .bottom-bar .sys-status-bar {
-        gap: 8px;
+        flex: 1 1 auto;
+        gap: 7px;
         min-width: 0;
-        font-size: 0.58rem;
+        justify-content: flex-end;
+        font-size: 0.64rem;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    .bottom-bar .sys-status-bar span {
+        display: none;
     }
 
     .mobile-notice-dialog {
@@ -444,11 +453,13 @@
     body.glass-mode .glass-footer {
         min-height: 44px;
         padding: 8px 10px;
-        gap: 10px;
-        font-size: 0.58rem;
+        gap: 0;
+        justify-content: center;
+        font-size: 0.64rem;
         line-height: 1;
         flex-wrap: nowrap;
-        overflow: hidden;
+        overflow-x: auto;
+        overflow-y: hidden;
     }
 
     body.glass-mode .glass-footer,
@@ -460,9 +471,11 @@
         gap: 10px;
         flex-wrap: nowrap;
         min-width: 0;
+        justify-content: center;
     }
 
+    body.glass-mode .glass-footer > div:first-child,
     body.glass-mode #glass-footer-year {
-        font-size: 0.52rem;
+        display: none;
     }
 }

@@ -184,8 +184,11 @@ body.automata-playground #bg-canvas {
     box-shadow: 0 -2px 0 #333;
     display: flex;
     align-items: center;
+    gap: 14px;
     padding: 0 20px;
     justify-content: space-between;
+    box-sizing: border-box;
+    pointer-events: auto;
 }
 
 .playground-hue-controls {
@@ -349,11 +352,19 @@ body.low-effects #bg-canvas {
     display: flex;
     gap: 15px;
     align-items: center;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+}
+.sys-status-bar::-webkit-scrollbar {
+    display: none;
 }
 .sys-status-bar a {
     color: #fff;
     text-decoration: none;
     transition: color 0.2s;
+    flex: 0 0 auto;
 }
 .sys-status-bar a:hover {
     color: var(--theme-accent);
@@ -653,4 +664,31 @@ input[type="range"][orient="vertical"] {
     .intro-signature {
         font-size: 1.24em;
     }
+}
+
+
+
+.blog-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 10px 0;
+    flex-grow: 1;
+}
+.blog-list li {
+    margin-bottom: 8px;
+}
+.blog-list li a {
+    color: #444;
+    text-decoration: none;
+    font-family: var(--font-pixel);
+    font-size: 1.1rem;
+    transition: color 0.2s;
+    display: inline-block;
+}
+.blog-list li a:hover {
+    color: var(--theme-accent);
+}
+.blog-list li a::before {
+    content: ">> ";
+    color: var(--theme-accent);
 }

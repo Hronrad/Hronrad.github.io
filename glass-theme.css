@@ -217,7 +217,7 @@ body.glass-mode .lang-toggle:hover { color: #ccff00; }
 body.glass-mode .vertical-controls { display: none; }
 body.glass-mode.automata-playground .vertical-controls { display: flex; z-index: 900; }
 body.glass-mode .v-slider-group, body.glass-mode #playground-hue-controls, body.glass-mode .nav-back-btn {
-    background: rgba(255,255,255,0.02); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 0; text-transform: uppercase; font-family: "JetBrains Mono", monospace; font-weight: 800;
+    background: rgba(255,255,255,0.02); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; text-transform: uppercase; font-family: "JetBrains Mono", monospace; font-weight: 800;
 }
 
 /* =========================================
@@ -231,7 +231,7 @@ body.glass-mode .page-panel {
 }
 body.glass-mode .page-panel.active { display: block; opacity: 1; z-index: 6; }
 /* Clear layout styles normally applied */
-body.glass-mode .pixel-panel { border-radius: 0; }
+body.glass-mode .pixel-panel { border-radius: 20px; }
 
 /* Universal Typography in Pages */
 body.glass-mode h1 {
@@ -249,6 +249,7 @@ body.glass-mode h1 {
 body.glass-mode #page-media > h1,
 body.glass-mode #page-github > h1,
 body.glass-mode #page-research > h1,
+body.glass-mode #page-blog > h1,
 body.glass-mode #page-explore > h1 {
     color: transparent !important;
     -webkit-text-fill-color: transparent !important;
@@ -398,6 +399,7 @@ body.glass-mode #page-media { padding: 15vh 5vw; display: none; opacity: 0; }
 body.glass-mode #page-media.active { display: flex; flex-direction: column; opacity: 1; }
 body.glass-mode #page-media h1,
 body.glass-mode #page-github h1,
+body.glass-mode #page-blog h1,
 body.glass-mode #page-research h1 {
     margin-left: 2vw;
     margin-bottom: 5vh;
@@ -455,7 +457,7 @@ body.glass-mode #page-github .card-grid {
     z-index: 1003;
 }
 body.glass-mode #page-github .pixel-card {
-    background: rgb(22, 22, 22) !important; padding: 2.5rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 0;
+    background: rgb(22, 22, 22) !important; padding: 2.5rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px;
     transition: transform 0.35s cubic-bezier(0.1, 0.6, 0.3, 1), box-shadow 0.35s, border-color 0.35s, background 0.35s; min-height: 350px; display: flex; flex-direction: column;
     opacity: 1 !important;
     isolation: isolate;
@@ -504,6 +506,7 @@ body.glass-mode #page-research { display: flex; flex-direction: column; align-it
 body.glass-mode #page-research.active {
     z-index: 1002;
 }
+body.glass-mode #page-blog h1,
 body.glass-mode #page-research h1 {
     font-size: clamp(3rem, 10vw, 8rem);
     margin-bottom: 2vh;
@@ -593,14 +596,16 @@ body.glass-mode #page-explore .pixel-card .btn-black:hover { background: #fff; c
 /* =========================================
    11. FOOTER & EXTRAS
    ========================================= */
-body.glass-mode .glass-footer { display: flex; position: fixed; inset: auto 0 0 0; z-index: 100;
+body.glass-mode .glass-footer { display: flex; position: fixed; inset: auto 0 0 0; z-index: 9999;
     border-top: 1px solid rgba(255, 255, 255, 0.15); background: #000; color: rgba(255, 255, 255, 0.4);
     font-family: "JetBrains Mono", monospace; font-size: 0.85rem; padding: 1.5vh 4vw;
     display: flex; justify-content: space-between; align-items: center; text-transform: uppercase;
     min-height: 58px;
+    pointer-events: auto;
+    isolation: isolate;
 }
-body.glass-mode .glass-footer-links { display: flex; gap: 24px; }
-body.glass-mode .glass-footer a { color: rgba(255, 255, 255, 0.6); text-decoration: none; font-weight: 800; transition: color 0.2s; }
+body.glass-mode .glass-footer-links { display: flex; gap: 24px; position: relative; z-index: 1; pointer-events: auto; }
+body.glass-mode .glass-footer a { color: rgba(255, 255, 255, 0.6); text-decoration: none; font-weight: 800; transition: color 0.2s; pointer-events: auto; }
 body.glass-mode .glass-footer a:hover { color: #ccff00; }
 body.glass-mode.automata-playground .glass-footer { display: none !important; }
 
@@ -657,6 +662,7 @@ body.mobile-env.glass-mode .glass-collage-scene {
 
 body.glass-mode #page-media > h1,
 body.glass-mode #page-github > h1,
+body.glass-mode #page-blog > h1,
 body.glass-mode #page-research > h1 {
     color: transparent !important;
     -webkit-text-fill-color: transparent !important;
@@ -672,6 +678,7 @@ body.glass-mode #page-research > h1 {
 body.glass-mode #page-media > h1::after,
 body.glass-mode #page-github > h1::after,
 body.glass-mode #page-research > h1::after,
+body.glass-mode #page-blog > h1::after,
 body.glass-mode #page-explore > h1::after {
     content: attr(data-outline-text);
     position: absolute;
@@ -697,11 +704,13 @@ body.glass-mode #page-explore > h1::after {
 body.safari-env.glass-mode #page-media > h1,
 body.safari-env.glass-mode #page-github > h1,
 body.safari-env.glass-mode #page-research > h1,
+body.safari-env.glass-mode #page-blog > h1,
 body.safari-env.glass-mode #page-explore > h1,
 body.mobile-env.glass-mode #page-media > h1,
 body.mobile-env.glass-mode #page-github > h1,
 body.mobile-env.glass-mode #page-research > h1,
-body.mobile-env.glass-mode #page-explore > h1 {
+body.mobile-env.glass-mode #page-blog > h1,
+body.glass-mode #page-explore > h1 {
     color: #ffffff !important;
     -webkit-text-fill-color: #ffffff !important;
     -webkit-text-stroke: 0 !important;
@@ -724,11 +733,95 @@ body.mobile-env.glass-mode #page-explore > h1 {
 body.safari-env.glass-mode #page-media > h1::after,
 body.safari-env.glass-mode #page-github > h1::after,
 body.safari-env.glass-mode #page-research > h1::after,
+body.safari-env.glass-mode #page-blog > h1::after,
 body.safari-env.glass-mode #page-explore > h1::after,
 body.mobile-env.glass-mode #page-media > h1::after,
 body.mobile-env.glass-mode #page-github > h1::after,
 body.mobile-env.glass-mode #page-research > h1::after,
-body.mobile-env.glass-mode #page-explore > h1::after {
+body.mobile-env.glass-mode #page-blog > h1::after,
+body.glass-mode #page-explore > h1::after {
     display: none !important;
     content: none !important;
+}
+
+body.glass-mode #page-blog .pixel-card {
+    border: none;
+    border-radius: 20px;
+    background: rgba(10, 10, 10, 0.4);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 10px 30px rgba(0,0,0,0.5);
+    backdrop-filter: blur(15px);
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+body.glass-mode #page-blog .pixel-card:hover { 
+    transform: translateY(-10px); 
+    box-shadow: 0 40px 80px rgba(0,0,0,0.8), 0 0 40px rgba(204,255,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3); 
+}
+body.glass-mode #page-blog .pixel-card h3 { 
+    display: block; 
+    font-family: "Inter"; 
+    font-weight: 900; 
+    font-size: 2rem; 
+    color: #ccff00; 
+    margin-bottom: 1rem; 
+    text-transform: uppercase; 
+}
+body.glass-mode #page-blog .pixel-card .blog-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 10px 0;
+    flex-grow: 1;
+}
+body.glass-mode #page-blog .pixel-card .blog-list li {
+    margin-bottom: 0.5rem;
+}
+body.glass-mode #page-blog .pixel-card .blog-list li a {
+    display: block;
+    font-family: "JetBrains Mono";
+    font-size: 1rem;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.3s;
+}
+body.glass-mode #page-blog .pixel-card .blog-list li a:hover {
+    color: #ccff00;
+    padding-left: 10px;
+    border-bottom-color: rgba(204,255,0,0.5);
+}
+body.glass-mode #page-blog .pixel-card .blog-list li a::before {
+    content: ">> ";
+    color: #ccff00;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+body.glass-mode #page-blog .pixel-card .blog-list li a:hover::before {
+    opacity: 1;
+}
+
+body.glass-mode #page-blog .card-grid {
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+    gap: 30px;
+    isolation: isolate;
+    position: relative;
+    z-index: 1003;
+    width: 100%;
+}
+@media (max-width: 980px) {
+    body.glass-mode #page-blog .card-grid { grid-template-columns: 1fr; }
+}
+body.glass-mode #page-blog .pixel-card {
+    padding: 2.5rem;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+body.glass-mode #page-blog { padding: 15vh 5vw; }
+body.glass-mode #page-blog.active {
+    z-index: 1002;
+    display: flex;
+    flex-direction: column;
 }

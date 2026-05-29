@@ -15,6 +15,7 @@
         home: { cssHue: 210, cssSaturation: "100%", controlSaturation: "55%", cssLightness: "50%", caHue: 210 },
         intro: { cssHue: 210, cssSaturation: "100%", controlSaturation: "55%", cssLightness: "50%", caHue: 210 },
         research: { cssHue: 210, cssSaturation: "100%", controlSaturation: "55%", cssLightness: "50%", caHue: 210 },
+        blog: { cssHue: 15, cssSaturation: "100%", controlSaturation: "60%", cssLightness: "50%", caHue: 15 },
         media: { cssHue: 285, cssSaturation: "100%", controlSaturation: "60%", cssLightness: "50%", caHue: 285 },
         github: { cssHue: 28, cssSaturation: "100%", controlSaturation: "60%", cssLightness: "50%", caHue: 28 },
         explore: { cssHue: 170, cssSaturation: "100%", controlSaturation: "60%", cssLightness: "42%", caHue: 170 }
@@ -272,7 +273,7 @@
                 element.innerText = translations[key];
             }
         });
-        document.querySelectorAll("#page-media > h1, #page-github > h1, #page-research > h1, #page-explore > h1").forEach((element) => {
+        document.querySelectorAll("#page-media > h1, #page-github > h1, #page-research > h1, #page-blog > h1, #page-explore > h1").forEach((element) => {
             element.setAttribute("data-outline-text", element.innerText.trim());
         });
         document.querySelectorAll("[data-i18n-html]").forEach((element) => {
@@ -598,7 +599,7 @@
             return;
         }
 
-        const glowTargets = document.querySelectorAll(".pixel-card, #page-home, #page-intro, #page-research");
+        const glowTargets = document.querySelectorAll(".pixel-card, #page-home, #page-intro, #page-research, #page-blog");
 
         glowTargets.forEach((target) => {
             target.addEventListener("mousemove", (event) => {
