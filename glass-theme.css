@@ -498,12 +498,28 @@ body.glass-mode #page-github .pixel-card:hover .btn-black {
     box-shadow: 6px 6px 0 rgba(204,255,0,0.9);
 }
 
+body.glass-mode #page-github .deployed-apps {
+    margin-top: 10vh;
+}
+
+body.glass-mode #page-github .deployed-apps h2 {
+    margin: 0 0 4vh 2vw;
+    color: rgba(255,255,255,0.88);
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(1.8rem, 4vw, 3.5rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
 
 /* =========================================
    8. RESEARCH PAGE (FLUID GLASSMORPHIC GEEK)
    ========================================= */
-body.glass-mode #page-research { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-height: 100vh; padding: 10vh 5vw; background: radial-gradient(circle at center, rgba(204,255,0,0.05) 0%, transparent 60%); }
+body.glass-mode #page-research { display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-height: 100vh; padding: 10vh 5vw; background: radial-gradient(circle at center, rgba(204,255,0,0.05) 0%, transparent 60%); }
 body.glass-mode #page-research.active {
+    display: flex;
     z-index: 1002;
 }
 body.glass-mode #page-blog h1,
@@ -513,10 +529,11 @@ body.glass-mode #page-research h1 {
 }
 body.glass-mode #page-research p.intro { font-family: "JetBrains Mono"; font-size: clamp(1rem, 2vw, 1.2rem); margin: 0 0 6vh; color: rgba(255,255,255,0.9); text-transform: uppercase; letter-spacing: 0.1em; max-width: 800px; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
 body.glass-mode #page-research .card-grid {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
     width: 100%;
-    max-width: 600px;
+    max-width: 1200px;
     z-index: 1003;
     position: relative;
     isolation: isolate;
@@ -525,13 +542,13 @@ body.glass-mode #page-research .pixel-card {
     background: rgba(20, 20, 20, 0.48) !important; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255,255,255,0.15); border-top: 2px solid #ccff00;
     padding: clamp(2rem, 4vw, 4rem); box-shadow: 0 30px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
-    text-align: center; align-items: center; width: 100%; display: flex; flex-direction: column; justify-content: center;
+    text-align: left; align-items: flex-start; width: 100%; display: flex; flex-direction: column; justify-content: flex-start;
     border-radius: 20px; transition: transform 0.4s cubic-bezier(0.1, 0.6, 0.3, 1), box-shadow 0.4s; opacity: 1 !important; isolation: isolate; mix-blend-mode: normal; position: relative; z-index: 1004;
 }
 body.glass-mode #page-research .pixel-card:hover { transform: translateY(-10px); box-shadow: 0 40px 80px rgba(0,0,0,0.8), 0 0 40px rgba(204,255,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3); }
-body.glass-mode #page-research .pixel-card h3 { display: block; font-family: "Inter"; font-weight: 900; font-size: 2rem; color: #ccff00; margin-bottom: 1rem; text-transform: uppercase; }
+body.glass-mode #page-research .pixel-card h3 { display: block; font-family: "Inter"; font-weight: 900; font-size: 2rem; color: #ccff00; margin-bottom: 1rem; text-transform: uppercase; overflow-wrap: anywhere; }
 body.glass-mode #page-research .pixel-card p { display: block; font-family: "JetBrains Mono"; font-size: 1rem; color: rgba(255,255,255,0.8); margin-bottom: 2.5rem; }
-body.glass-mode #page-research .pixel-card .btn-black { align-self: center; margin: 0 auto; font-size: 1.2rem; padding: 1rem 2.5rem; border-width: 2px; border-radius: 999px; background: rgba(255,255,255,0.05); color: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: all 0.3s; backdrop-filter: blur(10px); }
+body.glass-mode #page-research .pixel-card .btn-black { align-self: flex-start; margin: auto 0 0; font-size: 1.2rem; padding: 1rem 2.5rem; border-width: 2px; border-radius: 999px; background: rgba(255,255,255,0.05); color: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: all 0.3s; backdrop-filter: blur(10px); }
 body.glass-mode #page-research .pixel-card .btn-black:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(204,255,0,0.6); background: #ccff00; color: #000; border-color: #ccff00; }
 
 

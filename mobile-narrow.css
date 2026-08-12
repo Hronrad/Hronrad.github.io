@@ -396,10 +396,16 @@
     body.glass-mode #page-github .pixel-card,
     body.glass-mode #page-research .pixel-card,
     body.glass-mode #page-explore .pixel-card {
+        min-width: 0;
         max-width: none !important;
         width: 100%;
         padding: 1.2rem !important;
         box-shadow: 10px 10px 0 rgba(204, 255, 0, 0.18) !important;
+    }
+
+    body.glass-mode #page-github .pixel-card h3,
+    body.glass-mode #page-research .pixel-card h3 {
+        overflow-wrap: anywhere;
     }
 
     body.glass-mode #page-media .pixel-card p,

@@ -532,6 +532,18 @@ input[type="range"][orient="vertical"] {
     text-align: left;
 }
 
+.deployed-apps {
+    margin-top: 42px;
+    text-align: left;
+}
+
+.deployed-apps h2 {
+    color: #222;
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
 .pixel-card {
     border: 2px solid #333;
     padding: 15px;
