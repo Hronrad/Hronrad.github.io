@@ -15,6 +15,7 @@
         home: { cssHue: 210, cssSaturation: "100%", controlSaturation: "55%", cssLightness: "50%", caHue: 210 },
         intro: { cssHue: 210, cssSaturation: "100%", controlSaturation: "55%", cssLightness: "50%", caHue: 210 },
         research: { cssHue: 210, cssSaturation: "100%", controlSaturation: "55%", cssLightness: "50%", caHue: 210 },
+        ham: { cssHue: 190, cssSaturation: "100%", controlSaturation: "55%", cssLightness: "50%", caHue: 190 },
         blog: { cssHue: 15, cssSaturation: "100%", controlSaturation: "60%", cssLightness: "50%", caHue: 15 },
         media: { cssHue: 285, cssSaturation: "100%", controlSaturation: "60%", cssLightness: "50%", caHue: 285 },
         github: { cssHue: 28, cssSaturation: "100%", controlSaturation: "60%", cssLightness: "50%", caHue: 28 },
@@ -277,7 +278,7 @@
                 element.innerText = translations[key];
             }
         });
-        document.querySelectorAll("#page-media > h1, #page-github > h1, #page-research > h1, #page-blog > h1, #page-explore > h1").forEach((element) => {
+        document.querySelectorAll("#page-media > h1, #page-github > h1, #page-research > h1, #page-blog > h1, #page-explore > h1, #page-ham > h1").forEach((element) => {
             element.setAttribute("data-outline-text", element.innerText.trim());
         });
         document.querySelectorAll("[data-i18n-html]").forEach((element) => {
@@ -331,6 +332,8 @@
             siteSubtitle.innerText = translations.site_subtitle;
             langButton.innerText = state.currentLang === "zh" ? "English" : "中文";
         }
+
+        document.querySelector(".ham-station-notes").setAttribute("aria-label", translations.ham_parameters);
 
         document.querySelectorAll(".nav-list a").forEach((link) => {
             const targetKey = state.isGlassTheme

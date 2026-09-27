@@ -133,7 +133,6 @@ jobs:
         run: |
           node --check app.js
           node --check CA.js
-          node --check ham/ham.js
           node --check responsive-shell.js
           node --test tests/ca-engine.test.cjs tests/responsive-shell.test.cjs
 
@@ -231,7 +230,7 @@ sudo nginx -t && sudo systemctl reload nginx
 
 1. 修改一处页面文字并推送到 `main`。
 2. 查看 GitHub Actions，确认测试和同步步骤均成功。
-3. 刷新线上首页与 `/ham/` 页面，确认新内容可见。
+3. 刷新线上首页与 `/#ham` 子页面，确认新内容可见。
 
 如 Actions 成功但仍看到旧页面，先强制刷新浏览器；使用 CDN 时，还需要刷新相应页面的 CDN 缓存。
 
@@ -265,3 +264,25 @@ sudo nginx -t && sudo systemctl reload nginx
 - [GitHub Actions 工作流触发器](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow)
 - [Nginx 入门与静态文件配置](https://nginx.org/en/docs/beginners_guide.html)
 - [Nginx 配置检查与命令行参数](https://nginx.org/en/docs/switches.html)
+
+## 单页导航与旧 HAM 地址兼容
+
+所有站内栏目均由根目录 `index.html` 提供，通过 `/#home`、`/#intro`、`/#media`、`/#github`、`/#research`、`/#ham`、`/#blog`、`/#explore` 切换。无需为栏目创建独立 HTML。
+
+删除原来的 `ham/index.html` 后，如需兼容旧链接，请在当前域名的 Nginx `server` 块加入以下规则（若已有同名 location，替换原规则）：
+
+```nginx
+location = /ham {
+    return 301 /#ham;
+}
+
+location = /ham/ {
+    return 301 /#ham;
+}
+
+location = /ham/index.html {
+    return 301 /#ham;
+}
+```
+
+然后执行 `sudo nginx -t && sudo systemctl reload nginx`。`ham/ham.css` 仍是普通样式资源，不是独立页面。

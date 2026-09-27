@@ -32,7 +32,6 @@ jobs:
         run: |
           node --check app.js
           node --check CA.js
-          node --check ham/ham.js
           node --check responsive-shell.js
           node --test tests/ca-engine.test.cjs tests/responsive-shell.test.cjs
 

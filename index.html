@@ -6,6 +6,7 @@
     <title data-i18n="page_title"></title>
     <link rel="stylesheet" href="styles.css?v=20260812a">
     <link rel="stylesheet" href="glass-theme.css?v=20260812a">
+    <link rel="stylesheet" href="ham/ham.css?v=20260927p">
     <link rel="stylesheet" href="mobile-narrow.css?v=20260927l">
 </head>
 <body>
@@ -55,7 +56,7 @@
             <li><a href="#media" data-i18n="nav_media" data-glass-i18n="glass_nav_media"></a></li>
             <li><a href="#github" data-i18n="nav_github" data-glass-i18n="glass_nav_github"></a></li>
             <li><a href="#research" data-i18n="nav_research" data-glass-i18n="glass_nav_research"></a></li>
-            <li><a href="/ham/" data-i18n="nav_ham" data-glass-i18n="glass_nav_ham"></a></li>
+            <li><a href="#ham" data-i18n="nav_ham" data-glass-i18n="glass_nav_ham"></a></li>
             <li><a href="#blog" data-i18n="nav_blog" data-glass-i18n="glass_nav_blog"></a></li>
             <li><a href="#explore" data-i18n="nav_explore" data-glass-i18n="glass_nav_explore"></a></li>
         </ul>
@@ -247,6 +248,36 @@
         </div>
     </main>
 
+    <main id="page-ham" class="pixel-panel page-panel">
+        <p class="ham-band" aria-hidden="true">CQ · CQ · CQ</p>
+        <h1 data-i18n="ham_title"></h1>
+        <dl class="ham-station-notes" aria-label="电台参数">
+            <div class="ham-paper ham-paper-grid">
+                <dt>GRID</dt>
+                <dd>OM92LC<span class="ham-paper-imprint" aria-hidden="true">BA4TIR / NANJING</span></dd>
+            </div>
+            <div class="ham-paper ham-paper-cq">
+                <dt>CQ</dt>
+                <dd>24<span class="ham-paper-imprint" aria-hidden="true">ZONE</span></dd>
+            </div>
+            <div class="ham-paper ham-paper-itu">
+                <dt>ITU</dt>
+                <dd>44<span class="ham-paper-imprint" aria-hidden="true">ZONE</span></dd>
+            </div>
+        </dl>
+        <section class="ham-profile" aria-labelledby="ham-call-sign">
+            <div class="ham-identity">
+                <p class="ham-label" data-i18n="ham_callsign_label"></p>
+                <h2 id="ham-call-sign">BA4TIR</h2>
+                <p class="ham-location" data-i18n="ham_location"></p>
+            </div>
+            <div class="ham-copy">
+                <p data-i18n="ham_intro"></p>
+                <a href="https://www.qrz.com/db/BA4TIR" target="_blank" rel="noopener noreferrer" class="btn-black" data-i18n="btn_qrz"></a>
+            </div>
+        </section>
+    </main>
+
     <main id="page-blog" class="pixel-panel page-panel">
         <h1 data-i18n="nav_blog"></h1>
         <div class="card-grid">
@@ -288,9 +319,9 @@
         <div id="glass-footer-year"></div>
     </footer>
 
-    <script src="translations.js?v=20260907a"></script>
+    <script src="translations.js?v=20260927p"></script>
     <script src="CA.js?v=20260927f"></script>
-    <script src="app.js?v=20260927f"></script>
+    <script src="app.js?v=20260927p"></script>
     <script src="responsive-shell.js?v=20260927k"></script>
 </body>
 </html>
