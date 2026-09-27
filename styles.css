@@ -629,7 +629,7 @@ input[type="range"][orient="vertical"] {
     transform: translate(2px, 2px);
 }
 
-@media (max-width: 800px) {
+@media (orientation: portrait) and (max-width: 800px) {
     #left-sidebar {
         top: 50px;
         flex-direction: row;

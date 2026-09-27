@@ -59,7 +59,7 @@ function fixture() {
     vm.runInNewContext(source, {
         document,
         window: { addEventListener: (event, listener) => { windowEvents[event] = listener; } },
-        matchMedia: query => query.includes('max-width') ? compact : { matches: false },
+        matchMedia: query => query === '(orientation: portrait) and (max-width: 1400px)' ? compact : { matches: false },
         // No animation frames are delivered, as in the observed Safari failure.
         requestAnimationFrame() { throw new Error('Essential shell UI must not depend on animation frames'); },
         setTimeout: callback => timers.push(callback),

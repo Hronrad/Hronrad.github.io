@@ -47,8 +47,9 @@
         const isMobileViewport = window.matchMedia("(max-width: 800px)").matches;
         const hasCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
         const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        const isTouchMobile = isMobileViewport || hasCoarsePointer;
-        const useLowEffects = isSafari || isIOSDevice || isTouchMobile || prefersReducedMotion;
+        const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+        const isTouchMobile = isPortrait && (isMobileViewport || hasCoarsePointer);
+        const useLowEffects = prefersReducedMotion;
 
         return {
             isSafari,
@@ -297,7 +298,7 @@
         const sidebar = document.getElementById("left-sidebar");
         const keepActiveVisible = () => {
             const active = sidebar.querySelector("a.active");
-            if (!active || window.innerWidth > 1400) return;
+            if (!active || !window.matchMedia("(orientation: portrait) and (max-width: 1400px)").matches) return;
             const item = active.getBoundingClientRect();
             const viewport = sidebar.getBoundingClientRect();
             if (item.left < viewport.left + 12 || item.right > viewport.right - 12) {
@@ -595,7 +596,7 @@
 
         let scrollFramePending = false;
         window.addEventListener("scroll", () => {
-            if (!state.isGlassTheme || !introPage.classList.contains("active") || scrollFramePending) {
+            if (!state.isGlassTheme || environmentProfile.prefersReducedMotion || !introPage.classList.contains("active") || scrollFramePending) {
                 return;
             }
 

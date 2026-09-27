@@ -128,3 +128,17 @@ Native Safari's AX interface was retried on this goal continuation and still tim
 Added semantic station parameter papers for GRID OM92LC, CQ 24 and ITU 44, with taped/torn paper styling and a two-row phone composition. Added the user's role as head of the Nanjing University Amateur Radio Association to Chinese and English introductions. Verified 320×568, 375×812, 568×320, 768×1024, 1024×768, 1400×900 and 1440×1000 in both languages/themes (28 combinations): parameter values and role text present, rotated papers within viewport, no document horizontal overflow. Visually inspected glass mobile/desktop and 320px English pixel mode. Corrected the old pixel HAM top margin; final phone panel starts 28px below navigation. JS syntax and diff whitespace checks pass. No new native Safari pass is claimed.
 
 User-directed visual revision: replaced bright white/lime/lavender sheets with charcoal, muted olive and worn gray stock. Reduced group maximum width from 1050px to 590px; phone layout now uses one compact row, about 137px tall at 375px width. Kept torn edges, dark tape/staple details and offset printing. Verified 320, 375, 568, 768, 1024 and 1440px widths in both themes (12 cases), with no horizontal overflow or paper escaping the viewport. This supersedes the earlier bright/two-row composition.
+
+## Visual regression recovery — 2026-09-27
+
+- Root cause: commit `6faaf50` applied flattening content overrides up to 1400px, hiding PROFILE collage and replacing per-page materials. The live responsive stylesheet checksum matched local, ruling out a missing deployment asset.
+- Scoped content reflow to 800px, retaining the 1400px navigation/footer shell. Restored page-specific materials, PROFILE blur, layered shadows, scattered placement, collage, and desktop outline headings.
+- Removed browser-name/coarse-pointer automatic visual downgrade; reduced-motion still disables motion and heavy effects. Canvas retains its separate mobile performance profile.
+- Browser checked all eight routes at 375, 800, 1024, 1280, 1440px: exactly one visible panel and no horizontal document overflow in 40 checks.
+- At 1280px, computed PROFILE cards have blur(24px), original layered shadows and distinct rotations; collage is visible.
+
+### Portrait-only mobile layout
+
+- Every width-based mobile media query in styles.css, glass-theme.css, mobile-narrow.css and ham/ham.css now requires portrait orientation. Both JavaScript mobile layout checks use the same orientation constraint.
+- Final browser matrix: 390×844, 844×390, 768×1024, 1024×768, 1280×900, across all eight routes (40 checks): no document horizontal overflow; exactly one visible panel.
+- PROFILE collage and blur remain visible in both orientations. At 844×390 and 1024×768 the mobile-env class is absent.

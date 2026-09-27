@@ -105,7 +105,7 @@
 }
 body:not(.glass-mode) .ham-paper { font-family: "PixelFont", monospace; }
 body.glass-mode .ham-station-notes + .ham-profile { margin-top: 24px; }
-@media (max-width: 639px) {
+@media (orientation: portrait) and (max-width: 639px) {
     .ham-station-notes {
         gap: 4px;
         margin-top: 14px;
@@ -233,7 +233,7 @@ body.glass-mode .ham-copy p {
     margin-bottom: 2.5rem;
 }
 
-@media (max-width: 800px) {
+@media (orientation: portrait) and (max-width: 800px) {
     body:not(.glass-mode) #page-ham { margin-top: 28px; }
     #page-ham {
         width: calc(100vw - 32px);

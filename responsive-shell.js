@@ -2,7 +2,7 @@
 (() => {
     const nav = document.getElementById('left-sidebar');
     if (!nav) return;
-    const compact = matchMedia('(max-width: 1400px)');
+    const compact = matchMedia('(orientation: portrait) and (max-width: 1400px)');
     const buttons = [-1, 1].map(direction => {
         const button = document.createElement('button');
         button.type = 'button';
