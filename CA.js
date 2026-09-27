@@ -1,5 +1,9 @@
 (function () {
     const FONT = {
+        B: [[1, 1, 1, 1, 0], [1, 0, 0, 0, 1], [1, 1, 1, 1, 0], [1, 0, 0, 0, 1], [1, 1, 1, 1, 0]],
+        4: [[1, 0, 0, 1, 0], [1, 0, 0, 1, 0], [1, 1, 1, 1, 1], [0, 0, 0, 1, 0], [0, 0, 0, 1, 0]],
+        T: [[1, 1, 1, 1, 1], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0]],
+        I: [[1, 1, 1, 1, 1], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [1, 1, 1, 1, 1]],
         H: [[1, 0, 0, 0, 1], [1, 0, 0, 0, 1], [1, 1, 1, 1, 1], [1, 0, 0, 0, 1], [1, 0, 0, 0, 1]],
         R: [[1, 1, 1, 1, 0], [1, 0, 0, 0, 1], [1, 1, 1, 1, 0], [1, 0, 1, 0, 0], [1, 0, 0, 1, 1]],
         O: [[0, 1, 1, 1, 0], [1, 0, 0, 0, 1], [1, 0, 0, 0, 1], [1, 0, 0, 0, 1], [0, 1, 1, 1, 0]],
@@ -177,6 +181,9 @@
         }
 
         resizeCanvas() {
+            const previousGrid = this.grid;
+            const previousCols = this.cols;
+            const previousResolution = this.resolution;
             this.canvas.width = window.innerWidth;
             this.canvas.height = window.innerHeight;
             if (this.performanceProfile.useLowEffects) {
@@ -184,9 +191,20 @@
             } else {
                 this.resolution = window.innerWidth < 600 ? 7 : 8;
             }
-            this.cols = Math.floor(this.canvas.width / this.resolution);
-            this.rows = Math.floor(this.canvas.height / this.resolution);
-            this.initTextGrid();
+            // Always fit the complete word, including on a 320px phone.
+            const wordColumns = this.word.length * 7 - 2;
+            this.resolution = Math.max(1, Math.min(this.resolution, Math.floor(this.canvas.width / (wordColumns + 4))));
+            this.cols = Math.max(1, Math.floor(this.canvas.width / this.resolution));
+            this.rows = Math.max(1, Math.floor(this.canvas.height / this.resolution));
+            if (previousCols === this.cols && previousResolution === this.resolution && previousGrid.length) {
+                // Mobile browser chrome changes viewport height while scrolling.
+                this.grid = Array.from({length: this.cols}, (_, x) =>
+                    Array.from({length: this.rows}, (_, y) => previousGrid[x]?.[y] || 0));
+                this.historyGrid = [];
+            } else {
+                this.initTextGrid();
+            }
+            this.drawGrid();
         }
 
         createEmptyGrid() {
@@ -289,7 +307,7 @@
 
             const baseWidth = this.word.length * 5 + (this.word.length - 1) * 2;
             let scale = Math.floor((this.cols * 0.8) / baseWidth);
-            scale = Math.max(1, Math.min(6, scale));
+            scale = Math.max(1, Math.min(6, scale, Math.floor(this.rows / 7)));
 
             const letterWidth = 5 * scale;
             const spacing = 2 * scale;
@@ -302,6 +320,7 @@
 
             for (const character of this.word) {
                 const pattern = FONT[character];
+                if (!pattern) { startX += letterWidth + spacing; continue; }
                 for (let row = 0; row < 5; row++) {
                     for (let col = 0; col < 5; col++) {
                         if (pattern[row][col] !== 1) {
@@ -551,7 +570,8 @@
             const themeIsTransitioning = this.updateThemeHue(timestamp);
             let didAdvance = false;
 
-            if (timestamp - this.lastFrameTime >= 1000 / this.fps) {
+            const reduceMotion = this.performanceProfile.prefersReducedMotion && !document.body.classList.contains("automata-playground");
+            if (!reduceMotion && timestamp - this.lastFrameTime >= 1000 / this.fps) {
                 this.advancePhase();
                 this.lastFrameTime = timestamp;
                 didAdvance = true;

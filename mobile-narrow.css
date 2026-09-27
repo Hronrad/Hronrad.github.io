@@ -1,487 +1,291 @@
-@media (max-width: 800px) {
-    html,
-    body {
-        max-width: 100%;
-        overflow-x: hidden !important;
-    }
+/* Shared responsive shell: phones, tablets, and compact desktop windows. */
+:root {
+    --shell-top: calc(56px + env(safe-area-inset-top, 0px));
+    --shell-nav: 56px;
+    --shell-gap: clamp(16px, 3vw, 40px);
+    --shell-safe-left: env(safe-area-inset-left, 0px);
+    --shell-safe-right: env(safe-area-inset-right, 0px);
+}
+html { -webkit-text-size-adjust: 100%; }
+.page-panel, .pixel-card, .intro-section, .ham-profile > * { min-width: 0; }
+.page-panel :is(h1, h2, h3, p, a) { overflow-wrap: anywhere; }
+:focus-visible { outline: 3px solid #55baff; outline-offset: 4px; }
+.lang-toggle:focus-visible { outline: 3px solid #55baff; }
+.nav-scroll-arrow { display: none; }
+body.glass-mode .ham-site-title { pointer-events: auto; }
 
-    body {
-        overscroll-behavior-x: none;
+@media (max-width: 1400px) {
+    :root { --shell-gap: max(clamp(16px, 3vw, 40px), var(--shell-safe-left), var(--shell-safe-right)); }
+    body, body.home-page, body.glass-mode { overflow-y: auto; }
+    body { padding-top: calc(var(--shell-top) + var(--shell-nav)); }
+    body .top-bar, body.glass-mode .top-bar {
+        position: fixed; inset: 0 0 auto; width: 100%; height: var(--shell-top);
+        display: flex !important; align-items: center; justify-content: space-between;
+        padding: env(safe-area-inset-top, 0px) max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px));
+        background: #101114 !important; box-shadow: none; mix-blend-mode: normal; z-index: 3000;
     }
-
-    body * {
-        max-width: 100%;
+    body .site-title, body.glass-mode .site-title {
+        position: static; font-size: 1.1rem; line-height: 1.2; mix-blend-mode: normal;
+        max-width: calc(100% - 184px); overflow-wrap: anywhere;
     }
-
-    #bg-canvas,
-    .glass-hero,
-    .glass-marquee,
-    .glass-footer,
-    .page-panel,
-    #left-sidebar,
-    .top-bar,
-    .bottom-bar {
-        max-width: 100vw;
+    body .site-subtitle { display: none; }
+    body .bgm-btn, body.glass-mode .bgm-btn {
+        position: static; width: auto; min-width: 44px; height: 44px; margin-right: 100px;
+        padding: 0 8px; font-size: 0.75rem; letter-spacing: 0; mix-blend-mode: normal;
     }
-
-    .top-bar {
-        height: 44px;
-        padding: 0 12px;
-        font-size: 1.1rem;
-        align-items: center;
+    body #bgm-icon { width: 28px; height: 28px; }
+    body .lang-toggle, body.glass-mode .lang-toggle {
+        position: fixed; top: env(safe-area-inset-top, 0px); right: max(12px, env(safe-area-inset-right, 0px));
+        min-width: 88px; min-height: 56px; padding: 0 8px; font-size: 0.8rem;
+        line-height: 1.25; z-index: 3002; color: #fff;
     }
-
-    .site-title {
-        gap: 4px;
+    body #left-sidebar, body.glass-mode #left-sidebar {
+        position: fixed; top: var(--shell-top); left: 0; right: 0; bottom: auto;
+        width: 100%; max-width: none; height: var(--shell-nav); transform: none;
+        display: block; padding: 0 max(12px, env(safe-area-inset-right, 0px)) 0 max(12px, env(safe-area-inset-left, 0px));
+        overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain;
+        scrollbar-width: thin; scrollbar-color: #6c7380 #17191d;
+        border: 0; border-bottom: 1px solid #393c43; border-radius: 0;
+        background: #17191d; mix-blend-mode: normal; z-index: 3001; scroll-padding-inline: 12px;
     }
-
-    .bottom-bar {
-        height: 30px;
-        padding: 0 10px;
-        gap: 8px;
-        overflow: hidden;
+    body .nav-list, body.glass-mode .nav-list {
+        display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center;
+        justify-content: flex-start; width: max-content; min-width: 100%; gap: 8px;
+        padding: 0; margin: 0; background: none; border: 0; border-radius: 0; backdrop-filter: none;
     }
-
-    .bottom-bar .lang-toggle,
-    .bottom-bar .sys-status-bar,
-    .bottom-bar .sys-status-bar a,
-    .bottom-bar .sys-status-bar span {
-        white-space: nowrap;
-        line-height: 1;
+    .nav-list li { flex: 0 0 auto; }
+    body .nav-list a, body.glass-mode .nav-list a,
+    body.glass-mode .nav-list a[href="#explore"] {
+        width: auto; min-width: 44px; height: 48px; padding: 0 12px;
+        font-size: 0.875rem; line-height: 1.2; white-space: nowrap;
+        transform: none !important; mix-blend-mode: normal !important;
     }
-
-    .bottom-bar .lang-toggle {
-        font-size: 0.72rem;
+    body .page-panel, body.glass-mode :is(#page-home, #page-intro, #page-media, #page-github, #page-research, #page-blog, #page-explore, #page-ham),
+    body #page-home, body.glass-mode #page-home,
+    body.glass-mode #page-intro, body.glass-mode #page-media,
+    body.glass-mode #page-github, body.glass-mode #page-research,
+    body.glass-mode #page-blog, body.glass-mode #page-explore, body.glass-mode #page-ham {
+        position: relative; inset: auto; width: calc(100% - 2 * var(--shell-gap)) !important;
+        max-width: 1120px !important; min-height: 0; margin: 28px auto 40px;
+        padding: clamp(16px, 3vw, 32px); overflow: visible; text-align: left;
     }
-
-    .bottom-bar .sys-status-bar {
-        flex: 1 1 auto;
-        gap: 7px;
-        min-width: 0;
-        justify-content: flex-end;
-        font-size: 0.64rem;
-        overflow-x: auto;
-        overflow-y: hidden;
+    body.glass-mode :is(#page-home, #page-intro, #page-media, #page-github, #page-research, #page-blog, #page-explore, #page-ham) { padding: 0 !important; }
+    body .page-panel.active { min-height: calc(100svh - var(--shell-top) - var(--shell-nav) - 200px); }
+    body .page-panel > h1, body.glass-mode :is(#page-home, #page-intro, #page-media, #page-github, #page-research, #page-blog, #page-explore, #page-ham) > h1 {
+        position: static !important; transform: none; writing-mode: horizontal-tb;
+        font-size: clamp(2rem, 6vw, 4.5rem); line-height: 1.1; letter-spacing: -0.025em;
+        white-space: normal; margin: 0 0 24px; max-width: 100%;
+        color: #222; -webkit-text-fill-color: currentColor !important;
+        -webkit-text-stroke: 0; text-shadow: none; mix-blend-mode: normal;
     }
-
-    .bottom-bar .sys-status-bar span {
-        display: none;
+    body.glass-mode :is(#page-home, #page-intro, #page-media, #page-github, #page-research, #page-blog, #page-explore, #page-ham) > h1 { color: #fff !important; }
+    body.glass-mode :is(#page-home, #page-intro, #page-media, #page-github, #page-research, #page-blog, #page-explore, #page-ham) > h1::after { display: none !important; }
+    body #page-home.pending-reveal, body #page-home.initial-reveal {
+        opacity: 1; visibility: visible; transform: none; animation: none; pointer-events: auto;
     }
-
-    .mobile-notice-dialog {
-        width: min(94vw, 420px);
+    body.glass-mode #page-home p.intro {
+        display: block !important; position: relative; inset: auto; width: 100%; max-width: 65ch;
+        margin: 0 auto; padding: clamp(20px, 4vw, 40px); color: #eee;
+        background: rgba(16,17,20,0.94); border: 1px solid #41444b; border-radius: 12px;
+        font-size: 1.05rem; line-height: 1.9; text-shadow: none; mix-blend-mode: normal;
     }
-
-    .mobile-notice {
-        font-size: 0.82rem;
+    body.glass-mode .intro-signature { color: #ccff00; }
+    body.glass-mode :is(.glass-marquee, .glass-collage-scene, .glass-content-section) { display: none !important; }
+    body .card-grid, body.glass-mode :is(#page-home, #page-intro, #page-media, #page-github, #page-research, #page-blog, #page-explore, #page-ham) .card-grid {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+        gap: 24px; width: 100%; max-width: none; margin: 24px 0 0; padding: 0;
+        background: none !important; border: 0; border-radius: 0; box-shadow: none; backdrop-filter: none;
     }
-
-    #left-sidebar {
-        top: 50px !important;
-        left: 8px !important;
-        right: 8px !important;
-        width: auto !important;
-        max-width: none !important;
-        transform: none !important;
-        z-index: 3002;
-        overflow-x: auto;
-        overflow-y: hidden;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
+    body .pixel-card, body.glass-mode :is(#page-home, #page-intro, #page-media, #page-github, #page-research, #page-blog, #page-explore, #page-ham) .pixel-card {
+        width: 100%; min-width: 0; max-width: none; min-height: 0; margin: 0;
+        padding: clamp(20px, 2.8vw, 32px); transform: none !important;
     }
-
-    .nav-scroll-arrow {
-        display: flex;
-        position: fixed;
-        top: 54px;
-        width: 24px;
-        height: 26px;
-        align-items: center;
-        justify-content: center;
-        z-index: 3004;
-        border: none;
-        background: rgba(255, 255, 255, 0.22);
-        color: #fff;
-        font-size: 0.95rem;
-        line-height: 1;
-        pointer-events: auto;
+    body.glass-mode :is(#page-home, #page-intro, #page-media, #page-github, #page-research, #page-blog, #page-explore, #page-ham) .pixel-card {
+        background: rgba(20,21,24,0.96) !important; border: 1px solid #44474d;
+        border-radius: 12px; box-shadow: none; backdrop-filter: none;
     }
-
-    .nav-scroll-arrow[hidden] {
-        display: none;
+    body .pixel-card h3, body.glass-mode :is(#page-home, #page-intro, #page-media, #page-github, #page-research, #page-blog, #page-explore, #page-ham) .pixel-card h3 {
+        font-size: clamp(1.2rem, 2.4vw, 1.6rem); line-height: 1.35; text-wrap: balance;
     }
-
-    .nav-scroll-left {
-        left: 8px;
-        border-radius: 10px 0 0 10px;
+    body .pixel-card p, body.glass-mode :is(#page-home, #page-intro, #page-media, #page-github, #page-research, #page-blog, #page-explore, #page-ham) .pixel-card p {
+        font-size: 1rem; line-height: 1.75; margin-bottom: 24px; opacity: 1;
     }
-
-    .nav-scroll-right {
-        right: 8px;
-        border-radius: 0 10px 10px 0;
+    body.glass-mode :is(#page-home, #page-intro, #page-media, #page-github, #page-research, #page-blog, #page-explore, #page-ham) .pixel-card p { color: #d4d6dc; }
+    body .btn-black, body.glass-mode :is(#page-home, #page-intro, #page-media, #page-github, #page-research, #page-blog, #page-explore, #page-ham) .pixel-card .btn-black {
+        position: static; align-self: flex-start; min-height: 44px; max-width: 100%;
+        display: inline-flex; align-items: center; justify-content: center;
+        margin-top: auto; padding: 10px 16px; font-size: 1rem; line-height: 1.4;
+        white-space: normal; transform: none; overflow-wrap: anywhere;
     }
-
-    #left-sidebar::-webkit-scrollbar {
-        display: none;
+    body.glass-mode :is(#page-home, #page-intro, #page-media, #page-github, #page-research, #page-blog, #page-explore, #page-ham) .pixel-card .btn-black { box-shadow: 4px 4px 0 #ccff00; }
+    body.glass-mode #page-explore .pixel-card::after { display: none; }
+    body .deployed-apps, body.glass-mode #page-github .deployed-apps { margin-top: 40px; width: 100%; }
+    body.glass-mode #page-github .deployed-apps h2 { margin: 0; font-size: 1.7rem; line-height: 1.3; }
+    body.glass-mode #page-intro .intro-lead,
+    body.glass-mode #page-intro .intro-section {
+        width: 100%; max-width: 72ch; margin: 0 auto; padding: clamp(20px, 4vw, 36px);
+        background: rgba(20,21,24,0.96); color: #e4e6eb;
+        border: 1px solid #44474d; border-radius: 12px; box-shadow: none; backdrop-filter: none;
+        transform: none !important; font-size: 1rem; line-height: 1.85;
     }
-
-    .nav-list {
-        width: max-content;
-        min-width: max-content;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 8px;
-        flex-wrap: nowrap;
-        padding: 0 4px;
+    body.glass-mode #page-intro .intro-sections {
+        display: flex; flex-direction: column; gap: 24px; min-height: 0; margin-top: 24px;
     }
-
-    .nav-list a {
-        min-width: 104px;
-        height: 34px;
-        padding: 0 12px;
-        justify-content: center;
-        font-size: 1.02rem;
-        text-align: center;
-        white-space: nowrap;
+    body.glass-mode #page-intro .intro-section:nth-child(n) { margin: 0 auto; }
+    body.glass-mode #page-intro .bio-text { font-size: 1rem; line-height: 1.85; mix-blend-mode: normal; }
+    body.glass-mode #page-intro .intro-topic {
+        color: #ccff00; -webkit-text-stroke: 0; font-size: 1.6rem; letter-spacing: 0; margin-bottom: 16px;
     }
-
-    body:not(.glass-mode) .page-panel {
-        width: calc(100vw - 32px) !important;
-        left: 16px !important;
-        right: 16px !important;
-        max-width: 20rem !important;
-        padding: 16px 14px !important;
-        box-sizing: border-box;
-        overflow-x: hidden !important;
+    body.glass-mode #page-research p.intro {
+        font-size: 1rem; line-height: 1.8; letter-spacing: normal; text-transform: none;
+        margin: 0; text-shadow: none; background: rgba(16,17,20,0.9); padding: 20px; border-radius: 12px;
     }
-
-    body:not(.glass-mode) #page-home {
-        margin: 146px auto 0 !important;
+    body .bottom-bar, body.glass-mode .bottom-bar {
+        position: relative; inset: auto; width: 100%; height: auto; min-height: 0;
+        padding: 0; background: #101114; box-shadow: none; mix-blend-mode: normal; z-index: 3002;
     }
-
-    body:not(.glass-mode) #page-home,
-    body:not(.glass-mode) #page-intro,
-    body:not(.glass-mode) #page-media,
-    body:not(.glass-mode) #page-github,
-    body:not(.glass-mode) #page-research,
-    body:not(.glass-mode) #page-explore {
-        overflow-x: hidden;
+    body:not(.glass-mode) .bottom-bar .sys-status-bar {
+        position: fixed; inset: auto 0 0; height: auto; max-height: 88px;
+        padding: 8px 16px calc(8px + env(safe-area-inset-bottom, 0px));
+        gap: 16px; background: #101114; font-size: 0.8rem; overflow-x: auto;
     }
-
-    body:not(.glass-mode) .card-grid {
-        gap: 28px;
-        margin-top: 28px;
-        width: min(100%, 18.5rem);
-        margin-left: auto;
-        margin-right: auto;
+    body:not(.glass-mode) { padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)); }
+    .sys-status-bar span { display: none; }
+    .sys-status-bar a { min-height: 44px; display: inline-flex; align-items: center; white-space: nowrap; }
+    body.glass-mode .glass-footer {
+        position: relative; inset: auto; display: flex; flex-direction: column; align-items: flex-start;
+        gap: 8px; width: 100%; min-height: 0; padding: 20px var(--shell-gap) calc(20px + env(safe-area-inset-bottom, 0px));
+        font-size: 0.8rem; line-height: 1.5; color: #aeb3bd; z-index: 20;
     }
-
-    body:not(.glass-mode) .pixel-card {
-        min-height: 160px;
-        width: 100%;
-        max-width: 18.5rem;
-        padding: 12px;
-        margin-left: auto;
-        margin-right: auto;
+    body.glass-mode .glass-footer-links { display: flex; flex-wrap: wrap; gap: 4px 20px; min-width: 0; }
+    body.glass-mode .glass-footer a { display: inline-flex; align-items: center; min-height: 44px; color: #c7cbd3; }
+    body .vertical-controls { display: none; }
+    body.automata-playground { overflow: hidden; padding: 0; }
+    body.automata-playground .page-panel { display: none !important; }
+    body.automata-playground #left-sidebar,
+    body.automata-playground .sys-status-bar { display: none; }
+    body.automata-playground #bg-canvas { touch-action: none; }
+    body.automata-playground .vertical-controls,
+    body.glass-mode.automata-playground .vertical-controls {
+        display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px;
+        position: fixed; top: auto; left: max(12px, env(safe-area-inset-left, 0px));
+        right: max(12px, env(safe-area-inset-right, 0px)); bottom: calc(74px + env(safe-area-inset-bottom, 0px));
+        width: auto; transform: none; z-index: 50;
     }
-
-    body:not(.glass-mode) .pixel-card p {
-        margin-bottom: 54px;
+    body.automata-playground .v-slider-group {
+        width: auto; min-width: 0; min-height: 0; padding: 8px;
+        display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 6px;
+        background: #eee; border-radius: 8px; box-shadow: none;
     }
-
-    .btn-black {
-        font-size: 1rem;
+    body.glass-mode.automata-playground .v-slider-group { background: #181b20; }
+    body.automata-playground .v-slider-group label {
+        grid-row: 1; grid-column: 1; writing-mode: horizontal-tb;
+        margin: 0; font-size: 0.75rem; letter-spacing: 0; color: #222; white-space: normal; overflow-wrap: anywhere;
     }
-
-    body:not(.glass-mode) .vertical-controls .v-slider-group label,
-    body:not(.glass-mode) .vertical-controls .v-slider-group span,
-    body:not(.glass-mode) .playground-hue-controls label,
-    body:not(.glass-mode) .playground-hue-controls span,
-    body:not(.glass-mode) .reset-btn {
-        color: #111 !important;
+    body.automata-playground .v-slider-group span { grid-row: 1; grid-column: 2; margin: 0; font-size: 0.75rem; }
+    body.automata-playground input[type="range"][orient="vertical"] {
+        appearance: auto; -webkit-appearance: auto; writing-mode: horizontal-tb;
+        grid-column: 1 / -1; width: 100%; height: 44px; min-width: 0; margin: 0;
+    }
+    body.automata-playground .reset-card { display: flex; justify-content: center; }
+    body.automata-playground .reset-btn { min-width: 44px; min-height: 44px; font-size: 0.75rem; }
+    body.automata-playground .playground-hue-controls {
+        left: max(108px, calc(96px + env(safe-area-inset-left, 0px)));
+        right: max(12px, env(safe-area-inset-right, 0px)); bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+        width: auto; height: 54px; transform: none; padding: 4px 8px; gap: 6px;
+        background: #eee; border-radius: 8px; box-shadow: none;
+    }
+    body.automata-playground .playground-hue-controls input { flex: 1; width: 0; min-width: 0; height: 44px; }
+    body.automata-playground .playground-hue-controls :is(label, span) { font-size: 0.75rem; }
+    body.glass-mode.automata-playground .playground-hue-controls { background: #181b20; }
+    body.glass-mode.automata-playground :is(.v-slider-group label, .v-slider-group span, .reset-btn, .playground-hue-controls label, .playground-hue-controls span) { color: #fff; }
+    body.automata-playground .nav-back-btn {
+        left: max(12px, env(safe-area-inset-left, 0px)); bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+        width: 88px; height: 54px; font-size: 0.8rem; background-color: #17191d; border-radius: 8px;
+    }
+    body.glass-mode .ham-profile { width: 100%; margin-top: 24px; padding: clamp(20px, 4vw, 40px); }
+    body .ham-mode-toggle, body.glass-mode .ham-mode-toggle { font-size: 0.7rem !important; padding: 0 4px; }
+}
+@media (max-width: 639px) {
+    body .card-grid, body.glass-mode :is(#page-home, #page-intro, #page-media, #page-github, #page-research, #page-blog, #page-explore, #page-ham) .card-grid { grid-template-columns: minmax(0, 1fr); }
+    body .ham-profile { grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 20px; }
+    body .ham-copy p, body.glass-mode .ham-copy p { font-size: 1rem; margin-bottom: 24px; }
+    body .page-panel > h1, body.glass-mode :is(#page-home, #page-intro, #page-media, #page-github, #page-research, #page-blog, #page-explore, #page-ham) > h1 { font-size: clamp(1.9rem, 8.5vw, 3.2rem); }
+    body.glass-mode .glass-noise-overlay, body.glass-mode .glass-blob { display: none !important; }
+    body .site-title, body.glass-mode .site-title { font-size: 0.95rem; }
+}
+@media (hover: none) {
+    .pixel-card:hover, .btn-black:hover, .intro-section:hover { transform: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    #page-home.pending-reveal { opacity: 1; visibility: visible; transform: none; }
+}
+/* Wide-screen regressions: fixed chrome must not cover language or content. */
+@media (min-width: 1401px) {
+    body:not(.glass-mode).home-page { overflow-y: auto; }
+    body:not(.glass-mode) #page-home { margin-bottom: 80px; }
+    body.glass-mode .bottom-bar { width: auto; height: 44px; bottom: 72px; }
+    body.glass-mode .lang-toggle { min-height: 44px; padding: 8px; }
+    body.glass-mode :is(#page-intro, #page-media, #page-github, #page-research, #page-blog, #page-explore, #page-ham) {
+        padding-top: max(180px, 15vh);
+        padding-bottom: max(100px, 12vh);
     }
 }
-
-@media (max-width: 800px) and (orientation: portrait) {
-    body.glass-mode {
-        overflow-x: hidden !important;
-        overflow-y: auto;
+@media (max-width: 1400px) {
+    html { scroll-padding-top: calc(var(--shell-top) + var(--shell-nav) + 16px); scroll-padding-bottom: 88px; }
+    body .blog-list a, body.glass-mode #page-blog .pixel-card .blog-list li a {
+        display: flex; align-items: center; min-width: 44px; min-height: 44px;
+        padding: 10px 0; overflow-wrap: anywhere;
     }
+    body .sys-status-bar a, body.glass-mode .glass-footer a { min-width: 44px; }
+    body .ham-site-title, body.glass-mode .ham-site-title { display: inline-flex; align-items: center; min-height: 44px; }
+}
 
-    body.glass-mode .top-bar {
-        top: 0;
-        padding: 0 12px;
-        height: 44px;
-        z-index: 3200;
+@media (max-width: 1400px) {
+    body #left-sidebar, body.glass-mode #left-sidebar {
+        left: var(--shell-safe-left); right: var(--shell-safe-right); width: auto;
+        padding-inline: 12px;
     }
-
-    body.glass-mode .site-title {
-        position: fixed;
-        top: 8px;
-        left: 12px;
-        font-size: 1rem;
+    body.nav-overflow #left-sidebar {
+        left: calc(48px + var(--shell-safe-left)); right: calc(48px + var(--shell-safe-right)); width: auto;
     }
-
-    body.glass-mode .bgm-btn {
-        top: 8px;
-        right: 12px;
-        font-size: 0.72rem;
+    body.nav-overflow:not(.automata-playground) .nav-scroll-arrow {
+        display: flex; align-items: center; justify-content: center;
+        position: fixed; top: var(--shell-top); width: 48px; height: var(--shell-nav);
+        z-index: 3002; margin: 0; padding: 0; border: 0; border-bottom: 1px solid #393c43;
+        background: #17191d; color: #fff; font: 32px/1 system-ui; cursor: pointer;
     }
-
-    body.glass-mode #left-sidebar {
-        top: 50px !important;
-        left: 8px !important;
-        right: 8px !important;
-        width: auto !important;
-        max-width: none !important;
-        height: 34px;
-        overflow-x: auto;
-        overflow-y: hidden;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        background: rgba(0, 0, 0, 0.78);
-        border: 1px solid rgba(255, 255, 255, 0.14);
-        border-radius: 12px;
-        padding: 6px 8px;
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
+    .nav-scroll-previous { left: var(--shell-safe-left); }
+    .nav-scroll-next { right: var(--shell-safe-right); }
+    body .nav-scroll-arrow:disabled { color: #707783; cursor: default; }
+    body, body:not(.glass-mode), body.glass-mode {
+        padding-bottom: calc(var(--shell-footer, 120px) + 24px);
     }
-
-    body.glass-mode .nav-scroll-arrow {
-        top: 58px;
-        background: rgba(255, 255, 255, 0.18);
-        color: #fff;
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-    }
-
-    body.glass-mode #left-sidebar::-webkit-scrollbar {
-        display: none;
-    }
-
-    body.glass-mode .nav-list {
-        display: flex;
-        width: max-content;
-        min-width: max-content;
-        flex-wrap: nowrap;
-        gap: 8px;
-        justify-content: flex-start;
-        align-items: center;
-        background: transparent;
-        border: none;
-        border-radius: 0;
-        padding: 0 6px 0 0;
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-    }
-
-    body.glass-mode .nav-list a {
-        width: auto;
-        min-width: max-content;
-        min-height: 32px;
-        font-size: 1rem;
-        justify-content: center;
-        text-align: center;
-        transform: none !important;
-        padding: 0 8px;
-        white-space: nowrap;
-    }
-
-    body.glass-mode .nav-list a[href="#explore"] {
-        font-size: 1.08rem;
-    }
-
-    body.glass-mode .page-panel {
-        left: 0 !important;
-        right: 0 !important;
-        width: auto !important;
-        min-height: auto;
-        padding-left: 18px !important;
-        padding-right: 18px !important;
-        overflow-x: hidden !important;
-    }
-
-    body.glass-mode #page-home {
-        margin: 0 !important;
-        padding-top: 116px !important;
-        padding-bottom: 112px !important;
-    }
-
-    body.glass-mode #page-home p.intro {
-        width: auto !important;
-        max-width: none !important;
-        left: 0 !important;
-        right: 0 !important;
-        top: 0 !important;
-        font-size: 0.98rem;
-        line-height: 1.8;
-    }
-
-    body.glass-mode #page-intro,
-    body.glass-mode #page-media,
-    body.glass-mode #page-github,
-    body.glass-mode #page-research,
-    body.glass-mode #page-explore {
-        padding-top: 126px !important;
-        padding-bottom: 96px !important;
-    }
-
-    body.glass-mode #page-intro .intro-lead {
-        margin-bottom: 22px;
-        font-size: 0.92rem;
-        line-height: 1.75;
-    }
-
-    body.glass-mode #page-intro .intro-sections {
-        gap: 24px !important;
-    }
-
-    body.glass-mode #page-intro .intro-section {
-        padding: 1.2rem !important;
-    }
-
-    body.glass-mode #page-media > h1,
-    body.glass-mode #page-github > h1,
-    body.glass-mode #page-research > h1,
-    body.glass-mode #page-explore h1 {
-        font-size: clamp(2.3rem, 12vw, 4rem) !important;
-        margin-bottom: 20px !important;
-        white-space: nowrap;
-    }
-
-    body.glass-mode #page-explore h1 {
-        color: transparent !important;
-        -webkit-text-fill-color: transparent !important;
-        -webkit-text-stroke: 0 !important;
-        mix-blend-mode: normal !important;
-        position: relative;
-        display: inline-block;
-        text-shadow: none !important;
-    }
-
-    body.glass-mode #page-explore h1::after {
-        content: attr(data-outline-text);
-        position: absolute;
-        inset: 0;
-        color: transparent;
-        -webkit-text-fill-color: transparent;
-        -webkit-text-stroke: 3.5px #ffffff;
-        mix-blend-mode: difference !important;
-        pointer-events: none;
-    }
-
-    body.glass-mode #page-media .card-grid,
-    body.glass-mode #page-github .card-grid,
-    body.glass-mode #page-research .card-grid,
-    body.glass-mode #page-explore .card-grid {
-        display: grid !important;
-        grid-template-columns: 1fr !important;
-        gap: 24px !important;
-        max-width: 24rem !important;
-        margin-top: 28px !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-        padding-bottom: 12px;
-    }
-
-    body.glass-mode .vertical-controls .v-slider-group label,
-    body.glass-mode .vertical-controls .v-slider-group span,
-    body.glass-mode .playground-hue-controls label,
-    body.glass-mode .playground-hue-controls span,
-    body.glass-mode .reset-btn {
-        color: #fff !important;
-    }
-
-    body.glass-mode #page-media .pixel-card,
-    body.glass-mode #page-github .pixel-card,
-    body.glass-mode #page-research .pixel-card,
-    body.glass-mode #page-explore .pixel-card {
-        min-width: 0;
-        max-width: none !important;
-        width: 100%;
-        padding: 1.2rem !important;
-        box-shadow: 10px 10px 0 rgba(204, 255, 0, 0.18) !important;
-    }
-
-    body.glass-mode #page-github .pixel-card h3,
-    body.glass-mode #page-research .pixel-card h3 {
-        overflow-wrap: anywhere;
-    }
-
-    body.glass-mode #page-media .pixel-card p,
-    body.glass-mode #page-github .pixel-card p,
-    body.glass-mode #page-research .pixel-card p,
-    body.glass-mode #page-explore .pixel-card p {
-        margin-bottom: 1.6rem !important;
-        font-size: 0.95rem !important;
-    }
-
-    body.glass-mode .btn-black,
-    body.glass-mode #page-research .pixel-card .btn-black,
-    body.glass-mode #page-explore .pixel-card .btn-black {
-        position: static !important;
-        align-self: flex-start !important;
-        margin-top: auto !important;
-        font-size: 0.9rem !important;
-        padding: 0.75rem 1.1rem !important;
-        box-shadow: 4px 4px 0 #ccff00 !important;
-    }
-
-    body.glass-mode .glass-marquee {
-        bottom: 44px !important;
-        font-size: 0.82rem !important;
-        padding: 6px 0 !important;
-        z-index: 120 !important;
-    }
-
-    body.glass-mode .glass-marquee-track {
-        gap: 1.5rem;
-    }
-
-    body.glass-mode .glass-marquee-track span {
-        padding: 0 1rem;
-    }
-
-    body.glass-mode .bottom-bar {
-        bottom: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
-        padding: 0 10px;
-        z-index: 3200;
-    }
-
-    body.glass-mode .lang-toggle {
-        font-size: 0.66rem;
-        line-height: 1;
-    }
-
     body.glass-mode .glass-footer {
-        min-height: 44px;
-        padding: 8px 10px;
-        gap: 0;
-        justify-content: center;
-        font-size: 0.64rem;
-        line-height: 1;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        overflow-y: hidden;
+        position: fixed; inset: auto 0 0; padding: 8px 16px calc(8px + env(safe-area-inset-bottom, 0px));
+        background: #101114; border-top: 1px solid #393c43; z-index: 3000;
     }
-
-    body.glass-mode .glass-footer,
-    body.glass-mode .glass-footer * {
-        white-space: nowrap;
+    body.glass-mode .glass-footer > :not(.glass-footer-links) { display: none; }
+    body.glass-mode .glass-footer-links { width: 100%; flex-wrap: nowrap; gap: 8px; }
+    body:not(.glass-mode) .bottom-bar .sys-status-bar {
+        flex-wrap: nowrap; max-height: none; gap: 8px; overflow-x: auto;
     }
-
-    body.glass-mode .glass-footer-links {
-        gap: 10px;
-        flex-wrap: nowrap;
-        min-width: 0;
-        justify-content: center;
+    body .sys-status-bar a[href*="beian.miit.gov.cn"],
+    body.glass-mode .glass-footer a[href*="beian.miit.gov.cn"] { display: none; }
+    body .sys-status-bar a, body.glass-mode .glass-footer a {
+        flex: 0 0 auto; font-size: 0.75rem; white-space: nowrap;
     }
-
-    body.glass-mode .glass-footer > div:first-child,
-    body.glass-mode #glass-footer-year {
-        display: none;
+    body.glass-mode .glass-footer-links { overflow-x: auto; }
+    body.glass-mode .glass-footer, body:not(.glass-mode) .bottom-bar .sys-status-bar {
+        padding-left: max(16px, var(--shell-safe-left));
+        padding-right: max(16px, var(--shell-safe-right));
     }
+    html { scroll-padding-bottom: calc(var(--shell-footer, 120px) + 16px); }
+    body.automata-playground { padding: 0; }
+    /* Let grid items retain their content minimum during WebKit reflow. */
+    body .pixel-card, body.glass-mode :is(#page-home, #page-intro, #page-media, #page-github, #page-research, #page-blog, #page-explore, #page-ham) .pixel-card {
+        min-height: auto; height: auto;
+    }
+    body .pixel-card > * { flex-shrink: 0; min-width: 0; max-width: 100%; }
 }

@@ -39,6 +39,105 @@
     text-align: left;
 }
 
+/* Compact, worn station labels: subdued stock, hard cuts, overprinted type. */
+.ham-station-notes {
+    display: grid;
+    grid-template-columns: minmax(0, 1.8fr) repeat(2, minmax(0, 0.8fr));
+    align-items: center;
+    gap: 6px;
+    width: min(100%, 590px);
+    margin: 20px 0 4px;
+    padding: 10px 6px;
+    isolation: isolate;
+    text-align: left;
+}
+.ham-paper {
+    position: relative;
+    min-width: 0;
+    padding: 14px 16px 16px;
+    color: #e1e0d8;
+    font-family: "JetBrains Mono", monospace;
+    background: #30312c;
+    box-shadow: 3px 4px 0 #080909;
+    transform: rotate(-1.5deg);
+}
+.ham-paper::before {
+    content: "";
+    position: absolute;
+    width: 46px;
+    height: 16px;
+    top: -8px;
+    left: 14px;
+    background: #181a18;
+    border: 1px solid #55584d;
+    clip-path: polygon(3% 0, 100% 5%, 97% 94%, 0 100%, 3% 70%, 0 40%);
+    transform: rotate(5deg);
+    pointer-events: none;
+}
+.ham-paper::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 -6px;
+    height: 8px;
+    background: inherit;
+    clip-path: polygon(0 0, 100% 0, 100% 65%, 92% 90%, 84% 50%, 74% 100%, 63% 65%, 54% 90%, 43% 45%, 31% 100%, 22% 65%, 12% 95%, 0 60%);
+}
+.ham-paper dt {
+    padding-bottom: 6px;
+    border-bottom: 2px solid currentColor;
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+}
+.ham-paper dd {
+    margin: 10px 0 0;
+    color: inherit;
+    font-size: clamp(1.75rem, 3vw, 2.8rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.04em;
+}
+.ham-paper-grid dd { font-size: clamp(1.2rem, 3vw, 2.25rem); }
+.ham-paper-imprint {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
+}
+.ham-paper-cq {
+    margin-top: 10px;
+    background: #555c33;
+    color: #f1f0da;
+    transform: rotate(2.5deg);
+    z-index: 1;
+}
+.ham-paper-itu {
+    background: #8d8f84;
+    color: #151714;
+    transform: rotate(-3deg);
+}
+.ham-paper-cq::before { left: auto; right: 8px; transform: rotate(-12deg); }
+.ham-paper-itu::before {
+    width: 22px; height: 4px; top: 5px; left: auto; right: 12px;
+    background: #4e5149; border: 1px solid #b9bbb2; clip-path: none; transform: rotate(3deg);
+}
+body:not(.glass-mode) .ham-paper { font-family: "PixelFont", monospace; }
+body.glass-mode .ham-station-notes + .ham-profile { margin-top: 24px; }
+@media (max-width: 639px) {
+    .ham-station-notes {
+        gap: 4px;
+        margin-top: 14px;
+        padding-inline: 4px;
+    }
+    .ham-paper { padding: 12px 8px 14px; }
+    .ham-paper dd { font-size: 1.65rem; }
+    .ham-paper-grid dd { font-size: clamp(1.05rem, 4.5vw, 1.65rem); }
+    .ham-paper-imprint { font-size: 0.5625rem; letter-spacing: 0; }
+    .ham-paper-grid .ham-paper-imprint { max-width: 12ch; line-height: 1.4; }
+    .ham-paper::before { width: 32px; left: 8px; }
+    .ham-paper-itu::before { width: 18px; left: auto; }
+}
+
 .ham-label,
 .ham-location {
     color: #555;
@@ -158,6 +257,7 @@ body.glass-mode .ham-mode-toggle {
 }
 
 @media (max-width: 800px) {
+    body:not(.glass-mode) #page-ham { margin-top: 28px; }
     #page-ham {
         width: calc(100vw - 32px);
         margin-top: 118px;

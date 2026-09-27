@@ -46,7 +46,7 @@
         const isMobileViewport = window.matchMedia("(max-width: 800px)").matches;
         const hasCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
         const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        const isTouchMobile = isMobileViewport || (hasCoarsePointer && window.innerWidth < 1024);
+        const isTouchMobile = isMobileViewport || hasCoarsePointer;
         const useLowEffects = isSafari || isIOSDevice || isTouchMobile || prefersReducedMotion;
 
         return {
@@ -124,6 +124,7 @@
             exitAutomataPlayground();
         }
 
+        if (!document.getElementById(`page-${hash}`)) hash = "home";
         document.querySelectorAll(".page-panel").forEach((panel) => panel.classList.remove("active"));
         document.querySelectorAll(".nav-list a").forEach((link) => link.classList.remove("active"));
         document.body.classList.toggle("home-page", hash === "home");
@@ -136,11 +137,13 @@
         }
 
         const activeNav = document.querySelector(`.nav-list a[href="#${hash}"]`);
+        document.querySelectorAll(".nav-list a").forEach(link => link.removeAttribute("aria-current"));
         if (activeNav) {
             activeNav.classList.add("active");
+            activeNav.setAttribute("aria-current", "page");
         }
 
-        window.scrollTo({ top: 0, behavior: environmentProfile && environmentProfile.useLowEffects ? "auto" : "smooth" });
+        window.scrollTo({ top: 0, behavior: "auto" });
     }
 
     function enterAutomataPlayground() {
@@ -260,6 +263,7 @@
     }
 
     function applyLanguage(lang) {
+        document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
         const translations = window.TRANSLATIONS[lang];
         document.querySelectorAll("[data-i18n]").forEach((element) => {
             const key = element.getAttribute("data-i18n");
@@ -288,58 +292,28 @@
         syncGlassThemePresentation();
     }
 
-    function bindMobileNotice() {
-        const modal = document.getElementById("mobile-notice-modal");
-        const confirmButton = document.getElementById("mobile-notice-confirm");
-
-        if (!modal || !confirmButton) {
-            return;
-        }
-
-        const shouldShow = environmentProfile && environmentProfile.isTouchMobile;
-        modal.hidden = !shouldShow;
-        document.body.classList.toggle("mobile-notice-open", shouldShow);
-
-        confirmButton.addEventListener("click", () => {
-            modal.hidden = true;
-            document.body.classList.remove("mobile-notice-open");
-        });
-    }
-
-    function bindMobileNavArrows() {
+    function bindResponsiveNavigation(engine) {
         const sidebar = document.getElementById("left-sidebar");
-        const leftArrow = document.getElementById("nav-scroll-left");
-        const rightArrow = document.getElementById("nav-scroll-right");
-
-        if (!sidebar || !leftArrow || !rightArrow) {
-            return;
-        }
-
-        const updateArrowVisibility = () => {
-            const isNarrow = window.matchMedia("(max-width: 800px)").matches;
-            const canScroll = sidebar.scrollWidth - sidebar.clientWidth > 6;
-
-            if (!isNarrow || !canScroll) {
-                leftArrow.hidden = true;
-                rightArrow.hidden = true;
-                return;
+        const keepActiveVisible = () => {
+            const active = sidebar.querySelector("a.active");
+            if (!active || window.innerWidth > 1400) return;
+            const item = active.getBoundingClientRect();
+            const viewport = sidebar.getBoundingClientRect();
+            if (item.left < viewport.left + 12 || item.right > viewport.right - 12) {
+                sidebar.scrollBy({ left: item.left - viewport.left - (viewport.width - item.width) / 2, behavior: "auto" });
             }
-
-            leftArrow.hidden = sidebar.scrollLeft <= 2;
-            rightArrow.hidden = sidebar.scrollLeft + sidebar.clientWidth >= sidebar.scrollWidth - 2;
         };
-
-        leftArrow.addEventListener("click", () => {
-            sidebar.scrollBy({ left: -140, behavior: "smooth" });
-        });
-
-        rightArrow.addEventListener("click", () => {
-            sidebar.scrollBy({ left: 140, behavior: "smooth" });
-        });
-
-        sidebar.addEventListener("scroll", updateArrowVisibility, { passive: true });
-        window.addEventListener("resize", updateArrowVisibility);
-        window.setTimeout(updateArrowVisibility, 0);
+        const refresh = () => {
+            applyEnvironmentProfile();
+            engine.performanceProfile = environmentProfile;
+            keepActiveVisible();
+        };
+        window.addEventListener("resize", refresh);
+        window.matchMedia("(prefers-reduced-motion: reduce)").addEventListener("change", refresh);
+        window.addEventListener("hashchange", () => requestAnimationFrame(keepActiveVisible));
+        new MutationObserver(() => requestAnimationFrame(keepActiveVisible))
+            .observe(sidebar, { childList: true, subtree: true });
+        keepActiveVisible();
     }
 
     function syncGlassThemePresentation() {
@@ -683,8 +657,7 @@
         bindGlassGlowEffects();
         bindPerformanceGuards(engine);
         applyLanguage(state.currentLang);
-        bindMobileNotice();
-        bindMobileNavArrows();
+        bindResponsiveNavigation(engine);
         engine.start();
         if ((window.location.hash.replace("#", "") || "home") === "home") {
             engine.restartShowcase({ holdSeconds: HOME_SHOWCASE_HOLD_SECONDS });

@@ -2,11 +2,11 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title data-i18n="page_title"></title>
     <link rel="stylesheet" href="styles.css?v=20260812a">
     <link rel="stylesheet" href="glass-theme.css?v=20260812a">
-    <link rel="stylesheet" href="mobile-narrow.css?v=20260812a">
+    <link rel="stylesheet" href="mobile-narrow.css?v=20260927l">
 </head>
 <body>
     <audio id="bgm-audio" preload="auto"></audio>
@@ -24,13 +24,6 @@
             <span id="bgm-text" class="bgm-text">AUDIO: OFF</span>
             <img id="bgm-icon" src="assets/soundon.jpeg" alt="BGM toggle icon">
         </span>
-    </div>
-
-    <div id="mobile-notice-modal" class="mobile-notice-modal" hidden>
-        <div class="mobile-notice-dialog">
-            <div class="mobile-notice" data-i18n="mobile_notice"></div>
-            <button id="mobile-notice-confirm" class="mobile-notice-confirm" type="button" data-i18n="mobile_notice_confirm"></button>
-        </div>
     </div>
 
     <div class="bottom-bar">
@@ -67,19 +60,17 @@
             <li><a href="#explore" data-i18n="nav_explore" data-glass-i18n="glass_nav_explore"></a></li>
         </ul>
     </nav>
-    <button id="nav-scroll-left" class="nav-scroll-arrow nav-scroll-left" type="button" aria-label="Scroll navigation left" hidden>&lt;</button>
-    <button id="nav-scroll-right" class="nav-scroll-arrow nav-scroll-right" type="button" aria-label="Scroll navigation right" hidden>&gt;</button>
 
     <div class="vertical-controls">
         <div class="v-slider-group">
             <span id="valStates">10</span>
             <input type="range" id="statesSlider" min="2" max="20" value="10" orient="vertical">
-            <label data-i18n="ctrl_trail"></label>
+            <label for="statesSlider" data-i18n="ctrl_trail"></label>
         </div>
         <div class="v-slider-group">
             <span id="valFps">15</span>
             <input type="range" id="fpsSlider" min="5" max="60" value="15" orient="vertical">
-            <label data-i18n="ctrl_fps"></label>
+            <label for="fpsSlider" data-i18n="ctrl_fps"></label>
         </div>
         <div id="resetCard" class="v-slider-group reset-card">
             <button id="resetAutomataBtn" class="reset-btn" type="button" data-i18n="btn_reset"></button>
@@ -298,7 +289,8 @@
     </footer>
 
     <script src="translations.js?v=20260907a"></script>
-    <script src="CA.js"></script>
-    <script src="app.js"></script>
+    <script src="CA.js?v=20260927f"></script>
+    <script src="app.js?v=20260927f"></script>
+    <script src="responsive-shell.js?v=20260927k"></script>
 </body>
 </html>

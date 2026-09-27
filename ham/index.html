@@ -2,13 +2,13 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="BA4TIR amateur radio station profile.">
     <title>BA4TIR · Hronrad</title>
     <link rel="stylesheet" href="../styles.css?v=20260907a">
     <link rel="stylesheet" href="../glass-theme.css?v=20260907a">
-    <link rel="stylesheet" href="../mobile-narrow.css?v=20260907a">
-    <link rel="stylesheet" href="ham.css?v=20260907a">
+    <link rel="stylesheet" href="ham.css?v=20260927n">
+    <link rel="stylesheet" href="../mobile-narrow.css?v=20260927l">
 </head>
 <body class="ham-page glass-mode">
     <div class="glass-noise-overlay" aria-hidden="true"></div>
@@ -49,6 +49,20 @@
     <main id="page-ham" class="pixel-panel page-panel active">
         <p class="ham-band" aria-hidden="true">CQ · CQ · CQ</p>
         <h1 data-i18n="ham_title"></h1>
+        <dl class="ham-station-notes" aria-label="电台参数">
+            <div class="ham-paper ham-paper-grid">
+                <dt>GRID</dt>
+                <dd>OM92LC<span class="ham-paper-imprint" aria-hidden="true">BA4TIR / NANJING</span></dd>
+            </div>
+            <div class="ham-paper ham-paper-cq">
+                <dt>CQ</dt>
+                <dd>24<span class="ham-paper-imprint" aria-hidden="true">ZONE</span></dd>
+            </div>
+            <div class="ham-paper ham-paper-itu">
+                <dt>ITU</dt>
+                <dd>44<span class="ham-paper-imprint" aria-hidden="true">ZONE</span></dd>
+            </div>
+        </dl>
         <section class="ham-profile" aria-labelledby="ham-call-sign">
             <div class="ham-identity">
                 <p class="ham-label" data-i18n="ham_callsign_label"></p>
@@ -73,7 +87,8 @@
         <div id="glass-footer-year"></div>
     </footer>
 
-    <script src="../CA.js"></script>
-    <script src="ham.js?v=20260907a"></script>
+    <script src="../CA.js?v=20260927f"></script>
+    <script src="ham.js?v=20260927m"></script>
+    <script src="../responsive-shell.js?v=20260927k"></script>
 </body>
 </html>

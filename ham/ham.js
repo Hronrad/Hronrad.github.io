@@ -15,7 +15,8 @@
             ham_title: "业余无线电",
             ham_callsign_label: "电台呼号",
             ham_location: "中国 · 南京",
-            ham_intro: "我是业余无线电爱好者 Hronrad，电台呼号为 BA4TIR。业余无线电让我通过电波探索传播、通信技术与世界各地的连接。欢迎通过 QRZ 查看我的电台资料。",
+            ham_parameters: "电台参数",
+            ham_intro: "我是业余无线电爱好者 Hronrad，电台呼号为 BA4TIR，现任南京大学业余无线电协会负责人。业余无线电让我通过电波探索传播、通信技术与世界各地的连接。欢迎通过 QRZ 查看我的电台资料。",
             btn_qrz: "QRZ 资料 >",
             mode_pixel: "MODE: PIXEL",
             mode_glass: "MODE: GLASS"
@@ -35,7 +36,8 @@
             ham_title: "Ham Radio",
             ham_callsign_label: "Call sign",
             ham_location: "Nanjing · China",
-            ham_intro: "I am Hronrad, an amateur radio operator with the call sign BA4TIR. Ham radio lets me explore propagation, communications technology, and connections across the world through radio. Visit QRZ for my station profile.",
+            ham_parameters: "Station parameters",
+            ham_intro: "I am Hronrad, an amateur radio operator with the call sign BA4TIR and the head of the Nanjing University Amateur Radio Association. Ham radio lets me explore propagation, communications technology, and connections across the world through radio. Visit QRZ for my station profile.",
             btn_qrz: "VIEW ON QRZ >",
             mode_pixel: "MODE: PIXEL",
             mode_glass: "MODE: GLASS"
@@ -48,6 +50,7 @@
     function applyCopy() {
         const translations = copy[state.lang];
         document.documentElement.lang = state.lang === "zh" ? "zh-CN" : "en";
+        document.querySelector('.ham-station-notes').setAttribute('aria-label', translations.ham_parameters);
 
         document.querySelectorAll("[data-i18n]").forEach((element) => {
             const key = element.getAttribute("data-i18n");
@@ -90,11 +93,32 @@
     function init() {
         const canvas = document.getElementById("bg-canvas");
         const footerYear = document.getElementById("glass-footer-year");
-        const isNarrow = window.matchMedia("(max-width: 800px)").matches;
+        const isNarrow = window.matchMedia("(max-width: 800px), (pointer: coarse)").matches;
         const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
         document.body.classList.toggle("mobile-env", isNarrow);
         document.body.classList.toggle("low-effects", isNarrow || prefersReducedMotion);
+
+        const refreshEnvironment = () => {
+            const narrow = window.matchMedia("(max-width: 800px), (pointer: coarse)").matches;
+            const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            document.body.classList.toggle("mobile-env", narrow);
+            document.body.classList.toggle("low-effects", narrow || reduced);
+            if (engine) Object.assign(engine.performanceProfile, { isTouchMobile: narrow, prefersReducedMotion: reduced, useLowEffects: narrow || reduced });
+            const sidebar = document.getElementById("left-sidebar");
+            const active = sidebar.querySelector("a.active");
+            if (active && window.innerWidth <= 1400) {
+                const item = active.getBoundingClientRect();
+                const viewport = sidebar.getBoundingClientRect();
+                if (item.left < viewport.left || item.right > viewport.right) sidebar.scrollBy({left: item.left - viewport.left - (viewport.width - item.width) / 2});
+            }
+        };
+        window.addEventListener("resize", refreshEnvironment);
+        window.matchMedia("(prefers-reduced-motion: reduce)").addEventListener("change", refreshEnvironment);
+        document.addEventListener("visibilitychange", () => engine?.setRuntimeSuspended(document.hidden));
+        document.getElementById("lang-btn").addEventListener("click", () => requestAnimationFrame(refreshEnvironment));
+        document.getElementById("ham-mode-toggle").addEventListener("click", () => requestAnimationFrame(refreshEnvironment));
+        requestAnimationFrame(refreshEnvironment);
 
         if (footerYear) footerYear.innerText = `(C) ${new Date().getFullYear()} HRONRAD`;
         document.getElementById("lang-btn").addEventListener("click", toggleLanguage);
