@@ -1,0 +1,87 @@
+name: Deploy website
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nginx-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - name: Run tests
+        run: |
+          node --check app.js
+          node --check CA.js
+          node --check ham/ham.js
+          node --check responsive-shell.js
+          node --test tests/ca-engine.test.cjs tests/responsive-shell.test.cjs
+
+      - name: Check deployment configuration
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          : "${DEPLOY_HOST:?Add DEPLOY_HOST to repository Secrets}"
+          : "${SSH_KEY:?Add DEPLOY_SSH_KEY to repository Secrets}"
+          : "${KNOWN_HOSTS:?Add DEPLOY_KNOWN_HOSTS to repository Secrets}"
+
+      - name: Configure SSH
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/deploy_key ~/.ssh/known_hosts
+
+      - name: Sync website
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+        run: |
+          rsync -az \
+            --no-owner --no-group \
+            --chmod=D755,F644 \
+            --delay-updates \
+            --delete-delay \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='.agents/' \
+            --exclude='.codex/' \
+            --exclude='.vscode/' \
+            --exclude='.DS_Store' \
+            --exclude='.gitignore' \
+            --exclude='.env*' \
+            --exclude='.well-known/' \
+            --exclude='node_modules/' \
+            --exclude='tests/' \
+            --exclude='README.md' \
+            --exclude='AGENTS.md' \
+            --exclude='NGINX-DEPLOY.md' \
+            -e "ssh -i $HOME/.ssh/deploy_key -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=20" \
+            ./ "deploy@${DEPLOY_HOST}:/var/www/hronrad/site/"
+
+      - name: Remove deployment key
+        if: always()
+        run: rm -f ~/.ssh/deploy_key
