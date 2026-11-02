@@ -1,0 +1,799 @@
+/* ==========================================================================
+   ham/ham-console.css
+   BA4TIR 先锋瑞士网格与无线电测绘艺术终端样式 (严格隔离在 #page-ham 作用域)
+   ========================================================================== */
+
+body #page-ham.pixel-panel.page-panel.ham-console-page {
+  --ham-bg-deep: rgba(9, 13, 18, 0.82);
+  --ham-bg-card: rgba(14, 20, 27, 0.78);
+  --ham-bg-card-hover: rgba(18, 27, 36, 0.88);
+  --ham-border-hairline: rgba(255, 255, 255, 0.13);
+  --ham-border-bright: rgba(0, 245, 212, 0.48);
+  --ham-accent-cyan: #00f5d4;
+  --ham-accent-amber: #ffb703;
+  --ham-text-primary: #f1f5f9;
+  --ham-text-secondary: #94a3b8;
+  --ham-text-muted: #64748b;
+  --ham-font-mono: "JetBrains Mono", "Fira Code", "SFMono-Regular", Consolas, monospace;
+  --ham-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  color: var(--ham-text-primary) !important;
+  width: min(920px, calc(100vw - 290px)) !important;
+  max-width: 920px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+body #page-ham.pixel-panel.page-panel.ham-console-page:not(.active) {
+  display: none !important;
+}
+
+body #page-ham .ham-surface {
+  width: 100%;
+}
+
+/* 外层一体式黑曜石毛玻璃展板外壳 */
+body #page-ham .ham-monograph-shell {
+  position: relative;
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(0, 245, 212, 0.07), transparent 45%),
+    radial-gradient(circle at 88% 100%, rgba(255, 183, 3, 0.06), transparent 45%),
+    var(--ham-bg-deep);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid var(--ham-border-hairline);
+  box-shadow:
+    0 28px 70px rgba(0, 0, 0, 0.72),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  font-family: var(--ham-font-sans);
+  box-sizing: border-box;
+}
+
+body #page-ham .ham-monograph-shell *,
+body #page-ham .ham-monograph-shell *::before,
+body #page-ham .ham-monograph-shell *::after {
+  box-sizing: border-box;
+}
+
+/* ================= 第一层：主视觉双栏 (左呼号排版 + 右 CRT 视窗) ================= */
+body #page-ham .ham-hero-grid {
+  display: grid;
+  grid-template-columns: 1.08fr 1fr;
+  gap: 1.15rem;
+  margin-bottom: 1.35rem;
+}
+
+body #page-ham .ham-identity-card,
+body #page-ham .ham-crt-card {
+  position: relative;
+  background: var(--ham-bg-card);
+  border: 1px solid var(--ham-border-hairline);
+  border-radius: 12px;
+  padding: 1.25rem 1.35rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+/* 瑞士制图四角准星装饰 */
+body #page-ham .ham-corner-mark {
+  position: absolute;
+  font-family: var(--ham-font-mono);
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.22);
+  line-height: 1;
+  pointer-events: none;
+}
+body #page-ham .ham-corner-tl { top: 8px; left: 10px; }
+body #page-ham .ham-corner-tr { top: 8px; right: 10px; }
+
+body #page-ham .ham-identity-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+body #page-ham .ham-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.24rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(0, 245, 212, 0.08);
+  border: 1px solid rgba(0, 245, 212, 0.3);
+  font-family: var(--ham-font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: var(--ham-accent-cyan);
+}
+
+body #page-ham .ham-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ham-accent-cyan);
+  box-shadow: 0 0 8px var(--ham-accent-cyan);
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+body #page-ham .ham-live-dot.is-locked {
+  background: var(--ham-accent-amber);
+  box-shadow: 0 0 10px var(--ham-accent-amber);
+}
+
+body #page-ham .ham-coord-tag {
+  font-family: var(--ham-font-mono);
+  font-size: 0.66rem;
+  color: var(--ham-text-muted);
+  letter-spacing: 0.05em;
+}
+
+/* 呼号纪念碑主视觉排版 */
+body #page-ham .ham-callsign-stage {
+  position: relative;
+  padding: 0.35rem 0 0.7rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body #page-ham .ham-callsign-ghost {
+  position: absolute;
+  top: -0.35rem;
+  right: -0.2rem;
+  font-family: var(--ham-font-mono);
+  font-size: clamp(3.4rem, 5.5vw, 4.8rem);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.05);
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+}
+
+body #page-ham .ham-callsign-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  position: relative;
+  z-index: 1;
+}
+
+body #page-ham .ham-callsign-main {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-family: var(--ham-font-mono) !important;
+  font-size: clamp(2.5rem, 4.2vw, 3.5rem) !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  letter-spacing: 0.04em !important;
+  color: #ffffff !important;
+  text-shadow: 0 0 24px rgba(0, 245, 212, 0.22);
+}
+
+body #page-ham .ham-callsign-badges {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-family: var(--ham-font-mono);
+  font-size: 0.62rem;
+  line-height: 1.35;
+  color: var(--ham-accent-amber);
+  letter-spacing: 0.1em;
+}
+
+body #page-ham .ham-console-subtitle {
+  margin: 0.5rem 0 0 !important;
+  font-size: 0.76rem !important;
+  line-height: 1.5 !important;
+  color: var(--ham-accent-cyan) !important;
+  opacity: 0.88;
+}
+
+body #page-ham .ham-bio-editorial {
+  margin: 0.85rem 0 !important;
+  padding-left: 0.75rem !important;
+  border-left: 2px solid var(--ham-accent-amber);
+  font-size: 0.84rem !important;
+  line-height: 1.68 !important;
+  color: #dbe4ee !important;
+}
+
+/* 莫尔斯电码几何签名条 */
+body #page-ham .ham-morse-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-top: 0.65rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+body #page-ham .morse-label {
+  font-family: var(--ham-font-mono);
+  font-size: 0.62rem;
+  color: var(--ham-text-muted);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+body #page-ham .morse-glyphs {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex-wrap: wrap;
+}
+body #page-ham .morse-glyphs i {
+  display: inline-block;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(0, 245, 212, 0.55);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+body #page-ham .morse-glyphs i.dit { width: 4px; }
+body #page-ham .morse-glyphs i.dah { width: 12px; }
+body #page-ham .morse-glyphs .morse-gap { width: 5px; }
+
+body #page-ham .ham-monograph-shell.is-carrier-locked .morse-glyphs i {
+  background: var(--ham-accent-amber);
+  box-shadow: 0 0 6px rgba(255, 183, 3, 0.65);
+}
+
+/* ================= 右侧：同源元胞 CRT 监视器与单一调谐杆 ================= */
+body #page-ham .ham-crt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+}
+
+body #page-ham .ham-crt-title-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+body #page-ham .ham-tech-index {
+  font-family: var(--ham-font-mono);
+  font-size: 0.62rem;
+  color: var(--ham-accent-amber);
+  letter-spacing: 0.1em;
+}
+
+body #page-ham #ham-monitor-title {
+  margin: 0 !important;
+  font-family: var(--ham-font-mono) !important;
+  font-size: 0.74rem !important;
+  font-weight: 600 !important;
+  color: var(--ham-text-secondary) !important;
+  letter-spacing: 0.06em;
+}
+
+body #page-ham .ham-sync-btn {
+  appearance: none;
+  -webkit-appearance: none;
+  background: rgba(0, 245, 212, 0.12) !important;
+  color: var(--ham-accent-cyan) !important;
+  border: 1px solid rgba(0, 245, 212, 0.4) !important;
+  border-radius: 6px !important;
+  padding: 0.25rem 0.65rem !important;
+  font-family: var(--ham-font-mono) !important;
+  font-size: 0.68rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.18s ease !important;
+}
+body #page-ham .ham-sync-btn:hover {
+  background: var(--ham-accent-cyan) !important;
+  color: #06090e !important;
+  box-shadow: 0 0 14px rgba(0, 245, 212, 0.45) !important;
+}
+
+/* CRT 曲面显像管视窗 */
+body #page-ham .crt-bezel {
+  background: #06080b;
+  padding: 7px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.95);
+}
+
+body #page-ham .crt-screen {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #030709;
+  aspect-ratio: 46 / 25;
+}
+
+body #page-ham #ham-crt-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+body #page-ham .crt-scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.42) 50%
+  );
+  background-size: 100% 4px;
+  z-index: 2;
+}
+
+body #page-ham .crt-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 32px rgba(0, 0, 0, 0.88);
+  background: radial-gradient(circle at 50% 50%, rgba(0, 245, 212, 0.04), transparent 72%);
+  z-index: 3;
+}
+
+body #page-ham .crt-osd {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--ham-font-mono);
+  font-size: 0.68rem;
+  color: var(--ham-accent-cyan);
+  text-shadow: 0 0 8px rgba(0, 245, 212, 0.75);
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* 极简阻尼调谐控制尺 (强力覆盖宿主 styles.css 的垂直滑块全局规则) */
+body #page-ham .ham-vfo-control {
+  margin-top: 0.75rem;
+  padding: 0.55rem 0.75rem;
+  background: rgba(5, 8, 12, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+}
+
+body #page-ham .ham-vfo-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.35rem;
+  font-family: var(--ham-font-mono);
+  font-size: 0.7rem;
+}
+
+body #page-ham #ham-tuning-label {
+  color: var(--ham-text-secondary);
+  letter-spacing: 0.06em;
+}
+
+body #page-ham #ham-vfd-digits {
+  color: var(--ham-accent-amber);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+body #page-ham #ham-tuning-slider {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  writing-mode: horizontal-tb !important;
+  direction: ltr !important;
+  width: 100% !important;
+  height: 5px !important;
+  margin: 0.25rem 0 !important;
+  padding: 0 !important;
+  background: linear-gradient(90deg, rgba(255,255,255,0.12) 0%, rgba(0,245,212,0.35) 77%, rgba(255,183,3,0.85) 77.5%, rgba(255,255,255,0.12) 100%) !important;
+  border-radius: 999px !important;
+  border: none !important;
+  outline: none !important;
+  cursor: ew-resize !important;
+}
+
+body #page-ham #ham-tuning-slider::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  width: 14px !important;
+  height: 14px !important;
+  border-radius: 50% !important;
+  background: var(--ham-accent-amber) !important;
+  border: 2px solid #0b0f14 !important;
+  box-shadow: 0 0 10px rgba(255, 183, 3, 0.85) !important;
+  cursor: ew-resize !important;
+}
+
+body #page-ham #ham-tuning-slider::-moz-range-thumb {
+  width: 14px !important;
+  height: 14px !important;
+  border-radius: 50% !important;
+  background: var(--ham-accent-amber) !important;
+  border: 2px solid #0b0f14 !important;
+  box-shadow: 0 0 10px rgba(255, 183, 3, 0.85) !important;
+  cursor: ew-resize !important;
+}
+
+body #page-ham .ham-vfo-scale {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--ham-font-mono);
+  font-size: 0.58rem;
+  color: var(--ham-text-muted);
+  margin-top: 0.2rem;
+}
+body #page-ham .ham-vfo-scale .scale-target {
+  color: var(--ham-accent-amber);
+  font-weight: 600;
+}
+
+/* ================= 第二层：三大无线电测绘分区三联画 (OM92LC / CQ 24 / ITU 44) ================= */
+body #page-ham .ham-zones-section {
+  margin-bottom: 1.25rem;
+}
+
+body #page-ham .ham-section-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.85rem;
+}
+
+body #page-ham .ham-divider-title {
+  font-family: var(--ham-font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--ham-text-secondary);
+  white-space: nowrap;
+}
+
+body #page-ham .ham-divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.16), transparent);
+}
+
+body #page-ham .ham-zone-triptych {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+body #page-ham .ham-zone-card {
+  position: relative;
+  min-height: 176px;
+  border-radius: 12px;
+  background: var(--ham-bg-card);
+  border: 1px solid var(--ham-border-hairline);
+  padding: 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.28s ease, background 0.28s ease, box-shadow 0.28s ease;
+}
+
+body #page-ham .ham-zone-card:hover {
+  transform: translateY(-3px);
+  background: var(--ham-bg-card-hover);
+  border-color: var(--ham-border-bright);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55), 0 0 24px rgba(0, 245, 212, 0.08);
+}
+
+/* 背景定制几何测绘 SVG 图层 */
+body #page-ham .zone-art-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.35;
+  transition: opacity 0.3s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+body #page-ham .ham-zone-card:hover .zone-art-svg {
+  opacity: 0.45;
+  transform: scale(1.03);
+}
+
+/* VFO controls the existing full-screen grain only while HAM is mounted. */
+body.glass-mode.ham-noise-coupled .glass-noise-overlay {
+  opacity: var(--ham-background-noise, 0.12);
+  transition: opacity 180ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.glass-mode.ham-noise-coupled .glass-noise-overlay {
+    transition: none;
+  }
+}
+
+body #page-ham .ham-zone-card:hover .zone-svg-node {
+  filter: drop-shadow(0 0 6px #ffb703);
+}
+
+body #page-ham .zone-card-head,
+body #page-ham .zone-card-body {
+  position: relative;
+  z-index: 1;
+}
+
+body #page-ham .zone-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--ham-font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+}
+
+body #page-ham .zone-card-index {
+  color: var(--ham-accent-cyan);
+}
+
+body #page-ham .zone-card-coord {
+  color: var(--ham-text-muted);
+}
+
+body #page-ham .zone-value-lockup {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  margin: 1.1rem 0 0.65rem;
+}
+
+body #page-ham .zone-key-badge {
+  font-family: var(--ham-font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--ham-text-secondary);
+}
+
+body #page-ham .zone-monument-val {
+  font-family: var(--ham-font-mono);
+  font-size: clamp(2rem, 3vw, 2.55rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.75);
+}
+
+body #page-ham .zone-val-sub {
+  font-style: normal;
+  font-size: 0.58em;
+  color: var(--ham-accent-amber);
+  margin-left: 2px;
+  vertical-align: super;
+}
+
+body #page-ham .zone-card-foot {
+  padding-top: 0.55rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, transparent, rgba(9, 13, 18, 0.65));
+}
+
+body #page-ham .zone-card-foot h3 {
+  margin: 0 !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  color: var(--ham-text-primary) !important;
+}
+
+body #page-ham .zone-card-foot p {
+  margin: 0.18rem 0 0 !important;
+  font-family: var(--ham-font-mono) !important;
+  font-size: 0.64rem !important;
+  color: var(--ham-text-secondary) !important;
+}
+
+/* ================= 第三层：NJUHAM 极简友链条 (按钮仅写“访问”) ================= */
+body #page-ham .ham-beacon-dock {
+  margin-top: 0.25rem;
+}
+
+body #page-ham .beacon-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1.15rem;
+  border-radius: 10px;
+  background: linear-gradient(90deg, rgba(255, 183, 3, 0.08) 0%, rgba(14, 20, 27, 0.88) 45%);
+  border: 1px solid rgba(255, 183, 3, 0.35);
+  border-left: 3px solid var(--ham-accent-amber);
+}
+
+body #page-ham .beacon-left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+body #page-ham .beacon-amber-led {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ham-accent-amber);
+  box-shadow: 0 0 10px var(--ham-accent-amber);
+  flex-shrink: 0;
+}
+
+body #page-ham .beacon-text-group {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+body #page-ham .beacon-freq {
+  font-family: var(--ham-font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ham-accent-cyan);
+  background: rgba(0, 245, 212, 0.1);
+  padding: 0.14rem 0.5rem;
+  border-radius: 4px;
+}
+
+body #page-ham .beacon-desc {
+  margin: 0 !important;
+  font-size: 0.86rem !important;
+  font-weight: 500 !important;
+  color: var(--ham-text-primary) !important;
+}
+
+body #page-ham .beacon-switch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.05rem;
+  background: var(--ham-accent-amber) !important;
+  color: #090d12 !important;
+  font-family: var(--ham-font-mono) !important;
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 14px rgba(255, 183, 3, 0.3) !important;
+  transition: transform 0.15s ease, background 0.15s ease !important;
+  white-space: nowrap;
+}
+
+body #page-ham .beacon-switch-btn:hover {
+  background: #ffd166 !important;
+  transform: translateY(-1px);
+}
+
+/* ================= 响应式窄屏适配 ================= */
+@media (max-width: 1024px) {
+  body #page-ham.pixel-panel.page-panel.ham-console-page {
+    width: min(94vw, 860px) !important;
+  }
+}
+
+@media (max-width: 780px) {
+  body #page-ham.pixel-panel.page-panel.ham-console-page {
+    width: 100% !important;
+  }
+  body #page-ham .ham-monograph-shell {
+    padding: 1rem;
+  }
+  body #page-ham .ham-hero-grid {
+    grid-template-columns: 1fr;
+  }
+  body #page-ham .ham-zone-triptych {
+    grid-template-columns: 1fr;
+  }
+  body #page-ham .beacon-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  body #page-ham .beacon-action-col,
+  body #page-ham .beacon-switch-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Host compatibility: retain the supplied composition while neutralizing
+   glass-mode absolute positioning and keeping fixed navigation clear. */
+body #page-ham.pixel-panel.page-panel.ham-console-page {
+  position: relative !important;
+  inset: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin-top: max(184px, calc(4vh + 150px)) !important;
+  margin-bottom: 120px !important;
+}
+
+body:not(.glass-mode) #page-ham.pixel-panel.page-panel.ham-console-page {
+  width: min(920px, calc(100vw - 290px)) !important;
+}
+
+body #page-ham .ham-surface {
+  scroll-margin-top: max(210px, calc(4vh + 180px));
+}
+
+body #page-ham .ham-hero-grid {
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+}
+
+body #page-ham :is(.ham-identity-card, .ham-crt-card, .ham-zone-card) {
+  min-width: 0;
+}
+
+body #page-ham :is(.ham-identity-top, .ham-callsign-row, .ham-crt-header, .ham-crt-title-wrap) {
+  flex-wrap: wrap;
+}
+
+body #page-ham .ham-section-divider {
+  flex-wrap: wrap;
+}
+
+body #page-ham .ham-divider-title {
+  flex: 1;
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+body #page-ham .crt-osd {
+  gap: 8px;
+}
+
+body #page-ham #crt-freq-osd {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+body #page-ham #crt-status-osd {
+  min-width: 0;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+body #page-ham #ham-tuning-slider:focus-visible {
+  outline: 2px solid var(--ham-accent-amber) !important;
+  outline-offset: 6px;
+}
+
+@media (orientation: portrait) and (max-width: 1400px) {
+  body #page-ham.pixel-panel.page-panel.ham-console-page,
+  body:not(.glass-mode) #page-ham.pixel-panel.page-panel.ham-console-page {
+    width: calc(100% - 2 * var(--shell-gap, 16px)) !important;
+    margin-top: 28px !important;
+    margin-bottom: 40px !important;
+  }
+}
+
+@media (max-width: 780px) {
+  body #page-ham .ham-hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body #page-ham .ham-divider-title {
+    flex-basis: 100%;
+  }
+
+  body #page-ham .ham-divider-line {
+    display: none;
+  }
+}

@@ -134,7 +134,9 @@ jobs:
           node --check app.js
           node --check CA.js
           node --check responsive-shell.js
-          node --test tests/ca-engine.test.cjs tests/responsive-shell.test.cjs
+          node --check translations.js
+          node --check ham/ham-console.js
+          node --test tests/*.test.cjs
 
       - name: Configure SSH
         env:
@@ -267,9 +269,9 @@ sudo nginx -t && sudo systemctl reload nginx
 
 ## 单页导航与旧 HAM 地址兼容
 
-所有站内栏目均由根目录 `index.html` 提供，通过 `/#home`、`/#intro`、`/#media`、`/#github`、`/#research`、`/#ham`、`/#blog`、`/#explore` 切换。无需为栏目创建独立 HTML。
+所有站内栏目均由根目录 `index.html` 提供，通过 `/#home`、`/#intro`、`/#media`、`/#github`、`/#research`、`/#ham`、`/#blog`、`/#explore` 切换。`ham/index.html` 仅负责将旧地址重定向到 `/#ham`，不包含重复的页面实现。
 
-删除原来的 `ham/index.html` 后，如需兼容旧链接，请在当前域名的 Nginx `server` 块加入以下规则（若已有同名 location，替换原规则）：
+静态托管（包括 GitHub Pages 和本地预览）可直接使用该跳转文件。Nginx 也可以用以下规则在服务器端兼容旧链接（若已有同名 location，替换原规则）：
 
 ```nginx
 location = /ham {
@@ -285,4 +287,4 @@ location = /ham/index.html {
 }
 ```
 
-然后执行 `sudo nginx -t && sudo systemctl reload nginx`。`ham/ham.css` 仍是普通样式资源，不是独立页面。
+然后执行 `sudo nginx -t && sudo systemctl reload nginx`。`ham/ham-console.css` 和 `ham/ham-console.js` 是控制台专用资源。

@@ -209,6 +209,9 @@ body.glass-mode .nav-list a.active {
 }
 
 body.glass-mode .bottom-bar { left: 4vw; right: auto; top: auto; bottom: 4vh; padding: 0; background: transparent; border: none; box-shadow: none; }
+body.glass-mode .home-edge-action { color: #edf2f7; background: rgba(12, 16, 23, 0.52); border-color: rgba(216, 231, 241, 0.24); }
+body.glass-mode .home-livephoto-arrow { color: #ccff00; }
+body.glass-mode .home-edge-action:hover { background: rgba(12, 16, 23, 0.72); border-color: rgba(204, 255, 0, 0.55); }
 body.glass-mode .sys-status-bar { display: none; }
 body.glass-mode .lang-toggle { color: #fff; opacity: 1; font-family: "JetBrains Mono", monospace; font-size: min(0.85rem, 1.2vw); font-weight: 800; text-transform: uppercase; transition: color 0.3s; }
 body.glass-mode .lang-toggle:hover { color: #ccff00; }
@@ -556,10 +559,10 @@ body.glass-mode #page-research .pixel-card .btn-black:hover { transform: scale(1
    9. EXPLORE PAGE (CHAOS BEFORE AUTOMATA)
    ========================================= */
 body.glass-mode #page-explore { padding: 15vh 5vw; }
-body.glass-mode #page-explore h1 {
+body.glass-mode #page-explore > h1 {
     position: absolute;
-    right: -0.2vw;
-    top: 22vh;
+    right: calc(2.5vw + clamp(4rem, 8vw, 8rem));
+    top: max(180px, 22vh);
     writing-mode: horizontal-tb;
     transform: rotate(-90deg);
     transform-origin: top right;
@@ -567,34 +570,60 @@ body.glass-mode #page-explore h1 {
     margin: 0;
     white-space: nowrap;
 }
-body.glass-mode #page-explore .card-grid { margin-top: 10vh; max-width: 60vw; }
+/* Use the same transparent fill and white outline as the other page titles. */
+body.glass-mode #page-explore.page-panel > h1 {
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+    -webkit-text-stroke: 3.5px #ffffff !important;
+    paint-order: stroke fill;
+    text-shadow: none !important;
+    mix-blend-mode: normal !important;
+}
 body.glass-mode #page-explore .card-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    /* Reserve the original rotated title's width beside the compact cards. */
+    width: calc(100% - clamp(4rem, 8vw, 8rem) - 32px);
+    max-width: 1000px;
+    gap: 18px;
+    margin-top: clamp(28px, 5vh, 56px);
     position: relative;
     z-index: 7;
     isolation: isolate;
 }
 body.glass-mode #page-explore .pixel-card {
-    background: rgb(18, 18, 18) !important; backdrop-filter: none; border: 1px dotted #ccff00; padding: 4rem;
+    background: rgb(18, 18, 18) !important; backdrop-filter: none; border: 1px dotted #ccff00; padding: 22px;
     position: relative; box-shadow: inset 0 0 50px rgba(204,255,0,0.1);
     opacity: 1 !important;
     isolation: isolate;
     mix-blend-mode: normal;
     z-index: 8;
 }
-body.glass-mode #page-explore .pixel-card::after {
-    content: "ENTER PLAYGROUND"; position: absolute; top: -20px; left: -20px; background: #ccff00; color: #000;
-    font-family: "JetBrains Mono"; font-weight: 900; font-size: 1.2rem; padding: 10px 20px; transform: rotate(-5deg); text-transform: uppercase;
+body.glass-mode #page-explore .pixel-card:first-child::after {
+    content: "ENTER PLAYGROUND"; position: absolute; top: -12px; left: 14px; background: #ccff00; color: #000;
+    font-family: "JetBrains Mono"; font-weight: 900; font-size: 0.65rem; padding: 4px 9px; transform: rotate(-3deg); text-transform: uppercase;
 }
-body.glass-mode #page-explore .pixel-card h3 { font-size: 2rem; color: #fff; margin-bottom: 1.5rem; text-transform: uppercase; }
-body.glass-mode #page-explore .pixel-card p { font-size: 1.2rem; color: rgba(255,255,255,0.7); margin-bottom: 3rem; }
-body.glass-mode #page-explore .pixel-card .btn-black { font-size: 1.5rem; background: #ccff00; color: #000; border-color: #ccff00; box-shadow: 8px 8px 0 #fff; }
+body.glass-mode #page-explore .pixel-card h3 { font-size: 1.35rem; line-height: 1.25; color: #fff; margin-bottom: 12px; text-transform: uppercase; }
+body.glass-mode #page-explore .pixel-card p { font-size: 0.95rem; line-height: 1.65; color: #c9cdd2; margin-bottom: 22px; }
+body.glass-mode #page-explore .pixel-card .btn-black { font-size: 0.9rem; padding: 8px 14px; background: #ccff00; color: #000; border-color: #ccff00; box-shadow: 3px 3px 0 #fff; }
 body.glass-mode #page-explore .pixel-card .btn-black:hover { background: #fff; color: #000; border-color: #fff; box-shadow: 4px 4px 0 #ccff00; }
 
 
 /* =========================================
    10. MOBILE / RESPONSIVE FIXES
    ========================================= */
+@media (orientation: landscape) and (max-height: 600px) {
+    body.glass-mode #page-explore > h1 {
+        position: relative;
+        top: auto;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+    }
+    body.glass-mode #page-explore .card-grid { width: 100%; }
+}
+
 @media (orientation: portrait) and (max-width: 800px) {
+    body.glass-mode #page-explore.page-panel > h1 { -webkit-text-stroke-width: 1.5px !important; }
     body.glass-mode .glass-collage-scene { top: 18vh; right: 0; width: 240px; height: 320px; opacity: 0.45; }
     body.glass-mode .glass-hero { display: none !important; }
     body.glass-mode #page-home p.intro { top: 20vh; left: 5vw; width: 90vw; mix-blend-mode: normal; text-shadow: 2px 2px 10px #000; }
@@ -604,7 +633,7 @@ body.glass-mode #page-explore .pixel-card .btn-black:hover { background: #fff; c
     
     body.glass-mode #page-github .card-grid { grid-template-columns: 1fr; }
     body.glass-mode #page-explore h1 { writing-mode: horizontal-tb; position: static; transform: none; margin-bottom: 2rem; }
-    body.glass-mode #page-explore .card-grid { max-width: 100%; margin-top: 0; }
+    body.glass-mode #page-explore .card-grid { width: 100%; max-width: 100%; margin-top: 0; }
     
     body.glass-mode .btn-black { padding: 0.8rem 1.5rem; font-size: 1rem; }
     body.glass-mode .nav-list { background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); padding: 1rem; border-radius: 12px; }
@@ -694,8 +723,7 @@ body.glass-mode #page-research > h1 {
 body.glass-mode #page-media > h1::after,
 body.glass-mode #page-github > h1::after,
 body.glass-mode #page-research > h1::after,
-body.glass-mode #page-blog > h1::after,
-body.glass-mode #page-explore > h1::after {
+body.glass-mode #page-blog > h1::after {
     content: attr(data-outline-text);
     position: absolute;
     inset: 0;
@@ -721,12 +749,10 @@ body.safari-env.glass-mode #page-media > h1,
 body.safari-env.glass-mode #page-github > h1,
 body.safari-env.glass-mode #page-research > h1,
 body.safari-env.glass-mode #page-blog > h1,
-body.safari-env.glass-mode #page-explore > h1,
 body.mobile-env.glass-mode #page-media > h1,
 body.mobile-env.glass-mode #page-github > h1,
 body.mobile-env.glass-mode #page-research > h1,
-body.mobile-env.glass-mode #page-blog > h1,
-body.glass-mode #page-explore > h1 {
+body.mobile-env.glass-mode #page-blog > h1 {
     color: #ffffff !important;
     -webkit-text-fill-color: #ffffff !important;
     -webkit-text-stroke: 0 !important;
@@ -742,7 +768,6 @@ body.glass-mode #page-explore > h1 {
         1.5px -1.5px 0 rgba(0, 0, 0, 0.82),
         -1.5px -1.5px 0 rgba(0, 0, 0, 0.82) !important;
     opacity: 1 !important;
-    position: relative;
     display: inline-block;
 }
 
@@ -750,12 +775,10 @@ body.safari-env.glass-mode #page-media > h1::after,
 body.safari-env.glass-mode #page-github > h1::after,
 body.safari-env.glass-mode #page-research > h1::after,
 body.safari-env.glass-mode #page-blog > h1::after,
-body.safari-env.glass-mode #page-explore > h1::after,
 body.mobile-env.glass-mode #page-media > h1::after,
 body.mobile-env.glass-mode #page-github > h1::after,
 body.mobile-env.glass-mode #page-research > h1::after,
-body.mobile-env.glass-mode #page-blog > h1::after,
-body.glass-mode #page-explore > h1::after {
+body.mobile-env.glass-mode #page-blog > h1::after {
     display: none !important;
     content: none !important;
 }

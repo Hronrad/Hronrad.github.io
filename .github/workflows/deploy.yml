@@ -33,7 +33,9 @@ jobs:
           node --check app.js
           node --check CA.js
           node --check responsive-shell.js
-          node --test tests/ca-engine.test.cjs tests/responsive-shell.test.cjs
+          node --check translations.js
+          node --check ham/ham-console.js
+          node --test tests/*.test.cjs
 
       - name: Check deployment configuration
         env:

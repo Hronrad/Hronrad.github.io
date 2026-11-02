@@ -625,11 +625,88 @@ input[type="range"][orient="vertical"] {
     margin-top: auto;
 }
 
+/* Home shortcuts share one rail attached directly to the viewport edge. */
+.home-edge-actions {
+    display: none;
+    position: fixed;
+    right: 0;
+    bottom: calc(max(var(--shell-footer, 58px), 58px) + 64px);
+    z-index: 30;
+    flex-direction: column;
+    gap: 8px;
+    width: min(252px, calc(100vw - 24px));
+}
+.home-edge-action {
+    display: flex;
+    width: 100%;
+    padding: 16px 18px;
+    border: 1px solid rgba(75, 85, 99, 0.35);
+    border-right: 0;
+    border-radius: 8px 0 0 8px;
+    background: rgba(244, 248, 252, 0.62);
+    backdrop-filter: blur(16px) saturate(130%);
+    -webkit-backdrop-filter: blur(16px) saturate(130%);
+    color: #26313a;
+    font-family: inherit;
+    font-size: 0.75rem;
+    text-decoration: none;
+    transition: background 180ms ease-out, border-color 180ms ease-out;
+}
+body.home-page .home-edge-actions { display: flex; }
+body.automata-playground .home-edge-actions { display: none; }
+body:not(.glass-mode) .home-edge-actions {
+    left: 0;
+    right: auto;
+}
+body:not(.glass-mode) .home-edge-action {
+    border-left: 0;
+    border-right: 1px solid rgba(75, 85, 99, 0.35);
+    border-radius: 0 8px 8px 0;
+}
+.home-livephoto-link { flex-direction: column; gap: 10px; }
+.home-background-button { align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; font-size: 0.875rem; line-height: 1.5; text-align: left; cursor: pointer; }
+.home-livephoto-heading { display: flex; align-items: center; justify-content: space-between; font-size: 1rem; line-height: 1.2; }
+.home-livephoto-arrow { color: var(--theme-accent); font-size: 1.15rem; transition: transform 180ms ease-out; }
+.home-livephoto-description { line-height: 1.65; text-wrap: pretty; }
+.home-edge-action:hover { background: rgba(244, 248, 252, 0.82); border-color: var(--theme-accent); }
+.home-edge-action:hover .home-livephoto-arrow { transform: translate(2px, -2px); }
+.home-edge-action:focus-visible { outline: 2px solid var(--theme-accent); outline-offset: -3px; }
+
+/* LAB actions use compact cards; the rest of the site keeps its own scale. */
+#page-explore .card-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: 18px;
+}
+#page-explore .pixel-card { padding: 22px; min-height: 200px; }
+#page-explore .pixel-card h3 { font-size: 1.35rem; line-height: 1.25; margin-bottom: 12px; }
+#page-explore .pixel-card p { font-size: 1rem; line-height: 1.65; margin-bottom: 22px; }
+#page-explore .pixel-card .btn-black {
+    position: static;
+    align-self: flex-start;
+    margin-top: auto;
+    min-height: 44px;
+    padding: 8px 14px;
+    font-size: 1rem;
+}
+
 .btn-black:active {
     transform: translate(2px, 2px);
 }
 
 @media (orientation: portrait) and (max-width: 800px) {
+    body.home-page .home-edge-actions {
+        position: relative;
+        left: auto;
+        right: 0;
+        bottom: auto;
+        margin: 0 0 calc(max(var(--shell-footer, 58px), 58px) + 20px) auto;
+    }
+    body.home-page .home-edge-action {
+        border-left: 1px solid rgba(75, 85, 99, 0.35);
+        border-right: 0;
+        border-radius: 8px 0 0 8px;
+    }
+
     #left-sidebar {
         top: 50px;
         flex-direction: row;
@@ -678,7 +755,35 @@ input[type="range"][orient="vertical"] {
     }
 }
 
+@media (orientation: landscape) and (max-width: 800px), (orientation: landscape) and (max-height: 600px) {
+    body:not(.glass-mode).home-page .home-edge-actions {
+        position: relative;
+        left: auto;
+        right: 0;
+        bottom: auto;
+        margin: 40px 0 calc(max(var(--shell-footer, 58px), 58px) + 20px) auto;
+    }
+    body:not(.glass-mode).home-page .home-edge-action {
+        border-left: 1px solid rgba(75, 85, 99, 0.35);
+        border-right: 0;
+        border-radius: 8px 0 0 8px;
+    }
+    body.glass-mode.home-page .home-edge-actions {
+        width: min(220px, calc(100vw - 24px));
+        bottom: calc(max(var(--shell-footer, 58px), 58px) + 16px);
+    }
+    body.glass-mode.home-page .home-edge-action {
+        padding-block: 12px;
+        gap: 7px;
+    }
+}
 
+
+
+@media (orientation: landscape) and (max-width: 800px) {
+    /* Keep LAB buttons clear of the fixed pixel navigation. */
+    body:not(.glass-mode) #page-explore .pixel-card .btn-black { align-self: flex-end; }
+}
 
 .blog-list {
     list-style: none;

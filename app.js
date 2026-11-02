@@ -146,6 +146,7 @@
         }
 
         window.scrollTo({ top: 0, behavior: "auto" });
+        window.HamConsole?.checkRoute();
     }
 
     function enterAutomataPlayground() {
@@ -334,8 +335,6 @@
             langButton.innerText = state.currentLang === "zh" ? "English" : "中文";
         }
 
-        document.querySelector(".ham-station-notes").setAttribute("aria-label", translations.ham_parameters);
-
         document.querySelectorAll(".nav-list a").forEach((link) => {
             const targetKey = state.isGlassTheme
                 ? link.getAttribute("data-glass-i18n")
@@ -518,12 +517,16 @@
     }
 
     function bindPlaygroundControls(engine) {
-        const startButton = document.getElementById("explore-automata-start");
+        const startButtons = document.querySelectorAll("[data-automata-start]");
         const backButton = document.getElementById("explore-back-btn");
         const canvas = document.getElementById("bg-canvas");
 
-        startButton.addEventListener("click", (event) => {
+        const startPlayground = (event) => {
             event.preventDefault();
+            if (window.location.hash !== "#explore") {
+                window.history.pushState(null, "", "#explore");
+                showPage("explore");
+            }
             enterAutomataPlayground();
             setCssTheme(
                 state.playgroundHue,
@@ -532,7 +535,8 @@
                 PAGE_THEMES.explore.cssLightness
             );
             engine.setThemeHue(state.playgroundHue);
-        });
+        };
+        startButtons.forEach((button) => button.addEventListener("click", startPlayground));
 
         backButton.addEventListener("click", () => {
             exitAutomataPlayground();

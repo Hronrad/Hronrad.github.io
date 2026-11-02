@@ -142,3 +142,58 @@ User-directed visual revision: replaced bright white/lime/lavender sheets with c
 - Every width-based mobile media query in styles.css, glass-theme.css, mobile-narrow.css and ham/ham.css now requires portrait orientation. Both JavaScript mobile layout checks use the same orientation constraint.
 - Final browser matrix: 390×844, 844×390, 768×1024, 1024×768, 1280×900, across all eight routes (40 checks): no document horizontal overflow; exactly one visible panel.
 - PROFILE collage and blur remain visible in both orientations. At 844×390 and 1024×768 the mobile-env class is absent.
+
+## HAM monograph replacement — 2026-11-02
+
+This revision supersedes the earlier rack-console design and its CW/audio/NOAA checks. It implements the replacement specification in `ai_studio_code (1).txt`.
+
+- The HAM main node matches the supplied HTML structure, SVG paths, text and attributes; only trailing source whitespace was normalized. The CRT JavaScript is copied verbatim from the supplied code. Both languages contain precisely the 15 supplied HAM translation keys and values. No new DOM node or translation key was introduced.
+- The supplied CSS was retained, with a final HAM-scoped compatibility block. Literal source CSS left the host glass panel absolutely positioned at (0,0), under the fixed navigation, and let the nonwrapping cartography title overflow on phones. The compatibility block resets only HAM positioning, preserves fixed-sidebar clearance, and allows constrained content to wrap. It also restores visible keyboard focus on the tuning slider.
+- `node --test tests/*.test.cjs`: 11 tests pass (four CA, three shared shell, four replacement-HAM tests). HAM checks cover the three SVG panels, exact friend-link copy, one CRT/slider, removal of obsolete modules, initial 14.195 MHz and resonance at 14.270 MHz, language updates, background sampling, hue changes, and animation lifecycle. The removed station-notes lookup was removed from `app.js` so shared initialization remains safe.
+- Playwright Chromium tested 320×568, 375×812, 568×320, 768×1024, 1024×768 and 1440×1000 in both languages/themes: 24 HAM layouts, with no horizontal document overflow, no navigation overlap and one active animation loop. The single slider, single canvas, three SVG panels, Chinese-only association description and exact VISIT/访问 labels were asserted in every layout. After making the narrow cartography title use a full row, eight additional 320/375px language/theme checks confirmed full available title width and no overflow.
+- A further 56 checks covered the seven other routes at 375×812 and 1440×1000, in both languages/themes. Every route retained one visible panel and zero HAM animation frames. Browser interactions confirmed quick lock, keyboard tuning, translated lock status, hue-dependent rendering and the legacy `/ham/` redirect. Leaving HAM stopped CRT background sampling. No JavaScript page errors occurred.
+- The inherited glass PROFILE collage overflow remains 386px in a 375px viewport in both languages, matching the independent original-HEAD comparison recorded in the prior work. No unrelated layout was modified.
+- All seven other main-section source blocks and all non-HAM dictionary entries match the pre-revision snapshot. Checksums of `CA.js`, `styles.css`, `glass-theme.css`, `mobile-narrow.css` and `responsive-shell.js` are unchanged.
+
+These are Chromium and simulated-browser checks; no native Safari or physical-device acceptance is claimed.
+
+## HAM grain refinements — 2026-11-02
+
+- Reduced the three cartographic SVG backgrounds from 0.82 to 0.35 opacity, and hover opacity from 1 to 0.45. Text and SVG geometry are unchanged.
+- A small HAM-only CSS/JavaScript bridge now maps the existing VFO detuning to the existing glass-theme full-screen grain layer: 0.12 when far from 14.270 MHz, falling to 0.01 at resonance. Both the slider and quick-lock button update it. Leaving HAM removes the temporary class/property, restoring the original 0.12 grain. Existing theme/phone/reduced-motion display rules remain in effect; the CA engine and shared styles are unchanged.
+- All 12 Node tests pass, including a new lifecycle regression for monotonic noise reduction, route-exit cleanup, inactive language changes and remounting at the retained VFO setting.
+- Focused Chromium checks confirmed all three normal SVG opacities, hover opacity, falling full-screen grain near resonance, the 0.01 locked value and 0.12 restoration outside HAM. The 375px layout retained no horizontal overflow. No JavaScript page errors were recorded.
+
+## LivePhoto entry and compact LAB — 2026-11-02
+
+- Added a lowercase `livephoto` shortcut on the lower side of Home, pointing to `https://livephoto.hronrad.cn` in a new tab with `noopener noreferrer`. Desktop positioning clears the language switch; phone layouts place it after the introduction, aligned to the side. It is hidden on all other routes.
+- Added the same destination as the third LAB card with Chinese and English descriptions. LAB padding reduced from 64px to 22px; at 1440×1000 Chinese glass mode, the old 864×389px first card became a 321×226px card in a three-column layout. Typography, button size and heading spacing were reduced locally to LAB. Only the automata card retains the small PLAYGROUND tag.
+- Playwright Chromium verified Home and LAB at 320×568, 375×812, 568×320, 768×1024, 1024×768 and 1440×1000, in both languages/themes: 48 checks, zero failures or JavaScript page errors. Checks cover shortcut center-point hit testing, destination/target/rel, home-only visibility, three LAB cards, card-content containment and document overflow. Additional route transitions confirmed the shortcut stays hidden elsewhere.
+- All 12 existing Node tests pass. External destination availability was not established from this environment; URL verification above refers to the local link configuration.
+
+## LAB title restoration and LivePhoto edge ticket — 2026-11-02
+
+- Restored the original LAB h1 declaration verbatim from HEAD, including its original type scale and rotated composition. The compact three-card layout remains.
+- Replaced the small inset Home shortcut with a translucent glass ticket, including a bilingual introduction and destination URL. In glass mode it meets the viewport's right boundary; desktop pixel mode uses the left boundary to avoid the right controls. Phone and short pixel-landscape layouts keep it in document flow, flush with the right boundary after the introduction. No horizontal page gutter remains between the ticket and its docking edge.
+- Chromium checked Home/LAB at 320×568, 375×812, 568×320, 844×390, 1024×600, 768×1024, 1024×768 and 1440×1000 in both languages/themes: 64 checks, zero failures or JavaScript errors. Assertions verify an edge coordinate within 1px of the viewport, center-point hit testing, nonempty translated introduction, translucent background, destination and home-only visibility, LAB card containment and no horizontal overflow.
+- The original title source block comparison, all 12 Node tests and diff whitespace checks pass. Desktop glass ticket was measured at right=1440px in a 1440px viewport, with blur(16px) and background alpha 0.52.
+
+### Corrected LAB title visibility and LivePhoto typography
+
+The preceding title source comparison did not establish visual visibility. A later shared fallback changed the LAB heading from absolute to relative positioning while retaining its offset and rotation, placing the title behind the cards. That earlier title acceptance is superseded by this correction.
+
+- Removed positioning from the typography fallback. Retained the original LAB Inter/sans-serif family, 900 weight and desktop size range; corrected its right offset and reserved a separate gutter beside the compact cards. Short landscape layouts place the same heading horizontally above the cards; portrait retains the existing mobile layout.
+- Removed the LivePhoto ticket's URL row and its separator. The ticket now inherits the active theme's font instead of including PixelFont as a fallback in glass mode. The edge placement, bilingual introduction and link destination remain.
+- Chromium checked Home and LAB across eight viewport sizes, both themes and both languages (64 cases): no page errors, horizontal overflow, title/card overlap or ticket hit-test failures. Title checks now include visible text, original glass family/weight, viewport containment and nine unobscured points in the text region. Screenshots were inspected for desktop Chinese/English, phone Chinese and short-landscape English. A visible-text font audit of glass Home and LAB found no PixelFont usage. All 12 existing Node tests and diff whitespace checks pass.
+
+### LAB outline requirement and Home playground shortcut
+
+- The user clarified that LAB must use hollow white lettering. The preceding solid-white title treatment is superseded. LAB now has a transparent text fill and a 3.5px white stroke matching the other desktop page titles; portrait screens use a 1.5px stroke. Removed LAB from the solid-text fallback and duplicate outline pseudo-element groups so its interior stays transparent in glass mode.
+- Home now groups LivePhoto and a bilingual background-interaction button in the same translucent edge rail. Both it and LAB's Start bind to the same playground handler. The Home entry changes the route to `#explore`, opens the existing pure background mode directly, and hides the Home rail. It uses the existing hue, canvas interaction, controls and exit behavior.
+- Chromium exercised eight sizes in both languages/themes (32 combinations): Home mouse/Enter activation, hidden edge rail in playground mode, actual successful glider injection, Escape exit, and equivalent LAB entry state. A narrow landscape pixel-navigation overlap was found on the original LAB button; scoped its alignment to the right and repeated all four 568×320 language/theme cases successfully. Desktop Back-button exit and browser-history return to Home also pass. No JavaScript page errors occurred.
+- Compared RESEARCH and LAB at 1440×1000: both use Inter/sans-serif at weight 900, transparent fill and a 3.5px white stroke. LAB keeps the outline under simulated Safari classes and uses a thinner white outline on portrait phones. Inspected desktop/phone screenshots in both languages. All 12 existing Node tests, JavaScript syntax checks and diff whitespace checks pass.
+
+### Final association biography and pre-push check
+
+- Updated the Chinese HAM introduction verbatim to the user's founding-association/first-president wording, synchronized the English biography, and bumped the translation cache version. The HTML fallback matches the Chinese dictionary.
+- Re-ran all 12 Node tests, syntax checks for all five JavaScript entry files and diff whitespace checks successfully. Chromium verified the exact biographies at 375×812 and 1440×1000 in both languages/themes (eight HAM layouts), no horizontal overflow, three SVG panels and working 14.270 MHz lock. Rechecked the hollow LAB heading and Home's direct playground entry/Escape exit at both sizes; no page errors occurred. Inspected the updated phone HAM screenshot.
